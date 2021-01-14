@@ -1,12 +1,14 @@
 import './App.css';
-import TestForm from './components/TestForm';
+// import TestForm from './components/TestForm';
+import Container from 'react-bootstrap/Container'
+import LoginForm from './components/LoginForm';
 
 function App() {
 
   return (
-    <div className="App">
-      
-    </div>
+    <Container className="App">
+      <LoginForm />
+    </Container>
   );
 }
 
