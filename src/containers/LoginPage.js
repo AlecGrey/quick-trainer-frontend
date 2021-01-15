@@ -49,7 +49,7 @@ const LoginPage = ({ loginUser, addAgreements }) => {
 
     // REROUTING AFTER LOGIN
     const navigateToLandingPage = loginSuccessful => {
-        if ( loginSuccessful ) history.push('/landing')
+        if ( loginSuccessful ) history.push('/home')
     }
 
     // LOGIN HELPER METHODS
