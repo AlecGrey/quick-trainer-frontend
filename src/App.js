@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container'
 import LoginPage from './containers/LoginPage';
 import HomePage from './containers/HomePage';
@@ -9,8 +9,6 @@ import { loginUser } from './actions/user';
 import { addAgreements } from './actions/agreements';
 
 function App({ user, loginUser, addAgreements }) {
-
-  // const [ token, setToken ] = useState(null)
 
   useEffect(() => {
     // on page load, compare token to store, fetch the user information if necessary

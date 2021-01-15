@@ -16,7 +16,7 @@ const LoginForm = ({ changeName, changePassword, handleLoginSubmit }) => {
             <Button className='login-button font-weight-bold' variant='primary' type='submit' onClick={ handleLoginSubmit }>
                 Login
             </Button>
-            <div className='divider'/>
+            <div className='h-divider'/>
             <Button className='signup-button font-weight-bold' variant='secondary'>
                 Signup
             </Button>            
