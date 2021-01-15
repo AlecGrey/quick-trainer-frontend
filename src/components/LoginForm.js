@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container'
 import MainLogo from './MainLogo';
+import ErrorModal from './ErrorModal';
 import { loginUser } from '../actions/user';
 import { addAgreements } from '../actions/agreements';
 import { connect } from 'react-redux';
@@ -12,6 +13,7 @@ const LoginForm = ({ loginUser, addAgreements }) => {
     // STATE HOOKS
     const [ name, setName ] = useState('')
     const [ password, setPassword ] = useState('')
+    const [ error, setError ] = useState(null)
 
     // LOGIN EVENT LISTENERS
     const handleNameChange = event => {
@@ -33,7 +35,10 @@ const LoginForm = ({ loginUser, addAgreements }) => {
         const params = loginParams()
         fetch(url, params)
           .then(resp => resp.json())
-          .then(sendUserToStore)
+          .then(json => {
+            //   if we receive errors back instead of a user, render an error message, otherwise update the store
+            !!json.error ? setError(json.error) : sendUserToStore(json)
+          })
     }
 
     // LOGIN HELPER METHODS
@@ -49,35 +54,35 @@ const LoginForm = ({ loginUser, addAgreements }) => {
             password
           })
         }
-      }
+    }
 
-      const sendUserToStore = (json) => {
-          const user = json.user.data.attributes
-          const agreements = formatAgreementsFromJson(json)
-          const userPayload = {
-              token: json.token,
-              name: user.name,
-              isTrainer: user.account_type === 'trainer',
-              specialty: user.specialty,
-              credentials: user.credentials,
-              dateOfBirth: user.date_of_birth,
-              height: user.height,
-              weight: user.weight,
-              bio: user.bio,
-              imageUrl: user.image_url
-          }
-          loginUser( userPayload )
-          addAgreements( agreements )
-      }
+    const sendUserToStore = (json) => {
+        const user = json.user.data.attributes
+        const agreements = formatAgreementsFromJson(json)
+        const userPayload = {
+            token: json.token,
+            name: user.name,
+            isTrainer: user.account_type === 'trainer',
+            specialty: user.specialty,
+            credentials: user.credentials,
+            dateOfBirth: user.date_of_birth,
+            height: user.height,
+            weight: user.weight,
+            bio: user.bio,
+            imageUrl: user.image_url
+        }
+        loginUser( userPayload )
+        addAgreements( agreements )
+    }
 
-      const formatAgreementsFromJson = json => {
-          return json.user.data.attributes.agreements.map( agreement => {
-              return {
-                  ...agreement.data.attributes,
-                  id: agreement.data.id
-              }
-          })
-      }
+    const formatAgreementsFromJson = json => {
+        return json.user.data.attributes.agreements.map( agreement => {
+            return {
+                ...agreement.data.attributes,
+                id: agreement.data.id
+            }
+        })
+    }
 
     return (
         <Container className='d-flex align-items-center flex-column'>
@@ -98,6 +103,7 @@ const LoginForm = ({ loginUser, addAgreements }) => {
                     Signup
                 </Button>            
             </Form>
+            <ErrorModal errorMessage={ error } resetErrorMessage={ () => setError(null) } />
         </Container>
     );
 }
