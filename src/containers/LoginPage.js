@@ -40,15 +40,16 @@ const LoginPage = ({ loginUser, addAgreements }) => {
           .then(resp => resp.json())
           .then(json => {
             // if we receive errors back instead of a user, render an error message, otherwise update the store
+            console.log(json)
             !!json.error ? setError(json.error) : sendUserToStore(json)
             // return status of login
             return !json.error
           })
-          .then(navigateToLandingPage)
+          .then(navigateToHomePage)
     }
 
     // REROUTING AFTER LOGIN
-    const navigateToLandingPage = loginSuccessful => {
+    const navigateToHomePage = loginSuccessful => {
         if ( loginSuccessful ) history.push('/home')
     }
 
@@ -68,10 +69,11 @@ const LoginPage = ({ loginUser, addAgreements }) => {
     }
 
     const sendUserToStore = (json) => {
+        // Handles all saving of user data in store & in local storage
+        localStorage.setItem('token', json.token)
         const user = json.user.data.attributes
         const agreements = formatAgreementsFromJson(json)
         const userPayload = {
-            token: json.token,
             name: user.name,
             isTrainer: user.account_type === 'trainer',
             specialty: user.specialty,
@@ -100,7 +102,7 @@ const LoginPage = ({ loginUser, addAgreements }) => {
             <MainLogo />
             <LoginForm 
                 changeName={ handleNameChange } 
-                changePassword={ handlePasswordChange } 
+                changePassword={ handlePasswordChange }
                 handleLoginSubmit={ handleLoginSubmit }
             />
             <ErrorModal errorMessage={ error } resetErrorMessage={ () => setError(null) } />

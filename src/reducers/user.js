@@ -9,7 +9,6 @@ const userReducer = (state = initialState, action) => {
 }
 
 const initialState = {
-    token: null,
     name: null,
     isTrainer: null,
     specialty: null,

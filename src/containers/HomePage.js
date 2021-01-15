@@ -1,11 +1,22 @@
 import React from 'react';
+import Container from 'react-bootstrap/Container';
+import Image from 'react-bootstrap/Image'
+import { connect } from 'react-redux';
+import { useHistory } from "react-router-dom";
 
-const HomePage = () => {
+const HomePage = ({ user, agreements }) => {
     return (
-        <div>
-            <p>Welcome home, User!</p>
-        </div>
+        <Container className='d-flex align-items-center flex-column'>
+            <Image src="" roundedCircle />
+        </Container>
     );
 }
 
-export default HomePage;
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+        agreements: state.agreements
+    }
+}
+
+export default connect()(HomePage);
