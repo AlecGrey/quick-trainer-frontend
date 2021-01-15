@@ -1,4 +1,4 @@
-const rootReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
     switch (action.type) {
       case 'LOGIN_USER':
         // ADD FUNCTIONALITY HERE
@@ -21,4 +21,4 @@ const initialState = {
     imageUrl: null
 }
 
-export default rootReducer
+export default userReducer

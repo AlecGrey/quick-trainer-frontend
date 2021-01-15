@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import { loginUser } from '../actions/user';
+import { addAgreements } from '../actions/agreements';
 import { connect } from 'react-redux';
 
-const LoginForm = ({ loginUser }) => {
+const LoginForm = ({ loginUser, addAgreements }) => {
 
     // STATE HOOKS
     const [ name, setName ] = useState('')
@@ -50,6 +51,7 @@ const LoginForm = ({ loginUser }) => {
 
       const sendUserToStore = (json) => {
           const user = json.user.data.attributes
+          const agreements = formatAgreementsFromJson(json)
           const userPayload = {
               token: json.token,
               name: user.name,
@@ -63,6 +65,16 @@ const LoginForm = ({ loginUser }) => {
               imageUrl: user.image_url
           }
           loginUser( userPayload )
+          addAgreements( agreements )
+      }
+
+      const formatAgreementsFromJson = json => {
+          return json.user.data.attributes.agreements.map( agreement => {
+              return {
+                  ...agreement.data.attributes,
+                  id: agreement.data.id
+              }
+          })
       }
 
     return (
@@ -87,7 +99,8 @@ const LoginForm = ({ loginUser }) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        loginUser: ( userObject ) => dispatch(loginUser(userObject))
+        loginUser: ( userObject ) => dispatch(loginUser(userObject)),
+        addAgreements: ( clients ) => dispatch(addAgreements(clients))
     }
 }
 
