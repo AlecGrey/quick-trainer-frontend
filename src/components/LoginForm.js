@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container'
+import MainLogo from './MainLogo';
 import { loginUser } from '../actions/user';
 import { addAgreements } from '../actions/agreements';
 import { connect } from 'react-redux';
@@ -78,22 +80,25 @@ const LoginForm = ({ loginUser, addAgreements }) => {
       }
 
     return (
-        <Form id='login-box' className='shadow d-flex flex-column align-items-stretch justify-content-center'>
-            <Form.Group>
-                <Form.Control type="text" placeholder="Username" onChange={ handleNameChange }/>
-            </Form.Group>
+        <Container className='d-flex align-items-center flex-column'>
+            <MainLogo />
+            <Form id='login-box' className='shadow d-flex flex-column align-items-stretch justify-content-center'>
+                <Form.Group>
+                    <Form.Control type="text" placeholder="Username" onChange={ handleNameChange }/>
+                </Form.Group>
 
-            <Form.Group>
-                <Form.Control type="password" placeholder="Password" onChange={ handlePasswordChange }/>
-            </Form.Group>
-            <Button className='login-button font-weight-bold' variant='primary' type='submit' onClick={ handleLoginSubmit }>
-                Login
-            </Button>
-            <div className='divider'/>
-            <Button className='signup-button font-weight-bold' variant='secondary'>
-                Signup
-            </Button>            
-        </Form>
+                <Form.Group>
+                    <Form.Control type="password" placeholder="Password" onChange={ handlePasswordChange }/>
+                </Form.Group>
+                <Button className='login-button font-weight-bold' variant='primary' type='submit' onClick={ handleLoginSubmit }>
+                    Login
+                </Button>
+                <div className='divider'/>
+                <Button className='signup-button font-weight-bold' variant='secondary'>
+                    Signup
+                </Button>            
+            </Form>
+        </Container>
     );
 }
 

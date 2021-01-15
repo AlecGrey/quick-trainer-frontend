@@ -2,15 +2,16 @@ import './App.css';
 // import TestForm from './components/TestForm';
 import Container from 'react-bootstrap/Container'
 import LoginForm from './components/LoginForm';
-import MainLogo from './components/MainLogo';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 function App() {
 
   return (
-    <Container className="App d-flex flex-column align-items-center">
-      <MainLogo />
-      <LoginForm />
-    </Container>
+    <Router>
+      <Container className="App d-flex flex-column align-items-center">
+        <Route exact path='/' component={ LoginForm } />
+      </Container>
+    </Router>
   );
 }
 
