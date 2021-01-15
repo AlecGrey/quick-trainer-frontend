@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
+import { loginUser } from '../actions/user';
+import { connect } from 'react-redux';
 
-const LoginForm = () => {
+const LoginForm = ({ loginUser }) => {
 
     // STATE HOOKS
     const [ name, setName ] = useState('')
@@ -19,16 +21,16 @@ const LoginForm = () => {
 
     const handleLoginSubmit = event => {
         event.preventDefault()
-        loginUser()
+        fetchUser()
     }
 
     // FETCH REQUEST TO LOGIN USER
-    const loginUser = () => {
+    const fetchUser = () => {
         const url = 'http://localhost:5000/login'
         const params = loginParams()
         fetch(url, params)
           .then(resp => resp.json())
-          .then(console.log)
+          .then(sendUserToStore)
     }
 
     // LOGIN HELPER METHODS
@@ -44,6 +46,23 @@ const LoginForm = () => {
             password
           })
         }
+      }
+
+      const sendUserToStore = (json) => {
+          const user = json.user.data.attributes
+          const userPayload = {
+              token: json.token,
+              name: user.name,
+              isTrainer: user.account_type === 'trainer',
+              specialty: user.specialty,
+              credentials: user.credentials,
+              dateOfBirth: user.date_of_birth,
+              height: user.height,
+              weight: user.weight,
+              bio: user.bio,
+              imageUrl: user.image_url
+          }
+          loginUser( userPayload )
       }
 
     return (
@@ -66,4 +85,10 @@ const LoginForm = () => {
     );
 }
 
-export default LoginForm;
+const mapDispatchToProps = dispatch => {
+    return {
+        loginUser: ( userObject ) => dispatch(loginUser(userObject))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(LoginForm);
