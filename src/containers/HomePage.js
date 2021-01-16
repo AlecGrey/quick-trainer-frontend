@@ -3,13 +3,12 @@ import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image'
 import { connect } from 'react-redux';
 import { Link, useHistory } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
 
 const HomePage = ({ user, agreements }) => {
 
     return (
         <Container id='homepage' className='d-flex align-items-center flex-column'>
-            <Image className='homepage-image' src={ user.imageUrl } />
+            <Image className='shadow homepage-image' src={ user.imageUrl } />
             <h1 className='.welcome-message'>{ `Welcome, ${ user.name }!` }</h1>
             <Container className='d-flex justify-content-center'>
                 <div className='nav-link-container d-flex justify-content-end'>

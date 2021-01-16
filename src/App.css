@@ -3,6 +3,7 @@
 #root {
   background-color: rgb(245, 245, 245);
   margin: 0 auto;
+  position: relative;
 }
 
 .App {
@@ -63,8 +64,8 @@
 }
 
 .homepage-image {
-  max-height: 250px;
-  width: auto;
+  max-width: 200px;
+  height: auto;
   border-radius: 10px;
 }
 
@@ -76,9 +77,19 @@
 
 .nav-link-container {
   width: 200px;
-  margin: auto 5%;
+  margin: auto 4%;
 }
 
 .nav-link-container {
   font-size: 1.5rem;
+}
+
+/* ACCOUNT SETTINGS PAGE */
+#account-settings-page > * {
+  margin: 0 5%
+}
+
+/* MISCELLANEOUS HELPERS */
+.no-gutters {
+  padding: 0 !important;
 }

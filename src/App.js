@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container'
 import LoginPage from './containers/LoginPage';
 import HomePage from './containers/HomePage';
+import ManageAccountPage from './containers/ManageAccountPage';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { loginUser } from './actions/user';
@@ -71,6 +72,8 @@ function App({ user, loginUser, addAgreements }) {
       <Container className="App d-flex flex-column align-items-center">
         <Route exact path='/' component={ LoginPage } />
         <Route exact path='/home' component={ HomePage } />
+        <Route exact path='/manage-account' component={ ManageAccountPage } />
+        {/* <Route exact path='/training-agreements' component={ TrainingAgreementsPage } /> */}
         { localStorage.getItem('token') ? null : <Redirect to='/' /> }
       </Container>
     </Router>
