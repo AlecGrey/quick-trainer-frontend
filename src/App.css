@@ -1,14 +1,10 @@
 /* MAIN CONTAINERS */
-
-#root {
+body {
   background-color: rgb(245, 245, 245);
-  margin: 0 auto;
-  position: relative;
 }
 
-.App {
-  height: 100vh;
-  width: 100vh;
+#root {
+  margin: 0 auto;
 }
 
 /* LOGIN PAGE */
@@ -52,14 +48,14 @@
 }
 
 .v-divider {
-  height: 95%;
+  height: 30px;
   width: 1px;
   margin: auto 1%;
-  background-color: rgb(209, 209, 209);
+  background-color: rgb(170, 170, 170);
 }
 
 /* HOMEPAGE */
-#homepage > * {
+#home-page > * {
   margin: 20px auto;
 }
 
@@ -85,8 +81,60 @@
 }
 
 /* ACCOUNT SETTINGS PAGE */
+#account-settings-page {
+  padding: 0 20px;
+}
+
 #account-settings-page > * {
   margin: 0 5%
+}
+
+#account-settings-page > div.user-preview {
+  width: 40%;
+}
+
+div.user-preview > * {
+  margin: 20px auto;
+}
+
+#edit-settings-column {
+  margin: 20px 0;
+}
+
+#edit-settings-column > h1 {
+  margin: 0;
+}
+
+.section-title-divider {
+  width: 95%;
+  height: 1px;
+  margin: 1% auto 1% 0;
+  background-color: rgb(100, 100, 100);
+}
+
+.editable-setting {
+  position: relative;
+  width: 95%;
+}
+
+.editable-setting > * {
+  /* margin-top: auto; */
+  margin-bottom: auto;
+}
+
+.editable-setting > h3 {
+  font-weight: 400;
+}
+
+.editable-setting > p.edit-field {
+  color: rgb(28, 0, 184) !important;
+  margin-left: auto;
+}
+
+.editable-setting > p {
+  margin-left: 1%;
+  font-size: 1.5rem;
+  font-weight: 300;
 }
 
 /* MISCELLANEOUS HELPERS */

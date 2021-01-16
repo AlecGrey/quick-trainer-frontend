@@ -1,6 +1,5 @@
 import './App.css';
 import React, { useEffect } from 'react';
-import Container from 'react-bootstrap/Container'
 import LoginPage from './containers/LoginPage';
 import HomePage from './containers/HomePage';
 import ManageAccountPage from './containers/ManageAccountPage';
@@ -69,13 +68,13 @@ function App({ user, loginUser, addAgreements }) {
 
   return (
     <Router>
-      <Container className="App d-flex flex-column align-items-center">
+      <div className="App d-flex flex-column align-items-around">
         <Route exact path='/' component={ LoginPage } />
         <Route exact path='/home' component={ HomePage } />
         <Route exact path='/manage-account' component={ ManageAccountPage } />
         {/* <Route exact path='/training-agreements' component={ TrainingAgreementsPage } /> */}
         { localStorage.getItem('token') ? null : <Redirect to='/' /> }
-      </Container>
+      </div>
     </Router>
   );
 }

@@ -98,7 +98,7 @@ const LoginPage = ({ loginUser, addAgreements }) => {
     }
 
     return (
-        <Container className='d-flex align-items-center flex-column'>
+        <Container id='login-page' className='d-flex align-items-center flex-column'>
             <MainLogo />
             <LoginForm 
                 changeName={ handleNameChange } 

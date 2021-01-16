@@ -7,7 +7,7 @@ import { Link, useHistory } from "react-router-dom";
 const HomePage = ({ user, agreements }) => {
 
     return (
-        <Container id='homepage' className='d-flex align-items-center flex-column'>
+        <Container id='home-page' className='d-flex align-items-center flex-column'>
             <Image className='shadow homepage-image' src={ user.imageUrl } />
             <h1 className='.welcome-message'>{ `Welcome, ${ user.name }!` }</h1>
             <Container className='d-flex justify-content-center'>
