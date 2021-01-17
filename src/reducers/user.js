@@ -3,6 +3,11 @@ const userReducer = (state = initialState, action) => {
       case 'LOGIN_USER':
         // ADD FUNCTIONALITY HERE
         return {...action.user}
+      case 'UPDATE_USER':
+        return {
+          ...state,
+          ...action.user
+        }
       default:
         return state
     }

@@ -115,10 +115,13 @@ div.user-preview > * {
 .editable-setting {
   position: relative;
   width: 95%;
+  height: 2.5rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
 }
 
 .editable-setting > * {
-  /* margin-top: auto; */
+  margin-top: auto;
   margin-bottom: auto;
 }
 
@@ -129,12 +132,53 @@ div.user-preview > * {
 .editable-setting > p.edit-field {
   color: rgb(28, 0, 184) !important;
   margin-left: auto;
+  margin-right: 1%;
+  font-size: 1rem;
+}
+
+p.edit-field:hover {
+  cursor: pointer;
 }
 
 .editable-setting > p {
   margin-left: 1%;
   font-size: 1.5rem;
   font-weight: 300;
+  max-width: 90%;
+}
+
+.editable-setting > input {
+  margin-left: 1%;
+}
+
+.account-button-container {
+  margin: 1% 0;
+}
+
+.account-button-container > .btn {
+  margin-right: 1%;
+}
+
+.enter-password-container > * {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.enter-password-container > label {
+  font-size: 1.2rem;
+}
+
+.enter-password-container > input {
+  margin-left: 1%;
+  margin-right: 2%;
+}
+
+.password-button {
+  margin-top: 1%;
+}
+
+div > p > em {
+  color: rgb(140, 0, 0);
 }
 
 /* MISCELLANEOUS HELPERS */

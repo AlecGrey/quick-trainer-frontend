@@ -18,7 +18,7 @@ function App({ user, loginUser, addAgreements }) {
   const fetchUserToStore = () => {
     console.log('Found token, initiating request for user information!')
     // SEND GET REQUEST TO GET USER INFORMATION
-    const url = `http://localhost:5000/getuser`
+    const url = `http://localhost:5000/get-user`
     const params = getUserParams()
     fetch(url, params)
       .then(resp => resp.json())
