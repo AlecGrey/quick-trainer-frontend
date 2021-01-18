@@ -1,12 +1,16 @@
 import './App.css';
 import React, { useEffect } from 'react';
+// ADD PAGE CONTAINERS FOR UNIQUE ROUTES
 import LoginPage from './containers/LoginPage';
 import HomePage from './containers/HomePage';
 import ManageAccountPage from './containers/ManageAccountPage';
+import TrainingAgreementsPage from './containers/TrainingAgreementsPage';
+// REDUX AND REDUX ACTIONS
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { loginUser } from './actions/user';
 import { addAgreements } from './actions/agreements';
+// REACT ROUTER
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 function App({ user, loginUser, addAgreements }) {
 
@@ -72,7 +76,7 @@ function App({ user, loginUser, addAgreements }) {
         <Route exact path='/' component={ LoginPage } />
         <Route exact path='/home' component={ HomePage } />
         <Route exact path='/manage-account' component={ ManageAccountPage } />
-        {/* <Route exact path='/training-agreements' component={ TrainingAgreementsPage } /> */}
+        <Route exact path='/training-agreements' component={ TrainingAgreementsPage } />
         { localStorage.getItem('token') ? null : <Redirect to='/' /> }
       </div>
     </Router>

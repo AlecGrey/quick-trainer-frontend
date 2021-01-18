@@ -26,10 +26,4 @@ const mapStateToProps = state => {
     }
 }
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         // update user!
-//     }
-// }
-
-export default connect(mapStateToProps/*, mapDispatchToProps*/)(ManageAccountPage);
+export default connect(mapStateToProps)(ManageAccountPage);

@@ -204,6 +204,153 @@ p.edit-field:hover {
   margin-left: 0.5rem;
 }
 
+/* AGREEMENTS PAGE */
+#agreements-roster-page {
+  margin: 0 10%;
+}
+
+#agreements-list-container {
+  margin: 3rem 5rem 0 0;
+    flex-shrink: 0;
+    flex-basis: 15rem;
+}
+
+#agreements-list-title {
+  margin: 0 0 0 1rem;
+}
+
+#agreements-list-title + div.h-divider {
+  margin-top: 0;
+  background-color: rgb(120, 120, 120);
+}
+
+#agreements-list {
+  list-style-type: none;
+  margin-top: 0;
+  margin-left: 2rem;
+  padding: 0;
+}
+
+#agreements-list > li {
+  font-size: 1.5rem;
+  font-weight: 200;
+  color: rgb(30, 30, 30);
+}
+
+#agreements-list > li:hover {
+  font-weight: 250;
+  cursor: pointer;
+}
+
+#agreements-list > li.selected {
+  font-style: italic;
+  color: rgb(0, 0, 0);
+  font-weight: 400;
+}
+
+#agreements-list > li.selected:hover {
+  font-weight: 450;
+}
+
+#agreement-details-container {
+  margin-top: 0.6rem;
+  margin-right: 0;
+}
+
+#agreement-header > * {
+  margin-bottom: 0;
+}
+
+#agreement-header > .display-name {
+  font-size: 3rem;
+  font-style: italic;
+  font-weight: 400;
+  margin-left: 3rem;
+}
+
+#agreement-header > .display-remaining-sessions {
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+#agreement-header > .sessions-remaining {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+#agreement-header + div.h-divider {
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  width: 100%;
+  background-color: rgb(120, 120, 120);
+}
+
+img.agreement-image {
+  height: 100px;
+  width: 100px;
+}
+
+#bio-container {
+  margin: 2rem 0;
+}
+
+#bio-container > .user-bio-header {
+  font-style: italic;
+  font-weight: 500;
+}
+
+#bio-container > .user-bio-content {
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
+#demographics-container > h1 {
+  margin-bottom: 0;
+  font-style: italic;
+  font-size: 2.2rem;
+}
+
+#demographics-container > div.h-divider {
+  margin: 0;
+  width: 100%;
+  background-color: rgb(120, 120, 120);
+}
+
+#demographics-container > .information-grid {
+  margin: 0.5rem 0.2rem;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    'height weight'
+    'birthdate birthdate'
+}
+
+.information-grid > .birthdate {
+  grid-area: birthdate;
+}
+
+.information-grid > div {
+  margin: 0.5rem 0;
+}
+
+.information-grid > div > h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  font-style: italic;
+  margin: auto;
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+.information-grid > div > p {
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin: auto;
+  margin-left: 0;
+}
+
 /* MISCELLANEOUS HELPERS */
 .no-gutters {
   padding: 0 !important;

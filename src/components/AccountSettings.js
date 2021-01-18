@@ -128,7 +128,7 @@ const AccountSettings = ({ user, updateUser}) => {
     }
 
     return (
-        <Container id='edit-settings-column' className='flex-grow d-flex flex-column'>
+        <Container id='edit-settings-column' className='flex-grow-1 d-flex flex-column'>
             <SectionTitle title='Account Settings' />
             <EditableSetting 
                 contentType='text' 
