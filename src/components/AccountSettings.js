@@ -5,6 +5,7 @@ import { updateUser } from '../actions/user';
 import { connect } from 'react-redux';
 import ErrorModal from './ErrorModal';
 import SuccessModal from './SuccessModal';
+import { useHistory } from "react-router-dom";
 
 const AccountSettings = ({ user, updateUser}) => {
 
@@ -12,6 +13,7 @@ const AccountSettings = ({ user, updateUser}) => {
     const [ canDeleteAccount, setCanDeleteAccount ] = useState(false)
     const [ error, setError ] = useState(null)
     const [ successMessage, setSuccessMessage ] = useState(null)
+    const history = useHistory()
 
     const requestSettingChange = (title, content) => {
         // Sends patch request to server!
@@ -111,12 +113,17 @@ const AccountSettings = ({ user, updateUser}) => {
     }
 
     const handlePasswordEventResponse = ({json, eventType}) => {
-        if (json.errors) return setError( 'INVALID PASSWORD' )
+        if (json.errors) return setError( 'Invalid password!' )
 
         if (eventType === 'CHANGE_PASSWORD') {
+            setPasswordEditable(false)
             setSuccessMessage('Your password was changed successfully.')
         } else if (eventType === 'DELETE_ACCOUNT') {
-            // 
+            setSuccessMessage('Your account was successfully deleted.  Redirecting to login.')
+            setTimeout( () => {
+                localStorage.removeItem('token')
+                history.push('/')
+            }, 3000)
         }
     }
 
@@ -312,8 +319,8 @@ const EditPassword = ({ passwordEditable, canDeleteAccount, passwordSubmitEvent,
         let eventType
         if ( passwordEditable ) eventType = 'CHANGE_PASSWORD'
         else if ( canDeleteAccount ) eventType = 'DELETE_ACCOUNT'
-        else return
-        passwordSubmitEvent({ eventType, password })
+
+        return passwordSubmitEvent({ eventType, password })
     }
 
     const conditionallyRenderComponent = () => {
