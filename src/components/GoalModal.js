@@ -35,7 +35,7 @@ const GoalModal = ({ show, setShow, goals, id, setId, userIsTrainer }) => {
     return (
         <Modal show={show} onHide={handleOnHide} aria-labelledby="goal-title">
             <Modal.Header className='goal-header' closeButton>
-                <Modal.Title id='goal-title'>Goal</Modal.Title>
+                <Modal.Title id='goal-title'>{ goal ? goal.name : null }</Modal.Title>
             </Modal.Header>
             <Modal.Body className='goal-body'>
                 { goal ? renderGoalBody() : null }

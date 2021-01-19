@@ -219,7 +219,7 @@ const GoalsList = ({ goals, userIsTrainer, setShowGoal, setGoalId }) => {
             return <li
                     key={ goal.id }
                     id={ goal.id }
-                    onClick={ handleOnClick }>{ goal.description }</li>
+                    onClick={ handleOnClick }>{ goal.name }</li>
         })
     }
 

@@ -535,6 +535,16 @@ img.agreement-image {
   font-size: 2rem;
 }
 
+.goal-body > .description-container > h3 {
+  margin-top: 0;
+  margin-bottom: auto;
+  font-size: 1.2rem;
+}
+
+.goal-body > .description-container > p {
+  margin-top: 0;
+}
+
 /* MISCELLANEOUS HELPERS */
 .no-gutters {
   padding: 0 !important;
