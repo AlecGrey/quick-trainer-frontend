@@ -390,7 +390,36 @@ img.agreement-image {
   flex-basis: 40%;
 }
 
+/* TRAINING SESSION MODAL */
+.training-session-header.modal-header {
+  padding-bottom: 0.5rem;
+}
 
+.training-session-header > * {
+  margin: 0;
+  margin-top: auto;
+}
+
+.training-session-header > .modal-title {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 2rem;
+}
+
+.training-session-header > h3 {
+  font-weight: 350;
+  font-size: 1.5rem;
+}
+
+.training-session-header > p {
+  margin-right: 0.4rem;
+  margin-left: auto;
+  font-style: italic;
+}
+
+.training-session-header > button {
+  margin-left: 2rem !important;
+}
 
 /* MISCELLANEOUS HELPERS */
 .no-gutters {

@@ -29,6 +29,7 @@ const TrainingSessionModal = ({ show, id, setShow, setId }) => {
         }
     }
 
+    // EVENT HANDLERS
     const handleFetchData = json => {
         setTrainingSession(json)
     }
@@ -38,21 +39,39 @@ const TrainingSessionModal = ({ show, id, setShow, setId }) => {
         setId(null)
     }
 
+    const formattedDate = () => {
+        const sessionDate = trainingSession.created_at.slice(0,10).split('-')
+        return `${ sessionDate[1] } / ${ sessionDate[2] } / ${ sessionDate[0] }`
+    }
+
+    // SUB-COMPONENTS TO RENDER WITHIN JSX RETURN
+    const renderTrainingSessionHeader = () => {
+        return (
+            <>
+                <Modal.Title id="training-session-title">{ trainingSession ? trainingSession.name : 'Loading...' }</Modal.Title>
+                <p>date:</p>
+                <h3>{ formattedDate() }</h3>
+            </>
+        )
+    }
+
+    const renderTrainingSessionBody = () => {
+        return (
+            <>
+                YEET
+            </>
+        )
+    }
+
     return (
-        <Modal
-        size="lg"
-        show={show}
-        onHide={handleOnHide}
-        aria-labelledby="training-session-title"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="training-session-title">{ trainingSession ? trainingSession.name : 'Loading...' }</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            <div>
+        <Modal size="lg" show={show} onHide={handleOnHide} aria-labelledby="training-session-title">
+            <Modal.Header className='training-session-header' closeButton>
+                { trainingSession ? renderTrainingSessionHeader() : null }
                 
-            </div>
-        </Modal.Body>
+            </Modal.Header>
+            <Modal.Body>
+                { trainingSession ? renderTrainingSessionBody() : null }
+            </Modal.Body>
       </Modal>
     );
 }

@@ -10,13 +10,16 @@ import { connect } from 'react-redux';
 import { loginUser } from './actions/user';
 import { addAgreements } from './actions/agreements';
 // REACT ROUTER
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, useLocation } from 'react-router-dom';
 
 function App({ user, loginUser, addAgreements }) {
+
+  const location = useLocation
 
   useEffect(() => {
     // on page load, compare token to store, fetch the user information if necessary
     if ( localStorage.getItem('token') && user && !user.name) fetchUserToStore()
+    
   },[])
 
   const fetchUserToStore = () => {
@@ -70,6 +73,10 @@ function App({ user, loginUser, addAgreements }) {
     }
   }
 
+  const loggedInRedirect = () => {
+    if ( location.pathname === '/' ) return( <Redirect to='/home' /> )
+  }
+
   return (
     <Router>
       <div className="App d-flex flex-column align-items-around">
@@ -77,7 +84,7 @@ function App({ user, loginUser, addAgreements }) {
         <Route exact path='/home' component={ HomePage } />
         <Route exact path='/manage-account' component={ ManageAccountPage } />
         <Route exact path='/training-agreements' component={ TrainingAgreementsPage } />
-        { localStorage.getItem('token') ? null : <Redirect to='/' /> }
+        { localStorage.getItem('token') ? loggedInRedirect() : <Redirect to='/' /> }
       </div>
     </Router>
   );

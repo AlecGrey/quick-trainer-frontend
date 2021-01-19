@@ -34,13 +34,13 @@ const LoginPage = ({ loginUser, addAgreements }) => {
 
     // FETCH REQUEST TO LOGIN USER
     const fetchUser = () => {
+        console.log('initiating login fetch')
         const url = 'http://localhost:5000/login'
         const params = loginParams()
         fetch(url, params)
           .then(resp => resp.json())
           .then(json => {
             // if we receive errors back instead of a user, render an error message, otherwise update the store
-            console.log(json)
             !!json.error ? setError(json.error) : sendUserToStore(json)
             // return status of login
             return !json.error
