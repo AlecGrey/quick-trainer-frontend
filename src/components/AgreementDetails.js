@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'react-bootstrap/Image'
 import TrainingSessionModal from './TrainingSessionModal';
+import GoalModal from './GoalModal';
 
 const AgreementDetails = ({ userIsTrainer, agreement }) => {
 
@@ -60,6 +61,14 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
                     setShow={ setShowTrainingSession }
                     id={ trainingSessionId }
                     setId={ setTrainingSessionId }
+                    userIsTrainer={ userIsTrainer }
+                />
+                <GoalModal 
+                    show={ showGoal }
+                    setShow={ setShowGoal }
+                    goals={ agreement.goals }
+                    id={ goalId }
+                    setId={ setGoalId }
                     userIsTrainer={ userIsTrainer }
                 />          
             </>
