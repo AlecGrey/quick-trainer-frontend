@@ -23,7 +23,9 @@ const AgreementsList = ({ userIsTrainer, agreements, activeAgreement, setActiveA
 
     return (
         <div id='agreements-list-container' className='d-flex flex-column align-items-start'>
-            <h1 id='agreements-list-title' className='display-4'>{ userIsTrainer ? 'Clients' : 'Coaches' }</h1>
+            <h1 id='agreements-list-title' className='display-4'>
+                { userIsTrainer === null ? 'Loading...' : userIsTrainer ? 'Clients' : 'Coaches' }
+            </h1>
             <div className='h-divider' />
             <ul id='agreements-list'>
                 { renderClientLinks() }
