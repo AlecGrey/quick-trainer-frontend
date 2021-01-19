@@ -130,7 +130,7 @@ div.user-preview > * {
   font-weight: 400;
 }
 
-.editable-setting > p.edit-field {
+.editable-setting > p.edit-field, .create-new-item {
   color: rgb(28, 0, 184) !important;
   margin-left: auto;
   margin-right: 1%;
@@ -211,8 +211,8 @@ p.edit-field:hover {
 
 #agreements-list-container {
   margin: 3rem 5rem 0 0;
-    flex-shrink: 0;
-    flex-basis: 15rem;
+  flex-shrink: 0;
+  flex-basis: 15rem;
 }
 
 #agreements-list-title {
@@ -305,30 +305,30 @@ img.agreement-image {
   margin-bottom: 0;
 }
 
-#demographics-container > h1 {
+#demographics-container > h1, #credentials-container > h1, #training-sessions-list-container > div > h1, #goals-list-container > div > h1 {
   margin-bottom: 0;
   font-style: italic;
   font-size: 2.2rem;
 }
 
-#demographics-container > div.h-divider {
+#demographics-container > div.h-divider, #credentials-container > div.h-divider, #training-sessions-list-container > div.h-divider, #goals-list-container > div.h-divider {
   margin: 0;
   width: 100%;
   background-color: rgb(120, 120, 120);
 }
 
-#demographics-container > .information-grid {
+.information-grid {
   margin: 0.5rem 0.2rem;
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: auto;
   grid-template-areas: 
-    'height weight'
-    'birthdate birthdate'
+    'first second'
+    'third third'
 }
 
 .information-grid > .birthdate {
-  grid-area: birthdate;
+  grid-area: third;
 }
 
 .information-grid > div {
@@ -350,6 +350,47 @@ img.agreement-image {
   margin: auto;
   margin-left: 0;
 }
+
+#training-sessions-list-container {
+  margin: 2rem 0;
+  margin-right: 1rem;
+}
+
+#training-sessions-list, #goals-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+}
+
+#training-sessions-list > li, #goals-list > li {
+  font-size: 1.2rem;
+  font-weight: 200;
+  color: rgb(30, 30, 30);
+}
+
+#training-sessions-list > li:hover, #goals-list > li:hover {
+  font-weight: 250;
+  cursor: pointer;
+}
+
+.create-new-item {
+  margin-bottom: 0;
+  margin-top: auto;
+}
+
+.create-new-item:hover {
+  cursor: pointer;
+  font-weight: 450;
+}
+
+#goals-list-container {
+  margin: 2rem 0;
+  flex-shrink: 0;
+  flex-basis: 40%;
+}
+
+
 
 /* MISCELLANEOUS HELPERS */
 .no-gutters {

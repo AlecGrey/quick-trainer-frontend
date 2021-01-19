@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import AgreementsList from '../components/AgreementsList';
 import AgreementDetails from '../components/AgreementDetails';
@@ -8,7 +8,7 @@ const TrainingAgreementsPage = ({ user, agreements }) => {
     const [ activeAgreement, setActiveAgreement ] = useState(null)
 
     const currentAgreement = () => agreements.find(agreement => agreement.id === activeAgreement)
-
+    
     return (
         <div id='agreements-roster-page' className='d-flex justify-content-stretch'>
             <AgreementsList 
