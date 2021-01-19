@@ -60,6 +60,7 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
                     setShow={ setShowTrainingSession }
                     id={ trainingSessionId }
                     setId={ setTrainingSessionId }
+                    userIsTrainer={ userIsTrainer }
                 />          
             </>
         )

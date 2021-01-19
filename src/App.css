@@ -324,7 +324,7 @@ img.agreement-image {
   grid-template-rows: auto;
   grid-template-areas: 
     'first second'
-    'third third'
+    'third third';
 }
 
 .information-grid > .birthdate {
@@ -419,6 +419,104 @@ img.agreement-image {
 
 .training-session-header > button {
   margin-left: 2rem !important;
+}
+
+.training-session-body.modal-body {
+  padding: 0 2rem;
+}
+
+.training-session-body > div {
+  margin: 1rem auto;
+}
+
+.status-container > * {
+  margin: 0;
+  margin-top: auto;
+}
+
+.status-container > h3.status {
+  margin-left: 0;
+}
+
+.status-container > p.complete-status {
+  margin-left: 0.4rem;
+}
+
+.status-container > h3.rating {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.status-container > p.rating-value {
+  margin-right: 0;
+  margin-left: 0.4rem;
+}
+
+.description-container > * {
+  margin: 0;
+}
+
+.description-container > h3 {
+  margin-top: 0;
+  margin-bottom: auto;
+}
+
+.description-container > p {
+  flex: 1;
+  margin-top: 0.5rem;
+  margin-left: 0.4rem;
+}
+
+.training-session-body > .h-divider {
+  width: 100%;
+}
+
+.workout-header {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 450;
+  margin-bottom: 0;
+}
+
+.workout-table > .workout-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 20% 25% 15% 40%;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'exercise schema recovery description';
+}
+
+.workout-row > .exercise {
+  grid-area: exercise
+}
+
+.workout-row > .schema {
+  grid-area: schema
+}
+
+.workout-row > .recovery {
+  grid-area: recovery
+}
+
+.workout-row > .description {
+  grid-area: description
+}
+
+.workout-row > p {
+  text-align: center;
+  margin: 0.2rem;
+}
+
+.workout-row > .heading {
+  font-weight: 400;
+  font-size: 1.5rem;
+  text-decoration: underline;
+}
+
+.workout-table > .h-divider {
+  margin: 0;
+  width: 100%;
 }
 
 /* MISCELLANEOUS HELPERS */

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button';
 
-const TrainingSessionModal = ({ show, id, setShow, setId }) => {
+const TrainingSessionModal = ({ show, id, setShow, setId, userIsTrainer }) => {
 
     const [ trainingSession, setTrainingSession ] = useState(null)
 
@@ -58,9 +59,47 @@ const TrainingSessionModal = ({ show, id, setShow, setId }) => {
     const renderTrainingSessionBody = () => {
         return (
             <>
-                YEET
+                <div className='status-container d-flex'>
+                    <h3 className='status'>Status:</h3>
+                    <p className='complete-status'>{ trainingSession.is_complete ? 'Complete' : 'Not Complete' }</p>
+                    <h3 className='rating'>Rating:</h3>
+                    <p className='rating-value'>{ !!trainingSession.is_complete ? trainingSession.rating : 'n/a' }</p>
+                </div>
+                <div className='description-container d-flex'>
+                    <h3 className='description'>Description: </h3>
+                    <p className='description-value'>{ trainingSession.description }</p>
+                </div>
+                <div className='h-divider' />
+                <h1 className='workout-header' >Workout</h1>
+                <div className='workout-table'>
+                    <div className='workout-row'>
+                        <p className='exercise heading'>Exercise</p>
+                        <p className='schema heading'>Schema</p>
+                        <p className='recovery heading'>Recovery</p>
+                        <p className='description heading'>Description</p>
+                    </div>
+                    { renderAllWorkoutItems() }
+                </div>
+                { userIsTrainer ? null: <Button>Complete Workout</Button> }
             </>
         )
+    }
+
+    const renderAllWorkoutItems= () => {
+        return trainingSession.workout_items.map( workoutItem => {
+            return <div key={ workoutItem.id } className='workout-row'>
+                <p className='exercise'>{ workoutItem.exercise }</p>
+                <p className='schema'>{ formatSchema(workoutItem) }</p>
+                <p className='recovery'>{ workoutItem.rest_interval } seconds</p>
+                <p className='description'>{ workoutItem.description }</p>
+            </div>
+        })
+    }
+
+    const formatSchema = workoutItem => {
+        return !!workoutItem.repetitions ? 
+            `${ workoutItem.sets } x ${ workoutItem.repetitions } repetitions` :
+            `${ workoutItem.sets } x ${ workoutItem.duration } seconds`
     }
 
     return (
@@ -69,7 +108,7 @@ const TrainingSessionModal = ({ show, id, setShow, setId }) => {
                 { trainingSession ? renderTrainingSessionHeader() : null }
                 
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body className='training-session-body'>
                 { trainingSession ? renderTrainingSessionBody() : null }
             </Modal.Body>
       </Modal>
