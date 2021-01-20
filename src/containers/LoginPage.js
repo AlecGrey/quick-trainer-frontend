@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import MainLogo from '../components/MainLogo';
 import LoginForm from '../components/LoginForm';
@@ -6,7 +6,7 @@ import ErrorModal from '../components/ErrorModal';
 import { loginUser } from '../actions/user';
 import { addAgreements } from '../actions/agreements';
 import { connect } from 'react-redux';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const LoginPage = ({ loginUser, addAgreements }) => {
 
@@ -15,8 +15,15 @@ const LoginPage = ({ loginUser, addAgreements }) => {
     const [ password, setPassword ] = useState('')
     const [ error, setError ] = useState(null)
 
-    // USE HISTORY HOOK
+    
+
+    // USE LOCATION AND HISTORY HOOK
     const history = useHistory()
+    const location = useLocation()
+    
+    useEffect(()=>{
+        if (!!localStorage.token) history.push('/home')
+    },[])
 
     // LOGIN EVENT LISTENERS
     const handleNameChange = event => {
