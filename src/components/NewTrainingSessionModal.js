@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
-const NewTrainingSessionModal = ({ show, setShow }) => {
+const NewTrainingSessionModal = ({ show, setShow, coachClientId }) => {
 
     const [ name, setName ] = useState('')
     const [ description, setDescription ] = useState('')
@@ -65,7 +65,7 @@ const NewTrainingSessionModal = ({ show, setShow }) => {
               'Content-Type': 'application/json',
               'Authorization' : `Bearer ${ localStorage.getItem('token') }`
             },
-            body: JSON.stringify({ name, description, workoutItems })
+            body: JSON.stringify({ name, description, workoutItems, coachClientId })
         }
     }
 
@@ -100,7 +100,7 @@ const NewTrainingSessionModal = ({ show, setShow }) => {
 
 const NewExerciseForm = ({ index, updateWorkoutItem }) => {
 
-    const [ name, setName ] = useState('')
+    const [ exercise, setExercise ] = useState('')
     const [ description, setDescription ] = useState('')
     const [ sets, setSets ] = useState('')
     const [ repetitions, setRepetititons ] = useState('')
@@ -112,12 +112,12 @@ const NewExerciseForm = ({ index, updateWorkoutItem }) => {
     useEffect(() => {
         const payload = {
             index,
-            newWorkoutItem: { name, description, sets, repetitions, duration, resistance, restInterval }
+            newWorkoutItem: { exercise, description, sets, repetitions, duration, resistance, restInterval }
         }
         updateWorkoutItem(payload)
-    }, [ name, description, sets, repetitions, duration, resistance, restInterval ])
+    }, [ exercise, description, sets, repetitions, duration, resistance, restInterval ])
         
-    const changeName = e => setName( e.target.value )
+    const changeExercise = e => setExercise( e.target.value )
     const changeDescription = e => setDescription( e.target.value )
     const changeSets = e => setSets( e.target.value )
     const changeResistance = e => setResistance( e.target.value )
@@ -145,7 +145,7 @@ const NewExerciseForm = ({ index, updateWorkoutItem }) => {
         <Form>
             <Form.Group as={Row}>
                 <Col>
-                    <Form.Control type='text' placeholder='Name' onChange={changeName} />
+                    <Form.Control type='text' placeholder='Exercise' onChange={changeExercise} />
                 </Col>
                 <Col>
                     <Form.Control type='text' placeholder='description' onChange={changeDescription} />
@@ -178,7 +178,7 @@ const NewExerciseForm = ({ index, updateWorkoutItem }) => {
 }
 
 const blankWorkoutItem = {
-    name: '',
+    exercise: '',
     description: '',
     sets: '',
     repetitions: '',

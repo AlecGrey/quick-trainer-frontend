@@ -78,6 +78,7 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
                 <NewTrainingSessionModal 
                     show={ showNewTrainingSession }
                     setShow={ setShowNewTrainingSession }
+                    coachClientId={ agreement.id }
                 />     
             </>
         )
