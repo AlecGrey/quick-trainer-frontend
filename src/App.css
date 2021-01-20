@@ -137,7 +137,7 @@ div.user-preview > * {
   font-size: 1rem;
 }
 
-p.edit-field:hover {
+p.edit-field:hover, .new-agreement-link {
   cursor: pointer;
 }
 
@@ -250,6 +250,17 @@ p.edit-field:hover {
 
 #agreements-list > li.selected:hover {
   font-weight: 450;
+}
+
+.create-new-item.new-agreement-link {
+  margin: 0 auto;
+  font-size: 1.2rem;
+  font-weight: 350;
+}
+
+.create-new-item.new-agreement-link.selected {
+  font-weight: 550;
+  font-style: italic;
 }
 
 #agreement-details-container {
@@ -566,6 +577,119 @@ img.agreement-image {
 .new-training-session-body > .submit-button {
   position: absolute;
   right: 1rem;
+}
+
+/* NEW TRAINING AGREEMENT */
+#new-agreement-container {
+  padding-top: 3.5rem;
+}
+
+#new-agreement-container > div {
+  margin-top: 1rem;
+  
+}
+
+#new-agreement-container > div > h3 {
+  margin-left: 2rem;
+  margin-right: auto;
+}
+
+#new-agreement-container > .new-agreement-header {
+  margin-top: 0;
+  width: auto;
+}
+
+.new-agreement-header > h1 {
+  margin: 0 auto;
+  font-weight: 400;
+  font-size: 3rem;
+  margin-left: 1rem;
+}
+
+.new-agreement-header > .h-divider {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.card-img-top {
+  object-fit: cover;
+  height: 200px;
+}
+
+.card > .card-body {
+  padding: 0.5rem;
+}
+
+.card-body > * {
+  margin: 0 auto;
+}
+
+.card-body > .card-title {
+  text-align: center;
+  /* font-style: italic; */
+  font-weight: 350;
+  margin-bottom: 0;
+}
+
+.card-body > .h-divider {
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 0.3rem;
+}
+
+.card-body > div.d-flex {
+  margin-top: 0.1rem;
+}
+
+.card-body > div.d-flex > * {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.card-body > div.d-flex > p {
+  margin-left: 0.3rem;
+}
+
+.card-container > .card-group-link {
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgb(189, 189, 189);
+  align-self: center;
+  cursor: default;
+}
+
+.card-container > .card-group-link.clickable {
+  color: rgb(95, 95, 95);
+}
+
+.card-container > .card-group-link.clickable:hover {
+  cursor: pointer;
+  color: rgb(40, 40, 40)
+}
+
+.card {
+  cursor: pointer;
+}
+
+.card-group > * {
+  margin-left: 0.4rem;
+  margin-right: 0.4rem;
+}
+
+.card-body > .selected-card {
+  font-weight: 600;
+  font-style: italic
+}
+
+.card.selected-card {
+  outline: 0.25rem solid rgb(118, 115, 167);
+}
+
+#new-agreement-container > button {
+  margin-left: auto;
+  margin-right: 0;
+  max-width: 15rem;
 }
 
 /* MISCELLANEOUS HELPERS */

@@ -1,12 +1,22 @@
 import React from 'react';
 
-const AgreementsList = ({ userIsTrainer, agreements, activeAgreement, setActiveAgreement }) => {
+const AgreementsList = ({ userIsTrainer, agreements, activeAgreement, setActiveAgreement, showNew, setShowNew }) => {
 
     const handleOnClick = event => {
         const selectedID = event.target.id
         activeAgreement === selectedID ? 
             setActiveAgreement(null) : 
-            setActiveAgreement(event.target.id)
+            toggleAgreement(selectedID)
+    }
+
+    const toggleAgreement = id => {
+        setActiveAgreement(id)
+        setShowNew(false)
+    }
+    
+    const handleNewAgreement = event => {
+        setShowNew(!showNew)
+        setActiveAgreement(null)
     }
 
     const renderClientLinks = () => {
@@ -21,6 +31,11 @@ const AgreementsList = ({ userIsTrainer, agreements, activeAgreement, setActiveA
         })
     }
 
+    const newAgreementLinkClassName = () => {
+        if ( showNew ) return 'create-new-item new-agreement-link selected'
+        else return 'create-new-item new-agreement-link'
+    }
+
     return (
         <div id='agreements-list-container' className='d-flex flex-column align-items-start'>
             <h1 id='agreements-list-title' className='display-4'>
@@ -30,7 +45,12 @@ const AgreementsList = ({ userIsTrainer, agreements, activeAgreement, setActiveA
             <ul id='agreements-list'>
                 { renderClientLinks() }
             </ul>
-
+            { 
+            userIsTrainer ? null : 
+            <h3 onClick={ handleNewAgreement } className={ newAgreementLinkClassName() }>
+                New Training Agreement
+            </h3>
+            }
         </div>
     );
 }

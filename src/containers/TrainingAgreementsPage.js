@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import AgreementsList from '../components/AgreementsList';
 import AgreementDetails from '../components/AgreementDetails';
+import NewTrainingAgreement from '../components/NewTrainingAgreement';
 
 const TrainingAgreementsPage = ({ user, agreements }) => {
 
     const [ activeAgreement, setActiveAgreement ] = useState(null)
+    const [ showNewTrainingAgreement, setShowNewTrainingAgreement ] = useState(false)
 
     const currentAgreement = () => agreements.find(agreement => agreement.id === activeAgreement)
     
@@ -16,11 +18,11 @@ const TrainingAgreementsPage = ({ user, agreements }) => {
                 agreements={ agreements }
                 activeAgreement={ activeAgreement }
                 setActiveAgreement={ setActiveAgreement }
+                showNew={ showNewTrainingAgreement }
+                setShowNew={ setShowNewTrainingAgreement }
             />
-            <AgreementDetails
-                userIsTrainer={ user.isTrainer }
-                agreement={ currentAgreement() }
-            />
+            { showNewTrainingAgreement ? <NewTrainingAgreement /> :
+                <AgreementDetails userIsTrainer={ user.isTrainer } agreement={ currentAgreement() } />}
         </div>
     );
 }
