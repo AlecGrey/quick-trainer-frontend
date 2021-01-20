@@ -545,6 +545,29 @@ img.agreement-image {
   margin-top: 0;
 }
 
+/* NEW TRAINING SESSION FORM */
+.new-training-session-body > .h-divider {
+  width: 100%;
+}
+
+.h-divider {
+  background-color: rgb(150, 150, 150)
+}
+
+.form-group.row > button {
+  margin-left: 1rem;
+  margin-right: auto;
+}
+
+.new-training-session-body > button + button {
+  margin-left: 0.5rem;
+}
+
+.new-training-session-body > .submit-button {
+  position: absolute;
+  right: 1rem;
+}
+
 /* MISCELLANEOUS HELPERS */
 .no-gutters {
   padding: 0 !important;

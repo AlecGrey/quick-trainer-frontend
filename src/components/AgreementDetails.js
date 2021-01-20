@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'react-bootstrap/Image'
 import TrainingSessionModal from './TrainingSessionModal';
 import GoalModal from './GoalModal';
+import NewTrainingSessionModal from './NewTrainingSessionModal';
 
 const AgreementDetails = ({ userIsTrainer, agreement }) => {
 
     // HOOKS FOR VIEW STATUS OF PAGE MODALS
     const [ showTrainingSession, setShowTrainingSession ] = useState(false)
     const [ showGoal, setShowGoal ] = useState(false)
+    const [ showNewTrainingSession, setShowNewTrainingSession ] = useState(false)
+    const [ showNewGoal, setShowNewGoal ] = useState(false)
     // TRAINING SESSION ID REQUIRED FOR FETCH REQUEST
     const [ trainingSessionId, setTrainingSessionId ] = useState(null)
     const [ goalId, setGoalId ] = useState(null)
@@ -48,6 +51,7 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
                         userIsTrainer={ userIsTrainer }
                         setShowTrainingSession={ setShowTrainingSession }
                         setTrainingSessionId={ setTrainingSessionId }
+                        setShowNewTrainingSession={ setShowNewTrainingSession }
                     />
                     <GoalsList
                         goals={ agreement.goals }
@@ -70,7 +74,11 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
                     id={ goalId }
                     setId={ setGoalId }
                     userIsTrainer={ userIsTrainer }
-                />          
+                />
+                <NewTrainingSessionModal 
+                    show={ showNewTrainingSession }
+                    setShow={ setShowNewTrainingSession }
+                />     
             </>
         )
     }
@@ -177,11 +185,15 @@ const Credentials = ({ specialty, certification }) => {
     )
 }
 
-const TrainingSessionsList = ({ trainingSessions, userIsTrainer, setShowTrainingSession, setTrainingSessionId }) => {
+const TrainingSessionsList = ({ trainingSessions, userIsTrainer, setShowTrainingSession, setTrainingSessionId, setShowNewTrainingSession }) => {
 
     const handleOnClick = event => {
         setTrainingSessionId(event.target.id)
         setShowTrainingSession(true)
+    }
+
+    const handleNewClick = event => {
+        setShowNewTrainingSession(true)
     }
 
     const renderSessionListItems = () => {
@@ -197,7 +209,9 @@ const TrainingSessionsList = ({ trainingSessions, userIsTrainer, setShowTraining
         <div id='training-sessions-list-container' className='flex-grow-1'>
             <div className='d-flex'>
                 <h1>Training Sessions</h1>
-                { userIsTrainer ? <p className='create-new-item'>New</p> : null }
+                { userIsTrainer ? 
+                    <p className='create-new-item' onClick={ handleNewClick }>New</p> : null 
+                }
             </div>
             <div className='h-divider'/>
             <ul id='training-sessions-list'>

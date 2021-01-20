@@ -19,7 +19,6 @@ function App({ user, loginUser, addAgreements }) {
   useEffect(() => {
     // on page load, compare token to store, fetch the user information if necessary
     if ( localStorage.getItem('token') && user && !user.name) fetchUserToStore()
-    
   },[])
 
   const fetchUserToStore = () => {

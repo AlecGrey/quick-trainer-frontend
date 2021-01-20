@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button';
 
-const TrainingSessionModal = ({ show, id, setShow, setId, userIsTrainer }) => {
+const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer }) => {
 
     const [ trainingSession, setTrainingSession ] = useState(null)
 
@@ -106,7 +106,6 @@ const TrainingSessionModal = ({ show, id, setShow, setId, userIsTrainer }) => {
         <Modal size="lg" show={show} onHide={handleOnHide} aria-labelledby="training-session-title">
             <Modal.Header className='training-session-header' closeButton>
                 { trainingSession ? renderTrainingSessionHeader() : null }
-                
             </Modal.Header>
             <Modal.Body className='training-session-body'>
                 { trainingSession ? renderTrainingSessionBody() : null }
