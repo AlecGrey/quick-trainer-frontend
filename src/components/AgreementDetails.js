@@ -86,6 +86,7 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
                     show={ showNewGoal }
                     setShow={ setShowNewGoal }
                     coachClientId={ agreement.id }
+                    coachClient={ agreement }
                 />
             </>
         )

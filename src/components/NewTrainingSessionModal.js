@@ -4,8 +4,11 @@ import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+// ACTION AND DISPATCH
+import { connect } from 'react-redux';
+import { addTrainingSessionToAgreement } from '../actions/agreements';
 
-const NewTrainingSessionModal = ({ show, setShow, coachClientId }) => {
+const NewTrainingSessionModal = ({ show, setShow, coachClientId, addTrainingSessionToAgreement }) => {
 
     const [ name, setName ] = useState('')
     const [ description, setDescription ] = useState('')
@@ -39,7 +42,7 @@ const NewTrainingSessionModal = ({ show, setShow, coachClientId }) => {
         return workoutItems.map(( item, i ) => {
             return (
                 <>
-                    <div key={ i } className='h-divider' />
+                    <div key={ i * 1000 } className='h-divider' />
                     <NewExerciseForm 
                         key={ item }
                         updateWorkoutItem={ updateWorkoutItem }
@@ -55,7 +58,16 @@ const NewTrainingSessionModal = ({ show, setShow, coachClientId }) => {
         const params = submitWorkoutParams()
         fetch(url, params)
             .then(resp => resp.json())
-            .then(console.log)
+            .then(handleFetchResponse)
+    }
+
+    const handleFetchResponse = json => {
+        if (json.errors) return alert( json.errors )
+        console.log('FETCH RETURNED, SENDING DISPATCH...')
+        addTrainingSessionToAgreement({
+            agreementId: coachClientId,
+            trainingSession: json
+        })
     }
 
     const submitWorkoutParams = () => {
@@ -187,4 +199,10 @@ const blankWorkoutItem = {
     restInterval: ''
 }
 
-export default NewTrainingSessionModal;
+const mapDispatchToProps = dispatch => {
+    return {
+        addTrainingSessionToAgreement: (params) => dispatch(addTrainingSessionToAgreement(params))
+    }
+}
+
+export default connect( null, mapDispatchToProps )(NewTrainingSessionModal);

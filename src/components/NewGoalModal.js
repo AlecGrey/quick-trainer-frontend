@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+// BOOTSTRAP ITEMS
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+// ADD DISPATCH ACTION AND CONNECT
+import { addGoalToAgreement } from '../actions/agreements';
+import { connect } from 'react-redux';
 
-const NewGoalModal = ({ show, setShow, coachClientId }) => {
+const NewGoalModal = ({ show, setShow, coachClientId, addGoalToAgreement }) => {
 
     // STATE HOOKS
     const [ name, setName ] = useState('')
@@ -36,6 +40,34 @@ const NewGoalModal = ({ show, setShow, coachClientId }) => {
     }
     const submitNewGoal = e => {
         setNewErrors()
+        if ( !formContainsErrors() ) postNewGoalToServer()
+    }
+
+    const postNewGoalToServer = () => {
+        const url = 'http://localhost:5000/goals/create'
+        const params = postNewGoalParams()
+        fetch(url, params)
+            .then(resp => resp.json())
+            .then(handleFetchResponse)
+    }
+
+    const handleFetchResponse = json => {
+        if (json.errors) return alert( json.errors )
+        addGoalToAgreement({
+            agreementId: coachClientId,
+            goal: json
+        })
+    }
+
+    const postNewGoalParams = () => {
+        return {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization' : `Bearer ${ localStorage.getItem('token') }`
+            },
+            body: JSON.stringify({ coachClientId, name, date, description })
+          }
     }
 
     const isEmptyOrSpaces = str => {
@@ -77,6 +109,12 @@ const NewGoalModal = ({ show, setShow, coachClientId }) => {
             date: 'Date must be entered!'
             })
         }
+    }
+    
+    const formContainsErrors = () => {
+        return (
+            !!errors.name || !!errors.date || !!errors.description
+        )
     }
 
     return (
@@ -135,12 +173,11 @@ const NewGoalModal = ({ show, setShow, coachClientId }) => {
         </Modal>
     );
 }
-// ======================================
-// GOAL FIELDS:
-// name: string
-// description: string
-// complete_by_date: date ( YYYY-MM-DD )
-// coach_client_id: int
-// ======================================
 
-export default NewGoalModal;
+const mapDispatchToProps = dispatch => {
+    return {
+        addGoalToAgreement: (params) => dispatch(addGoalToAgreement(params))
+    }
+}
+
+export default connect( null, mapDispatchToProps )(NewGoalModal);
