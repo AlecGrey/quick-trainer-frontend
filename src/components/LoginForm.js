@@ -2,14 +2,17 @@ import React from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 
-const LoginForm = ({ changeName, changePassword, handleLoginSubmit }) => {
+const LoginForm = ({ changeName, changePassword, handleLoginSubmit, setShowSignup }) => {
+
+    const handleSignupClick = e => {
+        setShowSignup(true)
+    }
 
     return (
         <Form id='login-box' className='shadow d-flex flex-column align-items-stretch justify-content-center'>
             <Form.Group>
                 <Form.Control type="text" placeholder="Username" onChange={ changeName }/>
             </Form.Group>
-
             <Form.Group>
                 <Form.Control type="password" placeholder="Password" onChange={ changePassword }/>
             </Form.Group>
@@ -17,7 +20,7 @@ const LoginForm = ({ changeName, changePassword, handleLoginSubmit }) => {
                 Login
             </Button>
             <div className='h-divider'/>
-            <Button className='signup-button font-weight-bold' variant='secondary'>
+            <Button className='signup-button' variant='secondary' onClick={ handleSignupClick }>
                 Signup
             </Button>            
         </Form>

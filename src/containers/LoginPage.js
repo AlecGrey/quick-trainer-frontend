@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
+// BOOTSTRAP COMPONENTS
 import Container from 'react-bootstrap/Container';
+// DEPENDENT COMPONENTS
 import MainLogo from '../components/MainLogo';
 import LoginForm from '../components/LoginForm';
+import SignupForm from '../components/SignupForm';
 import ErrorModal from '../components/ErrorModal';
+// REDUX ACTIONS AND CONNECT
 import { loginUser } from '../actions/user';
 import { addAgreements } from '../actions/agreements';
 import { connect } from 'react-redux';
-import { useHistory, useLocation } from "react-router-dom";
+// REACT ROUTER
+import { useHistory } from "react-router-dom";
 
 const LoginPage = ({ loginUser, addAgreements }) => {
 
@@ -14,12 +19,10 @@ const LoginPage = ({ loginUser, addAgreements }) => {
     const [ name, setName ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ error, setError ] = useState(null)
+    const [ showSignup, setShowSignup ] = useState(false)  
 
-    
-
-    // USE LOCATION AND HISTORY HOOK
+    // USE HISTORY HOOK
     const history = useHistory()
-    const location = useLocation()
     
     useEffect(()=>{
         if (!!localStorage.token) history.push('/home')
@@ -46,13 +49,15 @@ const LoginPage = ({ loginUser, addAgreements }) => {
         const params = loginParams()
         fetch(url, params)
           .then(resp => resp.json())
-          .then(json => {
-            // if we receive errors back instead of a user, render an error message, otherwise update the store
-            !!json.error ? setError(json.error) : sendUserToStore(json)
-            // return status of login
-            return !json.error
-          })
+          .then(handleUserFetch)
           .then(navigateToHomePage)
+    }
+
+    const handleUserFetch = json => {
+        // if we receive errors back instead of a user, render an error message, otherwise update the store
+        !!json.error ? setError(json.error) : sendUserToStore(json)
+        // return status of login
+        return !json.error
     }
 
     // REROUTING AFTER LOGIN
@@ -107,11 +112,19 @@ const LoginPage = ({ loginUser, addAgreements }) => {
     return (
         <Container id='login-page' className='d-flex align-items-center flex-column'>
             <MainLogo />
-            <LoginForm 
-                changeName={ handleNameChange } 
-                changePassword={ handlePasswordChange }
-                handleLoginSubmit={ handleLoginSubmit }
-            />
+            {/* CONDITIONALLY RENDER ONE OF TWO FORMS */}
+            { showSignup ? 
+                <SignupForm
+                    setShowSignup={ setShowSignup }
+                    handleUserFetch={ handleUserFetch }
+                    navigateToHomePage={ navigateToHomePage }
+                /> : <LoginForm 
+                    changeName={ handleNameChange } 
+                    changePassword={ handlePasswordChange }
+                    handleLoginSubmit={ handleLoginSubmit }
+                    setShowSignup={ setShowSignup }
+                /> }
+            
             <ErrorModal errorMessage={ error } resetErrorMessage={ () => setError(null) } />
         </Container>
     );

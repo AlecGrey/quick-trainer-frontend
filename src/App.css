@@ -9,12 +9,23 @@ body {
 
 /* LOGIN PAGE */
 
-#login-box {
+#login-box, #signup-box {
   /* margin: 0 auto; */
-  width: 350px;
-  padding: 1%;
-  border-radius: 10px;
+  width: 22rem;
+  padding: 0.5rem;
+  border-radius: 0.6rem;
   background-color: white;
+}
+
+#signup-box > button:first-child {
+  width: auto;
+  margin: 0;
+  margin-right: auto;
+  margin-bottom: 0.5rem;
+}
+
+#signup-box > .form-group > .form-label {
+  margin-bottom: 0.2rem;
 }
 
 #main-logo {
@@ -38,6 +49,26 @@ body {
 .signup-button {
   margin: 0 auto;
   width: auto;
+}
+
+#signup-box > div > .signup-button {
+  margin-right: 0;
+}
+
+#signup-box > .account-type-buttons > .field-header {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+#signup-box > .account-type-buttons {
+  margin-bottom: 1rem;
+}
+
+#account-type-buttons > button {
+  width: 8rem;
+  margin: 0 auto;
 }
 
 .h-divider {
