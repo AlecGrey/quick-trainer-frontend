@@ -1,16 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer }) => {
 
+    // STATE HOOKS
     const [ trainingSession, setTrainingSession ] = useState(null)
-
+    const [ showCompleteWorkoutForm, setShowCompleteWorkoutForm ] = useState(false)
+    const [ completeWorkoutParams, setCompleteWorkoutParams ] = useState({})
+    // FETCH SESSION DATA ON RECEIVING ID
     useEffect(() => {
         if (id === null) return
         setTrainingSession(null)
         fetchTrainingSessionData()
     },[id])
+
+    // EVENT HANDLERS
+    const handleRatingChange = e => {
+        // FINISH
+    }
+
+    const handleFeedbackChange = e => {
+        // FINISH
+    }
 
     const fetchTrainingSessionData = () => {
         const url = `http://localhost:5000/training-sessions/${id}`
@@ -43,6 +56,10 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer }) => {
     const formattedDate = () => {
         const sessionDate = trainingSession.created_at.slice(0,10).split('-')
         return `${ sessionDate[1] } / ${ sessionDate[2] } / ${ sessionDate[0] }`
+    }
+
+    const launchCompleteWorkoutForm = e => {
+        setShowCompleteWorkoutForm(true)
     }
 
     // SUB-COMPONENTS TO RENDER WITHIN JSX RETURN
@@ -80,7 +97,7 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer }) => {
                     </div>
                     { renderAllWorkoutItems() }
                 </div>
-                { userIsTrainer ? null: <Button>Complete Workout</Button> }
+                { userIsTrainer || trainingSession.is_complete ? null: <Button onClick={ launchCompleteWorkoutForm }>Complete Workout</Button> }
             </>
         )
     }
@@ -95,11 +112,32 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer }) => {
             </div>
         })
     }
-
+    // HELPER METHOD FOR METHOD: renderAllWorkoutItems()
     const formatSchema = workoutItem => {
         return !!workoutItem.repetitions ? 
             `${ workoutItem.sets } x ${ workoutItem.repetitions } repetitions` :
             `${ workoutItem.sets } x ${ workoutItem.duration } seconds`
+    }
+
+    const renderCompleteWorkoutForm = () => {
+        return (
+            <Form>
+                <Form.Group>
+                    <Form.Label>Rate the workout: </Form.Label>
+                    <Form.Control as='select' onChange={ handleRatingChange }>
+                        <option value='1'>1</option>
+                        <option value='2'>2</option>
+                        <option value='3'>3</option>
+                        <option value='4'>4</option>
+                        <option value='5'>5</option>
+                    </Form.Control>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Leave Feedback</Form.Label>
+                    <Form.Control as='textarea' onChange={ handleFeedbackChange }></Form.Control>
+                </Form.Group>
+            </Form>
+        )
     }
 
     return (
@@ -109,6 +147,7 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer }) => {
             </Modal.Header>
             <Modal.Body className='training-session-body'>
                 { trainingSession ? renderTrainingSessionBody() : null }
+                { showCompleteWorkoutForm ? renderCompleteWorkoutForm() : null }
             </Modal.Body>
       </Modal>
     );
