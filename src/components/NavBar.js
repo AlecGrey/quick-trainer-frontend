@@ -29,6 +29,7 @@ const NavBar = ({ logoutUser }) => {
     const handleLogoutUser = e => {
         logoutUser()
         localStorage.clear()
+        history.push('/')
     }
 
     return (
