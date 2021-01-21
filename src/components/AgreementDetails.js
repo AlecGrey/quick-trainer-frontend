@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
+// REACT BOOTSTRAP COMPONENTS
 import Image from 'react-bootstrap/Image'
 import Button from 'react-bootstrap/Button';
+// DEPENDENT COMPONENTS
 import TrainingSessionModal from './TrainingSessionModal';
 import GoalModal from './GoalModal';
 import NewTrainingSessionModal from './NewTrainingSessionModal';
 import NewGoalModal from './NewGoalModal';
 import SuccessModal from './SuccessModal';
 import ErrorModal from './ErrorModal';
+// REACT REDUX AND ACTIONS
+import { updateAgreement } from '../actions/agreements';
+import { connect } from 'react-redux';
 
-const AgreementDetails = ({ userIsTrainer, agreement }) => {
+const AgreementDetails = ({ userIsTrainer, agreement, updateAgreement }) => {
 
     // HOOKS FOR VIEW STATUS OF PAGE MODALS
     const [ showTrainingSession, setShowTrainingSession ] = useState(false)
@@ -31,7 +36,17 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
         const params = updateAgreementParams(resolution)
         fetch(url, params)
             .then(resp => resp.json())
-            .then(console.log)
+            .then(handleFetchResponse)
+    }
+
+    const handleFetchResponse = json => {
+        if (!json.errors) {
+            updateAgreement(json)
+            const successStatus = json.accepted_agreement ? 'accepted' : 'declined'
+            setSuccessMessage(`You have successfully ${successStatus} the agreement.`)
+        } else {
+            setErrorMessage('We were unable to send your response, please try again.')
+        }
     }
 
     const updateAgreementParams = resolution => {
@@ -111,7 +126,7 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
                 />
                 <SuccessModal 
                     successMessage={ successMessage }
-                    resetSuccessMessage={ () => setSuccessMessage(null) } 
+                    resetSuccessMessage={ () => setSuccessMessage(null) }
                 />
                 <ErrorModal 
                     errorMessage={ errorMessage }
@@ -333,6 +348,10 @@ const GoalsList = ({ goals, userIsTrainer, setShowGoal, setGoalId, setShowNewGoa
     )
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        updateAgreement: (agreement) => dispatch(updateAgreement( agreement ))
+    }
+}
 
-
-export default AgreementDetails;
+export default connect( null, mapDispatchToProps )(AgreementDetails);

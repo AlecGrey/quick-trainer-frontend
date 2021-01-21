@@ -759,7 +759,7 @@ img.agreement-image {
 }
 
 .card.selected-card {
-  outline: 0.25rem solid rgb(118, 115, 167);
+  outline: 0.25rem solid rgb(63, 63, 70);
 }
 
 #new-agreement-container > button {

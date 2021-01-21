@@ -9,6 +9,11 @@ const AgreementsReducer = (state = [], action) => {
         // ADD NEW AGREEMENTS WHEN CREATED
         return [...state, action.agreement]
 
+      case 'UPDATE_AGREEMENT':
+        // RECEIVES UPDATED AGREEMENT TO REPLACE EXISTING AGREEMENT
+        const filteredAgreements = state.filter( a => a.id !== action.agreement.id )
+        return [ ...filteredAgreements, action.agreement ]
+
       case 'ADD_GOAL_TO_AGREEMENT':
         // WHEN A NEW GOAL IS CREATED, ADD TO STATE
         state.find(agreement => agreement.id === action.params.agreementId).goals.push( action.params.goal )

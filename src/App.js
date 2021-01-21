@@ -74,7 +74,6 @@ function App({ user, loginUser, logoutUser, addAgreements }) {
   }
 
   const loggedIn = () => {
-    // debugger
     return !!user.name
   }
 

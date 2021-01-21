@@ -12,6 +12,13 @@ export const addAgreement = (agreement = {}) => {
     }
 }
 
+export const updateAgreement = (agreement = {}) => {
+    return {
+        type: 'UPDATE_AGREEMENT',
+        agreement
+    }
+}
+
 export const addGoalToAgreement = ( params ) => {
     return {
         type: 'ADD_GOAL_TO_AGREEMENT',
