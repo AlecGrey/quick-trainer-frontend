@@ -5,6 +5,12 @@ export const loginUser = (user = {}) => {
     }
 }
 
+export const logoutUser = () => {
+    return {
+        type: 'LOGOUT_USER'
+    }
+}
+
 export const updateUser = (user = {}) => {
     return {
         type: 'UPDATE_USER',

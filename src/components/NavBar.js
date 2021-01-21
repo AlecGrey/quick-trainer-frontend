@@ -3,7 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 
-const NavBar = () => {
+const NavBar = ({ logoutUser }) => {
 
     const history = useHistory()
     const location = useLocation()
@@ -26,6 +26,11 @@ const NavBar = () => {
         }
     }
 
+    const handleLogoutUser = e => {
+        logoutUser()
+        localStorage.clear()
+    }
+
     return (
         <Navbar id='site-header' fixed='top' bg='dark' variant='dark'>
             <Navbar.Brand onClick={ navigateToHome }>Quick Trainer</Navbar.Brand>
@@ -42,6 +47,9 @@ const NavBar = () => {
                         active={ location.pathname === "/manage-account" }>
                             Account Management
                     </Nav.Link>
+                </Nav>
+                <Nav className='logout-nav'>
+                    <Nav.Link onClick={ handleLogoutUser }>Logout</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

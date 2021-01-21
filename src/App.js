@@ -9,12 +9,12 @@ import ManageAccountPage from './containers/ManageAccountPage';
 import TrainingAgreementsPage from './containers/TrainingAgreementsPage';
 // REDUX AND REDUX ACTIONS
 import { connect } from 'react-redux';
-import { loginUser } from './actions/user';
+import { loginUser, logoutUser } from './actions/user';
 import { addAgreements } from './actions/agreements';
 // REACT ROUTER
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
-function App({ user, loginUser, addAgreements }) {
+function App({ user, loginUser, logoutUser, addAgreements }) {
 
   useEffect(() => {
     // on page load, compare token to store, fetch the user information if necessary
@@ -73,9 +73,14 @@ function App({ user, loginUser, addAgreements }) {
     }
   }
 
+  const loggedIn = () => {
+    // debugger
+    return !!user.name
+  }
+
   return (
     <Router>
-      <NavBar />
+      { loggedIn() ? <NavBar logoutUser={ logoutUser }/> : null }
       <div className="App d-flex flex-column align-items-around">
         <Route exact path='/' component={ LoginPage } />
         <Route exact path='/home' component={ HomePage } />
@@ -96,6 +101,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
       loginUser: ( userObject ) => dispatch(loginUser(userObject)),
+      logoutUser: () => dispatch(logoutUser()),
       addAgreements: ( clients ) => dispatch(addAgreements(clients))
   }
 }

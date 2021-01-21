@@ -43,8 +43,16 @@ const AgreementsList = ({ userIsTrainer, agreements, activeAgreement, setActiveA
         else if ( status === 'PENDING' ) agreementArray = pendingAgreements
         // RENDER NOTHING IF OPTIONS ARE NOT HIT
         else return []
-
-        return agreementArray.map( (agreement, i) => {
+        // SET USERTYPE FOR SEARCHING DATASET FOR NAMES
+        const userType = userIsTrainer ? 'client' : 'trainer'
+        // SORT ARRAY ALPHABETICALLY GETTING TO THE USER NAME
+        const sortedArray = agreementArray.sort(( a, b ) => {
+            if ( a[userType].name > b[userType].name ) return 1
+            else if ( a[userType].name < b[userType].name ) return -1
+            else return 0
+        })
+        // MAP THE SORTED ARRAY INTO CLICKABLE LIST ITEMS
+        return sortedArray.map( (agreement, i) => {
             return <li 
                 key={ i } 
                 id={ agreement.id } 

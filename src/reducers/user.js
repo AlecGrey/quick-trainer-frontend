@@ -1,13 +1,19 @@
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
       case 'LOGIN_USER':
-        // ADD FUNCTIONALITY HERE
         return {...action.user}
+
       case 'UPDATE_USER':
         return {
           ...state,
           ...action.user
         }
+
+      case 'LOGOUT_USER':
+        return {
+          ...initialState
+        }
+
       default:
         return state
     }

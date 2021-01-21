@@ -19,6 +19,9 @@ const AgreementsReducer = (state = [], action) => {
         state.find(agreement => agreement.id === action.params.agreementId).training_sessions.push( action.params.trainingSession )
         return [...state]
 
+      case 'LOGOUT_USER':
+        return []
+
       default:
         return state
     }

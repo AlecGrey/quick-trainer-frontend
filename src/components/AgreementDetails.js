@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'react-bootstrap/Image'
+import Button from 'react-bootstrap/Button';
 import TrainingSessionModal from './TrainingSessionModal';
 import GoalModal from './GoalModal';
 import NewTrainingSessionModal from './NewTrainingSessionModal';
@@ -19,6 +20,32 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
     const [ goalId, setGoalId ] = useState(null)
     const [ successMessage, setSuccessMessage ] = useState(null)
     const [ errorMessage, setErrorMessage ] = useState(null)
+    // LOCAL EVENT HANDLERS
+    const resolveAgreement = status => {
+        const resolution = status === 'ACCEPT'
+        fetchUpdateAgreement(resolution)
+    }
+
+    const fetchUpdateAgreement = resolution => {
+        const url = `http://localhost:5000/coach-client/${agreement.id}/update`
+        const params = updateAgreementParams(resolution)
+        fetch(url, params)
+            .then(resp => resp.json())
+            .then(console.log)
+    }
+
+    const updateAgreementParams = resolution => {
+        return {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization' : `Bearer ${ localStorage.getItem('token') }`
+            },
+            body: JSON.stringify({
+                accepted_agreement: resolution
+            })
+          }
+    }
 
     const loadPageDetails = () => {
         return (
@@ -28,11 +55,13 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
                         name={ agreement.client.name }
                         imageUrl={ agreement.client.image_url }
                         sessionsRemaining={ agreement.sessions_remaining }
+                        pending={ !agreement.accepted_agreement }
                     /> : 
                     <AgreementHeader
                         name={ agreement.trainer.name }
                         imageUrl={ agreement.trainer.image_url }
                         sessionsRemaining={ agreement.sessions_remaining }
+                        pending={ !agreement.accepted_agreement }
                     /> }
                 { userIsTrainer ? 
                     <Bio bio={ agreement.client.bio } /> :
@@ -50,22 +79,7 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
                         certification={ agreement.trainer.credentials }
                     />
                 }
-                <div className='d-flex justify-content-stretch'>
-                    <TrainingSessionsList 
-                        trainingSessions={ agreement.training_sessions }
-                        userIsTrainer={ userIsTrainer }
-                        setShowTrainingSession={ setShowTrainingSession }
-                        setTrainingSessionId={ setTrainingSessionId }
-                        setShowNewTrainingSession={ setShowNewTrainingSession }
-                    />
-                    <GoalsList
-                        goals={ agreement.goals }
-                        userIsTrainer={ userIsTrainer }
-                        setShowGoal={ setShowGoal }
-                        setGoalId={ setGoalId }
-                        setShowNewGoal={ setShowNewGoal }
-                    />
-                </div>
+                { !!agreement.accepted_agreement ? showSessionsAndGoalsIfAccepted() : pendingAgreementButtons() }
                 <TrainingSessionModal 
                     show={ showTrainingSession }
                     setShow={ setShowTrainingSession }
@@ -107,6 +121,45 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
         )
     }
 
+    const showSessionsAndGoalsIfAccepted = () => {
+        return (
+            <div className='d-flex justify-content-stretch'>
+                <TrainingSessionsList 
+                    trainingSessions={ agreement.training_sessions }
+                    userIsTrainer={ userIsTrainer }
+                    setShowTrainingSession={ setShowTrainingSession }
+                    setTrainingSessionId={ setTrainingSessionId }
+                    setShowNewTrainingSession={ setShowNewTrainingSession }
+                />
+                <GoalsList
+                    goals={ agreement.goals }
+                    userIsTrainer={ userIsTrainer }
+                    setShowGoal={ setShowGoal }
+                    setGoalId={ setGoalId }
+                    setShowNewGoal={ setShowNewGoal }
+                />
+            </div>
+        )
+    }
+
+    const pendingAgreementButtons = () => {
+        if (!userIsTrainer) return null
+        return (
+            <div id='pending-agreement-buttons' className='d-flex'>
+                <Button 
+                    variant='success' 
+                    onClick={ () => resolveAgreement('ACCEPT') }>
+                        Accept Agreement
+                    </Button>
+                <Button 
+                    variant='danger'
+                    onClick={ () => resolveAgreement('DECLINE') }>
+                        Decline Agreement
+                    </Button>
+            </div>
+        )
+    }
+
     return (
         <div id='agreement-details-container' className='flex-grow-1 d-flex flex-column align-items-stretch'>
             {
@@ -116,13 +169,13 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
     );
 }
 
-const AgreementHeader = ({ name, imageUrl, sessionsRemaining }) => {
+const AgreementHeader = ({ name, imageUrl, sessionsRemaining, pending }) => {
     return (
         <>
             <div id='agreement-header' className='d-flex align-items-end'>
                 <Image className='agreement-image' src={ imageUrl }/>
                 <h1 className='display-name flex-grow-1'>{ name }</h1>
-                <p className='sessions-remaining'>Sessions Remaining:</p>
+                <p className='sessions-remaining'>{ pending ? 'Sessions Requested:' : 'Sessions Remaining:' }</p>
                 <h1 className='display-remaining-sessions'>{ sessionsRemaining }</h1>
             </div>
             <div className='h-divider'/>
@@ -175,11 +228,11 @@ const Demographics = ({ height, weight, birthdate }) => {
             <div className='information-grid'>
                 <div className='d-flex height'>
                     <h3>Height:</h3>
-                    <p>{ height }</p>
+                    <p>{ !!height ? height : 'Not reported' }</p>
                 </div>
                 <div className='d-flex weight'>
                     <h3>Weight:</h3>
-                    <p>{ weight }</p>
+                    <p>{ !!weight ? weight : 'Not reported' }</p>
                 </div>
                 <div className='d-flex birthdate'>
                     <h3>Date of Birth:</h3>
