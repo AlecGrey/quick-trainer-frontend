@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button';
 import { addGoalToAgreement } from '../actions/agreements';
 import { connect } from 'react-redux';
 
-const NewGoalModal = ({ show, setShow, coachClientId, addGoalToAgreement }) => {
+const NewGoalModal = ({ show, setShow, setSuccessMessage, setErrorMessage, coachClientId, addGoalToAgreement }) => {
 
     // STATE HOOKS
     const [ name, setName ] = useState('')
@@ -52,11 +52,17 @@ const NewGoalModal = ({ show, setShow, coachClientId, addGoalToAgreement }) => {
     }
 
     const handleFetchResponse = json => {
-        if (json.errors) return alert( json.errors )
-        addGoalToAgreement({
-            agreementId: coachClientId,
-            goal: json
-        })
+        if (!json.errors) {
+            addGoalToAgreement({
+                agreementId: coachClientId,
+                goal: json
+            })
+            setShow(false)
+            setSuccessMessage('Your goal was created successfully!')
+        } else {
+            setShow(false)
+            setErrorMessage('Sorry, we were unable to create your goal. Please try again.')
+        }
     }
 
     const postNewGoalParams = () => {

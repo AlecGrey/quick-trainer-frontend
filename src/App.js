@@ -1,5 +1,7 @@
 import './App.css';
 import React, { useEffect } from 'react';
+// IMPORT COMPONENT DEPENDENCIES
+import NavBar from './components/NavBar';
 // ADD PAGE CONTAINERS FOR UNIQUE ROUTES
 import LoginPage from './containers/LoginPage';
 import HomePage from './containers/HomePage';
@@ -73,6 +75,7 @@ function App({ user, loginUser, addAgreements }) {
 
   return (
     <Router>
+      <NavBar />
       <div className="App d-flex flex-column align-items-around">
         <Route exact path='/' component={ LoginPage } />
         <Route exact path='/home' component={ HomePage } />

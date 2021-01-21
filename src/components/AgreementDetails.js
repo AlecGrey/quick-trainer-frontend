@@ -4,6 +4,8 @@ import TrainingSessionModal from './TrainingSessionModal';
 import GoalModal from './GoalModal';
 import NewTrainingSessionModal from './NewTrainingSessionModal';
 import NewGoalModal from './NewGoalModal';
+import SuccessModal from './SuccessModal';
+import ErrorModal from './ErrorModal';
 
 const AgreementDetails = ({ userIsTrainer, agreement }) => {
 
@@ -15,6 +17,8 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
     // TRAINING SESSION ID REQUIRED FOR FETCH REQUEST
     const [ trainingSessionId, setTrainingSessionId ] = useState(null)
     const [ goalId, setGoalId ] = useState(null)
+    const [ successMessage, setSuccessMessage ] = useState(null)
+    const [ errorMessage, setErrorMessage ] = useState(null)
 
     const loadPageDetails = () => {
         return (
@@ -81,12 +85,23 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
                     show={ showNewTrainingSession }
                     setShow={ setShowNewTrainingSession }
                     coachClientId={ agreement.id }
+                    setSuccessMessage={ setSuccessMessage }
+                    setErrorMessage={ setErrorMessage }
                 />
                 <NewGoalModal 
                     show={ showNewGoal }
                     setShow={ setShowNewGoal }
                     coachClientId={ agreement.id }
-                    coachClient={ agreement }
+                    setSuccessMessage={ setSuccessMessage }
+                    setErrorMessage={ setErrorMessage }
+                />
+                <SuccessModal 
+                    successMessage={ successMessage }
+                    resetSuccessMessage={ () => setSuccessMessage(null) } 
+                />
+                <ErrorModal 
+                    errorMessage={ errorMessage }
+                    resetErrorMessage={ () => setErrorMessage(null) }
                 />
             </>
         )

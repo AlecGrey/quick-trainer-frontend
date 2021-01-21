@@ -3,8 +3,21 @@ body {
   background-color: rgb(245, 245, 245);
 }
 
+#root > .App {
+  margin-top: 5rem;
+}
+
 #root {
   margin: 0 auto;
+}
+
+/* SITE HEADER NAVBAR */
+#site-header > .navbar-brand:hover {
+  cursor: pointer;
+}
+
+#site-header > .navbar-brand:active {
+  cursor: pointer;
 }
 
 /* LOGIN PAGE */

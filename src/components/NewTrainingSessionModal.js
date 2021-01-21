@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 import { addTrainingSessionToAgreement } from '../actions/agreements';
 
-const NewTrainingSessionModal = ({ show, setShow, coachClientId, addTrainingSessionToAgreement }) => {
+const NewTrainingSessionModal = ({ show, setShow, setErrorMessage, setSuccessMessage, coachClientId, addTrainingSessionToAgreement }) => {
 
     const [ name, setName ] = useState('')
     const [ description, setDescription ] = useState('')
@@ -62,12 +62,19 @@ const NewTrainingSessionModal = ({ show, setShow, coachClientId, addTrainingSess
     }
 
     const handleFetchResponse = json => {
-        if (json.errors) return alert( json.errors )
-        console.log('FETCH RETURNED, SENDING DISPATCH...')
-        addTrainingSessionToAgreement({
-            agreementId: coachClientId,
-            trainingSession: json
-        })
+        if (!json.errors) {
+            addTrainingSessionToAgreement({
+                agreementId: coachClientId,
+                trainingSession: json
+            })
+            setShow(false)
+            setSuccessMessage('Your session was created successfully!')
+        } else {
+            setShow(false)
+            setErrorMessage('Sorry, we were unable to create your workout. Please try again.')
+        }
+        
+
     }
 
     const submitWorkoutParams = () => {
