@@ -5,7 +5,8 @@ import AgreementDetails from '../components/AgreementDetails';
 import NewTrainingAgreement from '../components/NewTrainingAgreement';
 
 const TrainingAgreementsPage = ({ user, agreements }) => {
-
+    
+    // STATE HOOKS FOR AGREEMENT DETAILS PAGE
     const [ activeAgreement, setActiveAgreement ] = useState(null)
     const [ showNewTrainingAgreement, setShowNewTrainingAgreement ] = useState(false)
 
@@ -21,7 +22,10 @@ const TrainingAgreementsPage = ({ user, agreements }) => {
                 showNew={ showNewTrainingAgreement }
                 setShowNew={ setShowNewTrainingAgreement }
             />
-            { showNewTrainingAgreement ? <NewTrainingAgreement /> :
+            { showNewTrainingAgreement ? 
+                <NewTrainingAgreement 
+                    closeTrainingAgreement={ () => setShowNewTrainingAgreement(false) }
+                /> :
                 <AgreementDetails userIsTrainer={ user.isTrainer } agreement={ currentAgreement() } />}
         </div>
     );

@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { addAgreement } from '../actions/agreements';
+import { connect } from 'react-redux';
 import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button'
+import SuccessModal from './SuccessModal';
 
-const NewTrainingAgreement = () => {
+const NewTrainingAgreement = ({ addAgreement, closeTrainingAgreement }) => {
 
+    // STATE HOOKS FOR POPUP MODALS
+    const [ successMessage, setSuccessMessage ] = useState(null)
+    // STATE HOOKS FOR FORM DATASET
     const [ coaches, setCoaches ] = useState([])
+    // STATE HOOKS FOR NEW AGREEMENT
     const [ selectedCoachId, setSelectedCoachId ] = useState(null)
     const [ sessionsCount, setSessionsCount ] = useState(null)
     const [ intent, setIntent ] = useState(null)
@@ -31,7 +38,49 @@ const NewTrainingAgreement = () => {
     }
 
     const submitNewAgreement = e => {
-        // 
+        // SUBMITS INFORMATION TO BACKEND
+        if ( invalidAgreement() ) return alert('Invalid Agreement!')
+        postNewAgreement()
+    }
+
+    const invalidAgreement = () => {
+        return (
+            selectedCoachId === null ||
+            sessionsCount === null || sessionsCount === 0 || sessionsCount === '' ||
+            intent === null || intent === ''
+        )
+    }
+
+    const postNewAgreement = () => {
+        const url = 'http://localhost:5000/coach-client/create'
+        const params = newAgreementParams()
+        fetch(url, params)
+            .then(resp => resp.json())
+            .then(addNewUserAgreementToStore)
+    }
+
+    const addNewUserAgreementToStore = json => {
+        if ( !!json.error ) return // ADD USE OF ERROR MODAL FOR ERROR HANDLING!
+        else {
+            addAgreement(json)
+            setSuccessMessage('Your agreement was successfully initiated! Awaiting response from your coach.')
+        }
+    }
+
+    const newAgreementParams = () => {
+        return {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization' : `Bearer ${ localStorage.getItem('token') }`
+            },
+            body: JSON.stringify({ selectedCoachId, sessionsCount, intent })
+          }
+    }
+
+    const handleHideSuccessMessage = () => {
+        setSuccessMessage(null)
+        closeTrainingAgreement()
     }
 
     return (
@@ -59,6 +108,10 @@ const NewTrainingAgreement = () => {
                 />
             </div>
             <Button onClick={ submitNewAgreement } variant='primary'>Submit Agreement</Button>
+            <SuccessModal 
+                successMessage={ successMessage }
+                resetSuccessMessage={ handleHideSuccessMessage }
+            />
         </div>
     );
 }
@@ -162,4 +215,10 @@ const AdditionalInformationForm = ({ setSessionsCount, setIntent }) => {
     )
 }
 
-export default NewTrainingAgreement;
+const mapDispatchToProps = dispatch => {
+    return {
+        addAgreement: (agreementObject) => dispatch(addAgreement(agreementObject))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(NewTrainingAgreement);

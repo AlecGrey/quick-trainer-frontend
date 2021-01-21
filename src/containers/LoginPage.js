@@ -99,7 +99,7 @@ const LoginPage = ({ loginUser, addAgreements }) => {
         return json.user.data.attributes.agreements.map( agreement => {
             return {
                 ...agreement.data.attributes,
-                id: agreement.data.id
+                id: parseInt(agreement.data.id)
             }
         })
     }

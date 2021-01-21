@@ -3,6 +3,7 @@ import Image from 'react-bootstrap/Image'
 import TrainingSessionModal from './TrainingSessionModal';
 import GoalModal from './GoalModal';
 import NewTrainingSessionModal from './NewTrainingSessionModal';
+import NewGoalModal from './NewGoalModal';
 
 const AgreementDetails = ({ userIsTrainer, agreement }) => {
 
@@ -10,7 +11,7 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
     const [ showTrainingSession, setShowTrainingSession ] = useState(false)
     const [ showGoal, setShowGoal ] = useState(false)
     const [ showNewTrainingSession, setShowNewTrainingSession ] = useState(false)
-    const [ showNewGoal, setShowNewGoal ] = useState(false)
+    const [ showNewGoal, setShowNewGoal ] = useState(false) 
     // TRAINING SESSION ID REQUIRED FOR FETCH REQUEST
     const [ trainingSessionId, setTrainingSessionId ] = useState(null)
     const [ goalId, setGoalId ] = useState(null)
@@ -58,6 +59,7 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
                         userIsTrainer={ userIsTrainer }
                         setShowGoal={ setShowGoal }
                         setGoalId={ setGoalId }
+                        setShowNewGoal={ setShowNewGoal }
                     />
                 </div>
                 <TrainingSessionModal 
@@ -79,7 +81,12 @@ const AgreementDetails = ({ userIsTrainer, agreement }) => {
                     show={ showNewTrainingSession }
                     setShow={ setShowNewTrainingSession }
                     coachClientId={ agreement.id }
-                />     
+                />
+                <NewGoalModal 
+                    show={ showNewGoal }
+                    setShow={ setShowNewGoal }
+                    coachClientId={ agreement.id }
+                />
             </>
         )
     }
@@ -193,11 +200,10 @@ const TrainingSessionsList = ({ trainingSessions, userIsTrainer, setShowTraining
         setShowTrainingSession(true)
     }
 
-    const handleNewClick = event => {
-        setShowNewTrainingSession(true)
-    }
+    const handleNewClick = e => setShowNewTrainingSession(true)
 
     const renderSessionListItems = () => {
+
         return trainingSessions.map( session => {
             return <li
                     key={ session.id }
@@ -216,18 +222,22 @@ const TrainingSessionsList = ({ trainingSessions, userIsTrainer, setShowTraining
             </div>
             <div className='h-divider'/>
             <ul id='training-sessions-list'>
-                { renderSessionListItems() }
+                { trainingSessions.length > 0 ? renderSessionListItems() :
+                    <h4>No training sessions to show</h4>
+                }
             </ul>
         </div>
     )
 }
 
-const GoalsList = ({ goals, userIsTrainer, setShowGoal, setGoalId }) => {
+const GoalsList = ({ goals, userIsTrainer, setShowGoal, setGoalId, setShowNewGoal }) => {
 
     const handleOnClick = event => {
         setGoalId(event.target.id)
         setShowGoal(true)
     }
+
+    const handleNewClick = e => setShowNewGoal(true)
 
     const renderGoalItems = () => {
         return goals.map( goal => {
@@ -242,11 +252,13 @@ const GoalsList = ({ goals, userIsTrainer, setShowGoal, setGoalId }) => {
         <div id='goals-list-container'>
             <div className='d-flex'>
                 <h1>Goals</h1>
-                { userIsTrainer ? <p className='create-new-item'>New</p> : null }
+                { userIsTrainer ? <p onClick={ handleNewClick } className='create-new-item'>New</p> : null }
             </div>
             <div className='h-divider'/>
             <ul id='goals-list'>
-                { renderGoalItems() }
+                { goals.length > 0 ? renderGoalItems() :
+                    <h4>No goals have been made</h4>
+                }
             </ul>
         </div>
     )

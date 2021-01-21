@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const AgreementsList = ({ userIsTrainer, agreements, activeAgreement, setActiveAgreement, showNew, setShowNew }) => {
 
+    const [ activeAgreements, setActiveAgreements ] = useState([])
+    const [ pendingAgreements, setPendingAgreements ] = useState([])
+
+    useEffect(() => {
+        setActiveAgreements( filterActiveAgreements() )
+        setPendingAgreements( filterPendingAgreements() )
+    }, [ agreements ])
+
+    const filterActiveAgreements = () => {
+        return agreements.filter( agreement => agreement.accepted_agreement )
+    }
+
+    const filterPendingAgreements = () => {
+        return agreements.filter( agreement => agreement.accepted_agreement === null )
+    }
+
     const handleOnClick = event => {
-        const selectedID = event.target.id
+        // debugger
+        const selectedID = parseInt(event.target.id)
         activeAgreement === selectedID ? 
             setActiveAgreement(null) : 
             toggleAgreement(selectedID)
@@ -19,10 +36,17 @@ const AgreementsList = ({ userIsTrainer, agreements, activeAgreement, setActiveA
         setActiveAgreement(null)
     }
 
-    const renderClientLinks = () => {
-        return agreements.map( agreement => {
+    const renderAgreementLinks = ( status ) => {
+        // SET WHETHER TO RENDER ALL PENDING OR ALL ACTIVE AGREEMENTS IN DATASET
+        let agreementArray
+        if ( status === 'ACTIVE' ) agreementArray = activeAgreements
+        else if ( status === 'PENDING' ) agreementArray = pendingAgreements
+        // RENDER NOTHING IF OPTIONS ARE NOT HIT
+        else return []
+
+        return agreementArray.map( (agreement, i) => {
             return <li 
-                key={ agreement.id } 
+                key={ i } 
                 id={ agreement.id } 
                 className={ agreement.id === activeAgreement ? 'selected' : null } 
                 onClick={ handleOnClick }>
@@ -36,21 +60,45 @@ const AgreementsList = ({ userIsTrainer, agreements, activeAgreement, setActiveA
         else return 'create-new-item new-agreement-link'
     }
 
+    const renderActiveAgreements = () => {
+        return (
+            <>
+                <h1 id='agreements-list-title' className='display-4'>
+                    { userIsTrainer === null ? 'Loading...' : userIsTrainer ? 'Clients' : 'Coaches' }
+                </h1>
+                <div className='h-divider' />
+                <ul id='agreements-list'>
+                    { renderAgreementLinks( 'ACTIVE' ) }
+                </ul>  
+            </>
+        )
+    }
+
+    const renderPendingAgreements = () => {
+        return (
+            <>
+                <h1 id='pending-agreements-list-title' className='display-4'>
+                    Pending Agreements
+                </h1>
+                <div className='h-divider' />
+                <ul id='agreements-list'>
+                    { renderAgreementLinks( 'PENDING' ) }
+                </ul>
+            </>
+        )
+    }
+
     return (
         <div id='agreements-list-container' className='d-flex flex-column align-items-start'>
-            <h1 id='agreements-list-title' className='display-4'>
-                { userIsTrainer === null ? 'Loading...' : userIsTrainer ? 'Clients' : 'Coaches' }
-            </h1>
-            <div className='h-divider' />
-            <ul id='agreements-list'>
-                { renderClientLinks() }
-            </ul>
-            { 
-            userIsTrainer ? null : 
+            {/* RENDER EACH LIST CONDITIONALLY */}
+            { activeAgreements.length > 0 ? renderActiveAgreements() : null }
+            { pendingAgreements.length > 0 ? renderPendingAgreements() : null }
+
+            {/* IF THE USER IS NOT A COACH, ALLOW TO ACCESS FORM TO CREATE NEW AGREEMENT */}
+            { userIsTrainer ? null : 
             <h3 onClick={ handleNewAgreement } className={ newAgreementLinkClassName() }>
                 New Training Agreement
-            </h3>
-            }
+            </h3>}
         </div>
     );
 }

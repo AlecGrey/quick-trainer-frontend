@@ -15,9 +15,9 @@ const NewTrainingSessionModal = ({ show, setShow, coachClientId }) => {
     const changeName = e => setName(e.target.value)
     const changeDescription = e => setDescription(e.target.value)
     // HIDE MODAL ON EXIT CLICK OR ESCAPE
-    const handleOnHide = event => setShow(false)
+    const handleOnHide = e => setShow(false)
     // ADDS WORKOUT ITEM FORM ON BUTTON CLICK
-    const addNewWorkoutItem = event => {
+    const addNewWorkoutItem = e => {
         setWorkoutItems([
             ...workoutItems, blankWorkoutItem
         ])
@@ -70,7 +70,7 @@ const NewTrainingSessionModal = ({ show, setShow, coachClientId }) => {
     }
 
     return (
-        <Modal size="lg" show={show} onHide={handleOnHide} aria-labelledby="training-session-title">
+        <Modal size="lg" show={show} onHide={handleOnHide} aria-labelledby="new-training-session-title">
             <Modal.Header className='new-training-session-header' closeButton>
             <Modal.Title id="new-training-session-title">New Training Session</Modal.Title>
             </Modal.Header>

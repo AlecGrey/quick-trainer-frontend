@@ -4,3 +4,10 @@ export const addAgreements = (agreements = []) => {
         agreements
     }
 }
+
+export const addAgreement = (agreement = {}) => {
+    return {
+        type: 'ADD_AGREEMENT',
+        agreement
+    }
+}

@@ -215,11 +215,18 @@ p.edit-field:hover, .new-agreement-link {
   flex-basis: 15rem;
 }
 
-#agreements-list-title {
-  margin: 0 0 0 1rem;
+#pending-agreements-list-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin: 0 auto;
+  margin-bottom: 0.2rem;
 }
 
-#agreements-list-title + div.h-divider {
+#agreements-list-title {
+  margin: 0 auto;
+}
+
+#agreements-list-title + div.h-divider, #pending-agreements-list-title + div.h-divider {
   margin-top: 0;
   background-color: rgb(120, 120, 120);
 }
@@ -229,12 +236,16 @@ p.edit-field:hover, .new-agreement-link {
   margin-top: 0;
   margin-left: 2rem;
   padding: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 #agreements-list > li {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 200;
   color: rgb(30, 30, 30);
+  text-overflow: ellipsis;
 }
 
 #agreements-list > li:hover {
@@ -299,6 +310,8 @@ p.edit-field:hover, .new-agreement-link {
 img.agreement-image {
   height: 100px;
   width: 100px;
+  object-fit: cover;
+  border-radius: 5px;
 }
 
 #bio-container {
@@ -372,6 +385,11 @@ img.agreement-image {
   padding: 0;
   margin-top: 0.5rem;
   margin-left: 1rem;
+}
+
+#training-sessions-list > h4, #goals-list > h4 {
+  font-size: 1.5rem;
+  font-weight: 250;
 }
 
 #training-sessions-list > li, #goals-list > li {
