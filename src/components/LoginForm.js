@@ -32,7 +32,7 @@ const LoginForm = ({ changeName, changePassword, handleLoginSubmit, setShowSignu
                     { errors.password }
                 </Form.Control.Feedback>
             </Form.Group>
-            <Button className='login-button font-weight-bold' variant='primary' type='submit' onClick={ handleLoginSubmit }>
+            <Button className='login-button font-weight-bold' variant='primary' onClick={ handleLoginSubmit }>
                 Login
             </Button>
             <div className='h-divider'/>

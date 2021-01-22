@@ -27,6 +27,10 @@ body {
 
 /* LOGIN PAGE */
 
+#login-page {
+  margin-top: -3rem;
+}
+
 #login-box, #signup-box {
   /* margin: 0 auto; */
   width: 22rem;

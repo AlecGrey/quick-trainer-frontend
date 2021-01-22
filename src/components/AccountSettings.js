@@ -21,7 +21,12 @@ const AccountSettings = ({ user, updateUser}) => {
         const params = updateUserParams({title, content})
         fetch( url, params )
             .then(resp => resp.json())
-            .then(sendUserUpdatesToStore)
+            .then(handleSettingChangeResponse)
+    }
+
+    const handleSettingChangeResponse = json => {
+        if (!json.errors) sendUserUpdatesToStore(json)
+        else setError( json.errors[0] )
     }
 
     const sendUserUpdatesToStore = json => {

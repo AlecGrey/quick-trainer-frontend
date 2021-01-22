@@ -99,7 +99,7 @@ const LoginPage = ({ loginUser, addAgreements }) => {
         }
     }
 
-    const sendUserToStore = (json) => {
+    const sendUserToStore = json => {
         // Handles all saving of user data in store & in local storage
         localStorage.setItem('token', json.token)
         const user = json.user.data.attributes
@@ -135,7 +135,7 @@ const LoginPage = ({ loginUser, addAgreements }) => {
             { showSignup ? 
                 <SignupForm
                     setShowSignup={ setShowSignup }
-                    handleUserFetch={ handleUserFetch }
+                    sendUserToStore={ sendUserToStore }
                     navigateToHomePage={ navigateToHomePage }
                 /> : <LoginForm 
                     changeName={ handleNameChange } 
