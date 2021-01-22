@@ -166,10 +166,10 @@ const NewGoalModal = ({ show, setShow, setSuccessMessage, setErrorMessage, coach
                             <Form.Control 
                                 as='textarea' 
                                 onChange={ changeGoalDescription }
-                                isInvalid={!!errors.description} 
+                                isInvalid={ !!errors.description } 
                             />
                             <Form.Control.Feedback type="invalid">
-                                {errors.description}
+                                { errors.description }
                             </Form.Control.Feedback>
                         </Col>
                     </Form.Group>

@@ -18,7 +18,7 @@ const LoginPage = ({ loginUser, addAgreements }) => {
     // STATE HOOKS
     const [ name, setName ] = useState('')
     const [ password, setPassword ] = useState('')
-    const [ error, setError ] = useState(null)
+    const [ errors, setErrors ] = useState({})
     const [ showSignup, setShowSignup ] = useState(false)  
 
     // USE HISTORY HOOK
@@ -31,10 +31,20 @@ const LoginPage = ({ loginUser, addAgreements }) => {
     // LOGIN EVENT LISTENERS
     const handleNameChange = event => {
         setName(event.target.value)
+        resetErrors('name')
     }
 
     const handlePasswordChange = event => {
         setPassword(event.target.value)
+        resetErrors('password')
+    }
+
+    // HELPER METHOD TO EVENT HANDLERS
+    const resetErrors = field => {
+        setErrors({
+            ...errors,
+            [field]: null
+        })
     }
 
     const handleLoginSubmit = event => {
@@ -55,9 +65,18 @@ const LoginPage = ({ loginUser, addAgreements }) => {
 
     const handleUserFetch = json => {
         // if we receive errors back instead of a user, render an error message, otherwise update the store
-        !!json.error ? setError(json.error) : sendUserToStore(json)
+        !!json.errors ? handleFetchErrors(json.errors) : sendUserToStore(json)
         // return status of login
-        return !json.error
+        return !json.errors
+    }
+
+    // HELPER METHOD TO handleUserFetch
+    const handleFetchErrors = jsonErrors => {
+        if (!!jsonErrors.name) {
+            setErrors({ ...errors, name: jsonErrors.name })
+        } else if (!!jsonErrors.password) {
+            setErrors({ ...errors, password: jsonErrors.password })
+        }
     }
 
     // REROUTING AFTER LOGIN
@@ -123,9 +142,9 @@ const LoginPage = ({ loginUser, addAgreements }) => {
                     changePassword={ handlePasswordChange }
                     handleLoginSubmit={ handleLoginSubmit }
                     setShowSignup={ setShowSignup }
+                    errors={ errors }
+                    setErrors={ setErrors }
                 /> }
-            
-            <ErrorModal errorMessage={ error } resetErrorMessage={ () => setError(null) } />
         </Container>
     );
 }
