@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
+// BOOTSTRAP COMPONENTS
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+// REDUX AND ACTION
+import { updateTrainingSessionInAgreement } from '../actions/agreements';
+import { connect } from 'react-redux';
 
-const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer }) => {
+const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer, updateTrainingSession, setSuccessMessage, setErrorMessage }) => {
 
     // STATE HOOKS
     const [ trainingSession, setTrainingSession ] = useState(null)
     const [ showCompleteWorkoutForm, setShowCompleteWorkoutForm ] = useState(false)
-    const [ completeWorkoutParams, setCompleteWorkoutParams ] = useState({})
+    const [ feedback, setFeedback ] = useState({})
+    const [ feedbackErrors, setFeedbackErrors ] = useState({})
     // FETCH SESSION DATA ON RECEIVING ID
     useEffect(() => {
         if (id === null) return
@@ -16,21 +21,97 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer }) => {
         fetchTrainingSessionData()
     },[id])
 
-    // EVENT HANDLERS
+// ================================
+//        EVENT HANDLERS
+// ================================
+
+    const handleOnHide = event => {
+        setShow(false)
+        setId(null)
+    }
+
     const handleRatingChange = e => {
-        // FINISH
+        resetError('rating')
+        setFeedback({
+            ...feedback,
+            rating: e.target.value
+        })
     }
 
     const handleFeedbackChange = e => {
-        // FINISH
+        resetError('feedback')
+        setFeedback({
+            ...feedback,
+            feedback: e.target.value
+        })
     }
+
+    const handleSubmitFeedback = e => {
+        // FINISH
+        checkForErrors()
+        if ( feedbackErrorsPresent() ) return
+        else ( fetchFeedbackToTrainingSession() )
+    }
+
+    const toggleCompleteWorkoutForm = e => {
+        setShowCompleteWorkoutForm(!showCompleteWorkoutForm)
+        setFeedback({})
+        setFeedbackErrors({})
+    }
+
+// ===================================
+//       ERROR HANDLING METHODS
+// ===================================
+
+    const checkForErrors = () => {
+        if (isEmptyOrSpaces( feedback.feedback )) {
+            setFeedbackErrors({
+                ...feedbackErrors,
+                feedback: 'must provide feedback of some kind'
+            })
+        }
+        if ( !feedback.rating ) {
+            setFeedbackErrors({
+                ...feedbackErrors,
+                rating: 'Select a value from 1-5'
+            })
+        }
+    }
+
+    const isEmptyOrSpaces = str => {
+        return !str || str.match(/^ *$/) !== null;
+    }
+
+    const resetError = field => {
+        setFeedbackErrors({
+            ...feedbackErrors,
+            [field]: null
+        })
+    }
+
+    const feedbackErrorsPresent = () => {
+        return feedbackErrors.rating || feedbackErrors.feedback
+    }
+
+// =================================
+//        FETCH REQUESTS
+// =================================
 
     const fetchTrainingSessionData = () => {
         const url = `http://localhost:5000/training-sessions/${id}`
         const params = fetchTrainingSessionParams()
         fetch(url, params)
             .then(resp => resp.json())
-            .then(handleFetchData)
+            .then(handleGetTrainingSessionFetch)
+    }
+
+    const handleGetTrainingSessionFetch = json => {
+        if (!!json.errors) {
+            setShow(false)
+            setErrorMessage('Unable to fetch training session data!')
+        } else {
+            setTrainingSession(json)
+        }
     }
 
     const fetchTrainingSessionParams = () => {
@@ -39,36 +120,62 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer }) => {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization' : `Bearer ${ localStorage.getItem('token') }`
-              }
+            }
         }
     }
 
-    // EVENT HANDLERS
-    const handleFetchData = json => {
-        setTrainingSession(json)
+    const fetchFeedbackToTrainingSession = () => {
+        const url = `http://localhost:5000/training-sessions/${id}`
+        const params = fetchFeedbackParams()
+        fetch(url, params)
+            .then(resp => resp.json())
+            .then(handlePatchTrainingSessionFetch)
     }
 
-    const handleOnHide = event => {
-        setShow(false)
-        setId(null)
+    const handlePatchTrainingSessionFetch = json => {
+        if (!!json.errors) {
+            setShow(false)
+            setShowCompleteWorkoutForm(false)
+            setErrorMessage('Unable to update training session!')
+        } else {
+            updateTrainingSession(json)
+            setTrainingSession(json)
+            setShow(false)
+            setShowCompleteWorkoutForm(false)
+            setSuccessMessage('Your feedback has been submitted!')
+        }
     }
+
+    const fetchFeedbackParams = () => {
+        return {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : `Bearer ${ localStorage.getItem('token') }`
+            },
+            body: JSON.stringify(feedback)
+        }
+    }
+
+// =======================================
+//          MISC HELPER METHODS
+// =======================================
 
     const formattedDate = () => {
         const sessionDate = trainingSession.created_at.slice(0,10).split('-')
         return `${ sessionDate[1] } / ${ sessionDate[2] } / ${ sessionDate[0] }`
     }
 
-    const launchCompleteWorkoutForm = e => {
-        setShowCompleteWorkoutForm(true)
-    }
+// ============================================
+//           INTERNAL SUBCOMPONENTS
+// ============================================
 
-    // SUB-COMPONENTS TO RENDER WITHIN JSX RETURN
     const renderTrainingSessionHeader = () => {
         return (
             <>
                 <Modal.Title id="training-session-title">{ trainingSession ? trainingSession.name : 'Loading...' }</Modal.Title>
                 <p>date:</p>
-                <h3>{ formattedDate() }</h3>
+                <h3>{ trainingSession ? formattedDate() : 'Loading...' }</h3>
             </>
         )
     }
@@ -86,8 +193,9 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer }) => {
                     <h3 className='description'>Description: </h3>
                     <p className='description-value'>{ trainingSession.description }</p>
                 </div>
-                <div className='h-divider' />
+                {/* <div className='h-divider' /> */}
                 <h1 className='workout-header' >Workout</h1>
+                <div className='h-divider' />
                 <div className='workout-table'>
                     <div className='workout-row'>
                         <p className='exercise heading'>Exercise</p>
@@ -97,7 +205,23 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer }) => {
                     </div>
                     { renderAllWorkoutItems() }
                 </div>
-                { userIsTrainer || trainingSession.is_complete ? null: <Button onClick={ launchCompleteWorkoutForm }>Complete Workout</Button> }
+                <div className='h-divider' />
+                <div className='feedback-buttons-container d-flex'>
+                    {/* CONDITIONAL BUTTON THAT SHOWS ONLY IF USER IS A CLIENT AND HAS NOT COMPLETED THEIR WORKOUT */}
+                    { userIsTrainer || trainingSession.is_complete ? null: 
+                    <Button 
+                        onClick={ toggleCompleteWorkoutForm }
+                        variant={ showCompleteWorkoutForm ? 'secondary' : 'primary' }>
+                            { showCompleteWorkoutForm ? 'Cancel' : 'Complete Workout' }
+                    </Button> }
+                    { showCompleteWorkoutForm ? 
+                        <Button 
+                            onClick={ handleSubmitFeedback }
+                            variant='primary'>
+                                Submit Feedback
+                        </Button> : null }
+                </div>
+                
             </>
         )
     }
@@ -124,26 +248,43 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer }) => {
             <Form>
                 <Form.Group>
                     <Form.Label>Rate the workout: </Form.Label>
-                    <Form.Control as='select' onChange={ handleRatingChange }>
+                    <Form.Control 
+                        as='select'
+                        onChange={ handleRatingChange }
+                        isInvalid={ !!feedbackErrors.rating }>
+                        <option value={ null }>select an option</option>
                         <option value='1'>1</option>
                         <option value='2'>2</option>
                         <option value='3'>3</option>
                         <option value='4'>4</option>
                         <option value='5'>5</option>
                     </Form.Control>
+                    <Form.Control.Feedback type="invalid">
+                        { feedbackErrors.rating }
+                    </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Leave Feedback</Form.Label>
-                    <Form.Control as='textarea' onChange={ handleFeedbackChange }></Form.Control>
+                    <Form.Control 
+                        as='textarea' 
+                        rows={3} 
+                        onChange={ handleFeedbackChange }
+                        isInvalid={ !!feedbackErrors.feedback } />
+                    <Form.Control.Feedback type='invalid'>
+                        { feedbackErrors.feedback }
+                    </Form.Control.Feedback>
                 </Form.Group>
             </Form>
         )
     }
+// ===========================================
+//          RETURN OF REACT COMPONENT
+// ===========================================
 
     return (
         <Modal size="lg" show={show} onHide={handleOnHide} aria-labelledby="training-session-title">
             <Modal.Header className='training-session-header' closeButton>
-                { trainingSession ? renderTrainingSessionHeader() : null }
+                { renderTrainingSessionHeader() }
             </Modal.Header>
             <Modal.Body className='training-session-body'>
                 { trainingSession ? renderTrainingSessionBody() : null }
@@ -153,4 +294,10 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer }) => {
     );
 }
 
-export default TrainingSessionModal;
+const addDispatchToProps = dispatch => {
+    return {
+        updateTrainingSession: (params) => dispatch(updateTrainingSessionInAgreement( params ))
+    }
+}
+
+export default connect(null, addDispatchToProps)(TrainingSessionModal);

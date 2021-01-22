@@ -650,6 +650,10 @@ img.agreement-image {
   margin-left: 0.5rem;
 }
 
+.feedback-buttons-container > button + button {
+  margin-left: 0.5rem;
+}
+
 .new-training-session-body > .submit-button {
   position: absolute;
   right: 1rem;

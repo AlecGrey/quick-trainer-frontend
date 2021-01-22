@@ -32,7 +32,7 @@ const AgreementDetails = ({ userIsTrainer, agreement, updateAgreement }) => {
     }
 
     const fetchUpdateAgreement = resolution => {
-        const url = `http://localhost:5000/coach-client/${agreement.id}/update`
+        const url = `http://localhost:5000/coach-client/${agreement.id}`
         const params = updateAgreementParams(resolution)
         fetch(url, params)
             .then(resp => resp.json())
@@ -101,6 +101,8 @@ const AgreementDetails = ({ userIsTrainer, agreement, updateAgreement }) => {
                     id={ trainingSessionId }
                     setId={ setTrainingSessionId }
                     userIsTrainer={ userIsTrainer }
+                    setSuccessMessage={ setSuccessMessage }
+                    setErrorMessage={ setErrorMessage }
                 />
                 <GoalModal 
                     show={ showGoal }

@@ -27,10 +27,15 @@ export const addGoalToAgreement = ( params ) => {
 }
 
 export const addTrainingSessionToAgreement = ( params ) => {
-    console.log('DISPATCH RECEIVED WITH PARAMS:')
-    console.log(params)
     return {
         type: 'ADD_TRAINING_SESSION_TO_AGREEMENT',
+        params
+    }
+}
+
+export const updateTrainingSessionInAgreement = ( params ) => {
+    return {
+        type: 'UPDATE_TRAINING_SESSION_IN_AGREEMENT',
         params
     }
 }
