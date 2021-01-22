@@ -25,11 +25,13 @@ const AccountSettings = ({ user, updateUser}) => {
     }
 
     const handleSettingChangeResponse = json => {
+        console.log(json)
         if (!json.errors) sendUserUpdatesToStore(json)
         else setError( json.errors[0] )
     }
 
     const sendUserUpdatesToStore = json => {
+        console.log('sending to store...')
         const user = json.user.data.attributes
         const userPayload = {
             name: user.name,
@@ -219,55 +221,47 @@ const SectionTitle = ({ title }) => {
 
 const EditableSetting = ({ contentType, title, currentValue, requestSettingChange }) => {
 
-    const [ content, setContent ] = useState('')
     const [ editable, setEditable ] = useState(false)
-
-    useEffect(() => {
-        if (title !== 'Image Link') setContent( currentValue === null ? '' : currentValue )
-        else setContent( "Click 'edit' to change your image" )
-    }, [title, currentValue])
+    const [ content, setContent ] = useState(null)
 
     const setContentEditable = () => {
         setEditable(true)
-        if ( title === 'Image Link' ) setContent('')
+        setContent(currentValue)
     }
 
-    const submitChanges = () => {
+    const changeContent = e => setContent(e.target.value)
+
+    const submitChanges = e => {
         setEditable(false)
-        // Height/weight fields can be left blank, other fields must have a value.
-        if (title === 'Weight' || title === 'Height' || content !== '') {
+        // Height/weight/image fields can be left blank, other fields must have a value.
+        if (title === 'Weight' || title === 'Height' || title === 'Image Link' || content !== '') {
+            console.log('updating in database!')
             requestSettingChange(title, content)
         }
-        else if ( title !== 'Image Link' ) setContent(currentValue)
-        else setContent("Click 'edit' to change your image")
     }
 
     const renderEditableField = () => {
         switch (contentType) {
             case 'textarea':
-                return <textarea value={ content } onChange={ handleOnChange } />
+                return <textarea defaultValue={ currentValue } onChange={ changeContent }/>
             case 'text':
-                return <input type='text' value={ content } onChange={ handleOnChange }/>
+                return <input type='text' defaultValue={ currentValue } onChange={ changeContent }/>
             case 'number':
-                return <input type='number' value={ content } onChange={ handleOnChange }/>
+                return <input type='number' defaultValue={ currentValue } onChange={ changeContent }/>
             case 'date':
-                return <input type='date' value={ content } onChange={ handleOnChange }/>
+                return <input type='date' defaultValue={ currentValue } onChange={ changeContent }/>
             default:
-                return <input type='text' value={ content } onChange={ handleOnChange }/>
+                return <input type='text' defaultValue={ currentValue } onChange={ changeContent }/>
         }
-    }
-
-    const handleOnChange = event => {
-        setContent(event.target.value)
     }
 
     const renderCurrentContent = () => {
-        if ( title === 'Bio' ) return <p className='bio-content'>{ content }</p>
-        if ( title === 'Image Link' ) return <p className='img-content'>{ content }</p>
-        if ( (title === 'Weight' || title === 'Height') && content === '' ) {
+        if ( title === 'Bio' ) return <p className='bio-content'>{ currentValue }</p>
+        if ( title === 'Image Link' ) return <p className='img-content'>Click edit to change value</p>
+        if ( (title === 'Weight' || title === 'Height') && currentValue === '' ) {
             return <p className='no-content-entered'>No value entered</p>
         }
-        return <p>{ content }</p>
+        return <p>{ currentValue }</p>
     }
 
     return (
