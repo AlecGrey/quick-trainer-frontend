@@ -277,6 +277,16 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer, updateT
             </Form>
         )
     }
+
+    const renderClientFeedback = () => {
+        return (
+            <div className='feedback-container d-flex'>
+                <h3>Client Feedback:</h3>
+                <p>{ trainingSession.feedback }</p>
+            </div>
+        )
+    }
+
 // ===========================================
 //          RETURN OF REACT COMPONENT
 // ===========================================
@@ -289,6 +299,7 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer, updateT
             <Modal.Body className='training-session-body'>
                 { trainingSession ? renderTrainingSessionBody() : null }
                 { showCompleteWorkoutForm ? renderCompleteWorkoutForm() : null }
+                { userIsTrainer && trainingSession && trainingSession.is_complete ? renderClientFeedback() : null }
             </Modal.Body>
       </Modal>
     );

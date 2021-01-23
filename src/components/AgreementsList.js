@@ -103,7 +103,7 @@ const AgreementsList = ({ userIsTrainer, agreements, activeAgreement, setActiveA
             { pendingAgreements.length > 0 ? renderPendingAgreements() : null }
 
             {/* IF THE USER IS NOT A COACH, ALLOW TO ACCESS FORM TO CREATE NEW AGREEMENT */}
-            { userIsTrainer ? null : 
+            { userIsTrainer || userIsTrainer === null ? null : 
             <h3 onClick={ handleNewAgreement } className={ newAgreementLinkClassName() }>
                 New Training Agreement
             </h3>}

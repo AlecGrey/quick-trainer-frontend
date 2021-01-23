@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image'
 import { connect } from 'react-redux';
 import { Link, useHistory } from "react-router-dom";
 
 const HomePage = ({ user, agreements }) => {
+
+    const [ notifications, setNotifications ] = useState([])
+
+    useEffect(() => {
+        // CONVERT AGREEMENTS INTO ARRAY OF NOTIFICATION OBJECTS, ADD TO NOTIFICATION STATE OBJECT
+    })
+
+    // const reduceAgreementToNotification = agreement => {
+    //     case () {
+
+    //     }
+    // }
 
     return (
         <Container id='home-page' className='d-flex align-items-center flex-column'>
@@ -21,7 +33,6 @@ const HomePage = ({ user, agreements }) => {
                     </Link>
                 </div>
             </Container>
-            {/* { coachHasNewTrainingRequests ? <NewRequests /> : null } */}
         </Container>
     );
 }

@@ -111,6 +111,8 @@ const AgreementDetails = ({ userIsTrainer, agreement, updateAgreement }) => {
                     id={ goalId }
                     setId={ setGoalId }
                     userIsTrainer={ userIsTrainer }
+                    setErrorMessage={ setErrorMessage }
+                    setSuccessMessage={ setSuccessMessage }
                 />
                 <NewTrainingSessionModal 
                     show={ showNewTrainingSession }

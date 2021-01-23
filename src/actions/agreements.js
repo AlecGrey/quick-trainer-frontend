@@ -26,6 +26,13 @@ export const addGoalToAgreement = ( params ) => {
     }
 }
 
+export const updateGoalInAgreement = ( goal ) => {
+    return {
+        type: 'UPDATE_GOAL_IN_AGREEMENT',
+        goal
+    }
+}
+
 export const addTrainingSessionToAgreement = ( params ) => {
     return {
         type: 'ADD_TRAINING_SESSION_TO_AGREEMENT',

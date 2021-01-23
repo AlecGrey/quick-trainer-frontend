@@ -610,6 +610,15 @@ img.agreement-image {
   width: 100%;
 }
 
+.feedback-container > h3 {
+  flex-shrink: 0;
+}
+
+.feedback-container > p {
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+}
+
 /* GOAL MODAL */
 .goal-header.modal-header {
   padding-bottom: 0.5rem;
@@ -626,6 +635,18 @@ img.agreement-image {
   font-size: 2rem;
 }
 
+.goal-header > p {
+  margin: auto;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  font-style: italic;
+  color: #6c757d;
+}
+
+.goal-header > button {
+  margin-left: 0 !important;
+}
+
 .goal-body > .description-container > h3 {
   margin-top: 0;
   margin-bottom: auto;
@@ -634,6 +655,18 @@ img.agreement-image {
 
 .goal-body > .description-container > p {
   margin-top: 0;
+}
+
+.complete-goal-form {
+  margin-top: 1rem;
+}
+
+.complete-goal-form > div > button + button {
+  margin-left: 0.5rem;
+}
+
+.form-label > em {
+  color: #6c757d;
 }
 
 /* NEW TRAINING SESSION FORM */
@@ -673,9 +706,16 @@ img.agreement-image {
   
 }
 
-#new-agreement-container > div > h3 {
-  margin-left: 2rem;
-  margin-right: auto;
+#new-agreement-container > div > div > h3 {
+  margin: 0.5rem 0 0.5rem 2rem;
+}
+
+#new-agreement-container > div > div > .error {
+  font-style: italic;
+  color: #dc3545;
+  font-weight: 250;
+  margin: auto;
+  margin-left: 1rem;
 }
 
 #new-agreement-container > .new-agreement-header {

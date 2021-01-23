@@ -233,6 +233,8 @@ const EditableSetting = ({ contentType, title, currentValue, requestSettingChang
 
     const submitChanges = e => {
         setEditable(false)
+        // Short-circuit if no changes have been made
+        if ( content === currentValue ) return
         // Height/weight/image fields can be left blank, other fields must have a value.
         if (title === 'Weight' || title === 'Height' || title === 'Image Link' || content !== '') {
             console.log('updating in database!')

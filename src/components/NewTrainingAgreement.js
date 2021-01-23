@@ -8,18 +8,20 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button'
 import SuccessModal from './SuccessModal';
+import ErrorModal from './ErrorModal';
 
 const NewTrainingAgreement = ({ addAgreement, closeTrainingAgreement }) => {
 
     // STATE HOOKS FOR POPUP MODALS
     const [ successMessage, setSuccessMessage ] = useState(null)
+    const [ errorMessage, setErrorMessage ] = useState(null)
     // STATE HOOKS FOR FORM DATASET
     const [ coaches, setCoaches ] = useState([])
     // STATE HOOKS FOR NEW AGREEMENT
-    const [ selectedCoachId, setSelectedCoachId ] = useState(null)
-    const [ sessionsCount, setSessionsCount ] = useState(null)
-    const [ intent, setIntent ] = useState(null)
+    const [ agreement, setAgreement ] = useState({})
+    const [ errors, setErrors ] = useState({})
 
+    // FETCH ALL COACHES WHEN RENDERING THIS COMPONENT
     useEffect(() => {
         fetchAllCoaches()
         // COMPONENT WILL UNMOUNT:
@@ -37,18 +39,50 @@ const NewTrainingAgreement = ({ addAgreement, closeTrainingAgreement }) => {
         setCoaches([...json])
     }
 
-    const submitNewAgreement = e => {
-        // SUBMITS INFORMATION TO BACKEND
-        if ( invalidAgreement() ) return alert('Invalid Agreement!')
-        postNewAgreement()
+    // HANDLE CHANGES TO FORM BY ADDING VALUES TO THE AGREEMENT STATE OBJECT
+    const addToAgreement = ( field, value ) => {
+        setAgreement({
+            ...agreement,
+            [field]: value
+        })
+        resetError(field)
     }
 
-    const invalidAgreement = () => {
-        return (
-            selectedCoachId === null ||
-            sessionsCount === null || sessionsCount === 0 || sessionsCount === '' ||
-            intent === null || intent === ''
-        )
+    const resetError = field => {
+        setErrors({
+            ...errors,
+            [field]: null
+        })
+    }
+
+    // BEFORE POSTING TO DATABASE, CHECK FOR ERRORS AND ADD TO ERRORS STATE OBJECt
+    const constructSubmitErrorObject = () => {
+        const errorObject = {}
+        if ( !agreement.trainer_id ) errorObject.trainer_id = 'Please select a coach!'
+        if ( !agreement.sessions_remaining ) errorObject.sessions_remaining = 'Cannot be blank!'
+        else if ( parseInt(agreement.sessions_remaining) <= 0 ) errorObject.sessions_remaining = 'Must request at least 1 session!'
+        if ( isEmptyOrSpaces(agreement.intent) ) errorObject.intent = 'Cannot be blank!'
+        return errorObject
+    }
+
+    const isEmptyOrSpaces = str => {
+        return !str || str.match(/^ *$/) !== null;
+    }
+
+    // EVENT HANDLER ON SUBMIT. CHECKS FIRST FOR ERRORS AND ADDS TO STATE
+    // IF NO ERRORS, WILL POST AGREEMENT TO DATABASE
+    const submitNewAgreement = e => {
+        // SUBMITS INFORMATION TO BACKEND
+        // ADD ERROR HANDLING HERE
+        const newErrors = constructSubmitErrorObject()
+        if ( Object.keys(newErrors).length > 0 ) {
+            setErrors({
+                ...errors,
+                ...newErrors
+            })
+        } else {
+            postNewAgreement()
+        }
     }
 
     const postNewAgreement = () => {
@@ -60,7 +94,7 @@ const NewTrainingAgreement = ({ addAgreement, closeTrainingAgreement }) => {
     }
 
     const addNewUserAgreementToStore = json => {
-        if ( !!json.error ) return // ADD USE OF ERROR MODAL FOR ERROR HANDLING!
+        if ( !!json.errors ) setErrorMessage(json.errors)
         else {
             addAgreement(json)
             setSuccessMessage('Your agreement was successfully initiated! Awaiting response from your coach.')
@@ -74,7 +108,7 @@ const NewTrainingAgreement = ({ addAgreement, closeTrainingAgreement }) => {
               'Content-Type': 'application/json',
               'Authorization' : `Bearer ${ localStorage.getItem('token') }`
             },
-            body: JSON.stringify({ selectedCoachId, sessionsCount, intent })
+            body: JSON.stringify(agreement)
           }
     }
 
@@ -92,19 +126,23 @@ const NewTrainingAgreement = ({ addAgreement, closeTrainingAgreement }) => {
             </div>
             <div>
                 {/* SELECT A COACH SECTION */}
-                <h3>Select a Coach</h3>
+                <div className='d-flex justify-content-start align-items-center'>
+                    <h3>Select a Coach</h3>
+                    { !!errors.trainer_id ? <p className='error'>must select a coach!</p> : null }
+                </div>
                 <CoachCardGroup 
                     coaches={ coaches }
-                    selectedCoachId={ selectedCoachId }
-                    setSelectedCoachId={ setSelectedCoachId }
+                    agreement={ agreement }
+                    addToAgreement={ addToAgreement }
+                    errors={ errors }
                 />
             </div>
             <div>
                 {/* REST OF THE FORM */}
                 <h3>Additional Information</h3>
-                <AdditionalInformationForm 
-                    setSessionsCount={ setSessionsCount }
-                    setIntent={ setIntent }
+                <AdditionalInformationForm
+                    errors={ errors }
+                    addToAgreement={ addToAgreement }
                 />
             </div>
             <Button onClick={ submitNewAgreement } variant='primary'>Submit Agreement</Button>
@@ -120,7 +158,7 @@ const NewTrainingAgreement = ({ addAgreement, closeTrainingAgreement }) => {
 // CONTAINER FOR ALL COACH CARDS
 // ==============================
 
-const CoachCardGroup = ({ coaches, selectedCoachId, setSelectedCoachId }) => {
+const CoachCardGroup = ({ coaches, agreement, addToAgreement, errors }) => {
 
     const [ page, setPage ] = useState(0)
 
@@ -129,9 +167,9 @@ const CoachCardGroup = ({ coaches, selectedCoachId, setSelectedCoachId }) => {
         const end = start + 3
         return coaches.slice( start, end ).map((coach, i) => {
             return <CoachCard 
-                    coach={ coach } 
-                    setSelectedCoachId={ setSelectedCoachId }
-                    selectedCoachId={ selectedCoachId }
+                    coach={ coach }
+                    addToAgreement={ addToAgreement }
+                    selectedCoachId={ agreement.trainer_id }
                     key={ i }
                 />
         })
@@ -158,14 +196,14 @@ const CoachCardGroup = ({ coaches, selectedCoachId, setSelectedCoachId }) => {
 // SINGLE COACH CARD COMPONENT
 // =============================
 
-const CoachCard = ({ coach, setSelectedCoachId, selectedCoachId }) => {
+const CoachCard = ({ coach, addToAgreement, selectedCoachId }) => {
 
     const coachIsSelected = () => {
         return coach.id === selectedCoachId
     }
 
     const handleOnClick = e => {
-        coachIsSelected() ? setSelectedCoachId(null) : setSelectedCoachId(coach.id)
+        coachIsSelected() ? addToAgreement('trainer_id', null) : addToAgreement('trainer_id', coach.id)
     }
 
     return (
@@ -194,21 +232,32 @@ const CoachCard = ({ coach, setSelectedCoachId, selectedCoachId }) => {
 // ADDITIONAL INFORMATION FORM
 // =============================
 
-const AdditionalInformationForm = ({ setSessionsCount, setIntent }) => {
-
-    const changeSessionCount = e => setSessionsCount( parseInt(e.target.value) )
-    const changeIntent = e => setIntent( e.target.value )
+const AdditionalInformationForm = ({ errors, addToAgreement }) => {
 
     return (
         <Form>
             <Form.Group as={Row}>
                 <Col sm={3}>
                     <Form.Label>Initial Session Count</Form.Label>
-                    <Form.Control type='number' onChange={ changeSessionCount } />
+                    <Form.Control 
+                        type='number' 
+                        onChange={ e => addToAgreement('sessions_remaining', parseInt(e.target.value)) } 
+                        isInvalid={ !!errors.sessions_remaining }    
+                    />
+                    <Form.Control.Feedback type='invalid'>
+                        { errors.sessions_remaining }
+                    </Form.Control.Feedback>
                 </Col>
                 <Col>
                     <Form.Label>Why are you interested in training?</Form.Label>
-                    <Form.Control as='textarea' rows={1} onChange={ changeIntent } />
+                    <Form.Control 
+                        as='textarea' rows={1} 
+                        onChange={ e => addToAgreement('intent', e.target.value) }
+                        isInvalid={ !!errors.intent } 
+                    />
+                    <Form.Control.Feedback type='invalid'>
+                        { errors.intent }
+                    </Form.Control.Feedback>
                 </Col>
             </Form.Group>
         </Form>

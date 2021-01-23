@@ -1,4 +1,6 @@
 const AgreementsReducer = (state = [], action) => {
+    let agreement, filteredAgreements, newState
+
     switch (action.type) {
 
       case 'ADD_AGREEMENTS':
@@ -11,13 +13,22 @@ const AgreementsReducer = (state = [], action) => {
 
       case 'UPDATE_AGREEMENT':
         // RECEIVES UPDATED AGREEMENT TO REPLACE EXISTING AGREEMENT
-        const filteredAgreements = state.filter( a => a.id !== action.agreement.id )
+        filteredAgreements = state.filter( a => a.id !== action.agreement.id )
         return [...filteredAgreements, action.agreement]
 
       case 'ADD_GOAL_TO_AGREEMENT':
         // WHEN A NEW GOAL IS CREATED, ADD TO STATE
         state.find(agreement => agreement.id === action.params.agreementId).goals.push( action.params.goal )
         return [...state]
+
+      case 'UPDATE_GOAL_IN_AGREEMENT':
+        // WHEN A COACH UPDATES A GOAL, ADD CHANGES TO STATE
+        agreement = state.find(agreement => agreement.id === action.goal.coach_client_id)
+        const filteredGoals = agreement.goals.filter(goal => goal.id !== action.goal.id)
+        agreement.goals = [...filteredGoals, action.goal]
+        filteredAgreements = state.filter(agreement => agreement.id !== action.goal.coach_client_id)
+        newState = [...filteredAgreements, agreement]
+        return newState
 
       case 'ADD_TRAINING_SESSION_TO_AGREEMENT':
         // WHEN A NEW TRAINING SESSION IS CREATED, ADD TO STATE
@@ -26,9 +37,8 @@ const AgreementsReducer = (state = [], action) => {
 
       case 'UPDATE_TRAINING_SESSION_IN_AGREEMENT':
         // WHEN A TRAINING SESSION IS RETURNED AFTER A PATCH, FIND AND REPLACE SESSION IN STATE
-        const { id, coach_client_id } = action.params
-        const agreement = state.find(agreement => agreement.id === coach_client_id)
-        const filteredSessions = agreement.training_sessions.filter(session => session.id !== id)
+        agreement = state.find(agreement => agreement.id === action.params.goalcoach_client_id)
+        const filteredSessions = agreement.training_sessions.filter(session => session.id !== action.params.id)
         agreement.training_sessions = [...filteredSessions, action.params]
         return [...state]
       case 'LOGOUT_USER':
