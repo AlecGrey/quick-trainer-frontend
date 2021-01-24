@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import NavDropdown from 'react-bootstrap/NavDropdown'
+import ChatFeed from './ChatFeed';
 
 const ChatFeedNav = ({ user, agreements }) => {
 
@@ -54,16 +55,16 @@ const ChatFeedNav = ({ user, agreements }) => {
     }
 
     return (
-        <Navbar id='chatfeed-nav'>
-            <Navbar.Collapse id='chatfeed-nav-items'>
-                <Nav className="justify-content-end">
+        <Navbar id='chatfeed-nav'fixed='bottom'>
+            <Navbar.Collapse id='chatfeed-nav-items'className="justify-content-end">
+                <Nav>
                     { renderChatfeedFromState() }
                     <NavDropdown title="Feeds" id="nav-dropdown" drop='up' alignRight>
                         { renderDropdownItemsFromState() }
                     </NavDropdown>
                 </Nav>
-
             </Navbar.Collapse>
+            { showFeed ? <ChatFeed feed={ activeFeed } /> : null }
         </Navbar>
     );
 }
