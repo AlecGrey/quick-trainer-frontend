@@ -25,6 +25,13 @@ body {
   margin-right: 0.5rem;
 }
 
+/* CHATFEED NAV FOOTER */
+#chatfeed-nav {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
 /* LOGIN PAGE */
 
 #login-page {

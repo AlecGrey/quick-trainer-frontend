@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 // IMPORT COMPONENT DEPENDENCIES
 import NavBar from './components/NavBar';
 // ADD PAGE CONTAINERS FOR UNIQUE ROUTES
+import ChatFeedNav from './components/ChatFeedNav';
 import LoginPage from './containers/LoginPage';
 import HomePage from './containers/HomePage';
 import ManageAccountPage from './containers/ManageAccountPage';
@@ -14,7 +15,7 @@ import { addAgreements } from './actions/agreements';
 // REACT ROUTER
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
-function App({ user, loginUser, logoutUser, addAgreements }) {
+function App({ user, agreements, loginUser, logoutUser, addAgreements }) {
 
   useEffect(() => {
     // on page load, compare token to store, fetch the user information if necessary
@@ -86,13 +87,15 @@ function App({ user, loginUser, logoutUser, addAgreements }) {
         <Route exact path='/training-agreements' component={ TrainingAgreementsPage } />
         { localStorage.getItem('token') ? null : <Redirect to='/' /> }
       </div>
+      { loggedIn() ? <ChatFeedNav user={ user } agreements={ agreements }/> : null }
     </Router>
   );
 }
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    agreements: state.agreements
   }
 }
 
