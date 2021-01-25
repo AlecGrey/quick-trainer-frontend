@@ -9,7 +9,11 @@ const LoginForm = ({ changeName, changePassword, handleLoginSubmit, setShowSignu
     }
 
     return (
-        <Form id='login-box' className='shadow d-flex flex-column align-items-stretch justify-content-center'>
+        <Form 
+            id='login-box' 
+            className='shadow d-flex flex-column align-items-stretch justify-content-center'
+            onSubmit={ handleLoginSubmit }
+        >
             <Form.Group>
                 <Form.Control 
                     type="text" 
@@ -32,7 +36,7 @@ const LoginForm = ({ changeName, changePassword, handleLoginSubmit, setShowSignu
                     { errors.password }
                 </Form.Control.Feedback>
             </Form.Group>
-            <Button className='login-button font-weight-bold' variant='primary' onClick={ handleLoginSubmit }>
+            <Button className='login-button font-weight-bold' variant='primary' type='submit' onClick={ handleLoginSubmit }>
                 Login
             </Button>
             <div className='h-divider'/>
