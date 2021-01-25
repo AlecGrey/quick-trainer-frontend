@@ -37,10 +37,17 @@ const AgreementsReducer = (state = [], action) => {
 
       case 'UPDATE_TRAINING_SESSION_IN_AGREEMENT':
         // WHEN A TRAINING SESSION IS RETURNED AFTER A PATCH, FIND AND REPLACE SESSION IN STATE
-        agreement = state.find(agreement => agreement.id === action.params.goalcoach_client_id)
+        agreement = state.find(agreement => agreement.id === action.params.coach_client_id)
         const filteredSessions = agreement.training_sessions.filter(session => session.id !== action.params.id)
         agreement.training_sessions = [...filteredSessions, action.params]
         return [...state]
+
+      case 'ADD_CHAT_MESSAGE_TO_AGREEMENT':
+        // RECEIVE NEW CHAT MESSAGE AND UPDATE STORE
+        agreement = state.find(agreement => agreement.id === action.params.AgreementId)
+        agreement.chat_messages.push(action.params.chatMessage)
+        return [...state]
+
       case 'LOGOUT_USER':
         return []
 

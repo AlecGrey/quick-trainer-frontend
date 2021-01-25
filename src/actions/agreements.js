@@ -46,3 +46,10 @@ export const updateTrainingSessionInAgreement = ( params ) => {
         params
     }
 }
+
+export const addChatMessageToAgreement = ( params ) => {
+    return {
+        type: 'ADD_CHAT_MESSAGE_TO_AGREEMENT',
+        params
+    }
+}

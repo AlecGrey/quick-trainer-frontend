@@ -105,6 +105,7 @@ const LoginPage = ({ loginUser, addAgreements }) => {
         const user = json.user.data.attributes
         const agreements = formatAgreementsFromJson(json)
         const userPayload = {
+            id: parseInt(json.user.data.id),
             name: user.name,
             isTrainer: user.account_type === 'trainer',
             specialty: user.specialty,

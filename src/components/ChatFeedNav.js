@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import ChatFeed from './ChatFeed';
+import ChatUser from './ChatUser';
+import actionCable from 'actioncable';
+
+const CableApp = {}
+CableApp.cable = actionCable.createConsumer('ws://localhost:5000/cable')
+export const ActionCableContext = createContext()
 
 const ChatFeedNav = ({ user, agreements }) => {
 
@@ -30,10 +36,12 @@ const ChatFeedNav = ({ user, agreements }) => {
 
     const renderDropdownItemsFromState = () => {
         return chatrooms.map( (room, i) => { 
-            return <NavDropdown.Item 
-                onClick={ () => setAsCurrentFeed(room) }
+            return <ChatUser
+                key={ i }
+                event={ () => setAsCurrentFeed(room) }
                 active={ room.id === activeFeed.id }
-                key={ i }>{ room.chatUser }</NavDropdown.Item>
+                agreement={ room }
+            />
         })
     }
 
@@ -55,7 +63,8 @@ const ChatFeedNav = ({ user, agreements }) => {
     }
 
     return (
-        <Navbar id='chatfeed-nav'fixed='bottom'>
+        <ActionCableContext.Provider value={ CableApp.cable }>
+           <Navbar id='chatfeed-nav'fixed='bottom'>
             <Navbar.Collapse id='chatfeed-nav-items'className="justify-content-end">
                 <Nav>
                     { renderChatfeedFromState() }
@@ -64,8 +73,10 @@ const ChatFeedNav = ({ user, agreements }) => {
                     </NavDropdown>
                 </Nav>
             </Navbar.Collapse>
-            { showFeed ? <ChatFeed feed={ activeFeed } /> : null }
-        </Navbar>
+            { showFeed ? <ChatFeed userId={ user.id } feed={ activeFeed } /> : null }
+        </Navbar> 
+        </ActionCableContext.Provider>
+        
     );
 }
 

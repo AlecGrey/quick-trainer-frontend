@@ -39,15 +39,16 @@ function App({ user, agreements, loginUser, logoutUser, addAgreements }) {
     const user = json.user.data.attributes
     const agreements = formatAgreementsFromJson(json)
     const userPayload = {
-        name: user.name,
-        isTrainer: user.account_type === 'trainer',
-        specialty: user.specialty,
-        credentials: user.credentials,
-        dateOfBirth: user.date_of_birth,
-        height: user.height,
-        weight: user.weight,
-        bio: user.bio,
-        imageUrl: user.image_url
+      id: parseInt(json.user.data.id),
+      name: user.name,
+      isTrainer: user.account_type === 'trainer',
+      specialty: user.specialty,
+      credentials: user.credentials,
+      dateOfBirth: user.date_of_birth,
+      height: user.height,
+      weight: user.weight,
+      bio: user.bio,
+      imageUrl: user.image_url
     }
     loginUser( userPayload )
     addAgreements( agreements )
