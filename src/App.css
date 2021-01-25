@@ -88,6 +88,8 @@ body {
   margin-right: 0;
   margin-left: auto;
   margin-top: 0.5rem;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 #chat-feed > .message > .user-message {
@@ -109,6 +111,7 @@ body {
   padding: 0.4rem 0.8rem;
   border-radius: 0.5rem;
   display: inline-block;
+  word-break: break-all
 }
 
 .received-message > p.content {
@@ -120,6 +123,20 @@ body {
   margin-left: auto;
   margin-right: 0;
 
+}
+
+#chat-feed-container > .header > p.error {
+  font-style: italic;
+  color: #dc3545;
+}
+
+#chat-feed-container > .header > p {
+  margin-right: 0.5rem;
+  margin-left: auto;
+  margin-bottom: 0;
+  font-size: 0.8rem;
+  font-weight: 250;
+  color: black;
 }
 
 /* LOGIN PAGE */

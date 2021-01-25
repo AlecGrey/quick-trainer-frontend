@@ -17,6 +17,7 @@ const ChatFeed = ({ userId, feed, showFeed }) => {
     const cable = useContext(ActionCableContext)
     const [channel, setChannel] = useState(null)
     const [content, setContent] = useState('')
+    const [error, setError] = useState(null)
 
     // SETS UP THE CHANNEL WITH UNMOUNTING CALLBACK AS RETURN VALUE
     useEffect(() => {
@@ -45,13 +46,27 @@ const ChatFeed = ({ userId, feed, showFeed }) => {
 
     const handleSubmit = e => {
         e.preventDefault()
-        sendMessage(content)
-        setContent('')
+        const newError = checkContentForErrors()
+        if (newError) setError(newError)
+        else {
+            sendMessage(content)
+            setContent('')
+        }
+    }
+
+    const checkContentForErrors = () => {
+        if (content === '') return 'message cannot be blank!'
+        else if (content.length > 250) return 'cannot exceed 250 characters'
+        else return null
     }
 
     return (
         <Container id='chat-feed-container' className='d-flex flex-column align-items-stretch shadow-sm'>
-            <ChatFeedHeader recipient={ feed.chatUser }/>
+            <ChatFeedHeader 
+                error={ error } 
+                recipient={ feed.chatUser }
+                content={ content }
+            />
             <div className='h-divider' />
             <ChatFeedMessages
                 userId={ userId }
@@ -62,24 +77,38 @@ const ChatFeed = ({ userId, feed, showFeed }) => {
             <ChatFeedInput 
                 content={ content }
                 setContent={ setContent }
+                error={ error }
+                setError={ setError }
                 handleSubmit={ handleSubmit } 
             />
         </Container>
     );
 }
 
-const ChatFeedHeader = ({ recipient }) => {
+const ChatFeedHeader = ({ recipient, error, content }) => {
+
+    const remainingCharacters = () => {
+        return 250 - content.length
+    }
+
     return (
         <Container className='header d-flex'>
             <h5>{ recipient }</h5>
             {/* Anything else? */}
+            { error ? 
+                <p className='error'>{ error }</p> : 
+                <p className='character-count'>{ `${remainingCharacters()}/250` }</p>
+            }
         </Container>
     )
 }
 
-const ChatFeedInput = ({ content, setContent, handleSubmit }) => {
+const ChatFeedInput = ({ content, setContent, handleSubmit, error, setError }) => {
 
-    const handleContentChange = e => setContent(e.target.value)
+    const handleContentChange = e => {
+        if (content.length < 250) setContent(e.target.value)
+        if (error !== null) setError(null)
+    }
 
     return (
         <Form onSubmit={ handleSubmit }>

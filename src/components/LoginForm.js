@@ -2,7 +2,7 @@ import React from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 
-const LoginForm = ({ changeName, changePassword, handleLoginSubmit, setShowSignup, errors, setErrors }) => {
+const LoginForm = ({ changeName, changePassword, handleLoginSubmit, setShowSignup, errors, disabledFields }) => {
 
     const handleSignupClick = e => {
         setShowSignup(true)
@@ -20,6 +20,7 @@ const LoginForm = ({ changeName, changePassword, handleLoginSubmit, setShowSignu
                     placeholder="Username" 
                     onChange={ changeName }
                     isInvalid={ !!errors.name }
+                    disabled={ disabledFields }
                 />
                 <Form.Control.Feedback type='invalid'>
                     { errors.name }
@@ -31,18 +32,26 @@ const LoginForm = ({ changeName, changePassword, handleLoginSubmit, setShowSignu
                     placeholder="Password" 
                     onChange={ changePassword }
                     isInvalid={ !!errors.password }
+                    disabled={ disabledFields }
                 />
                 <Form.Control.Feedback type='invalid'>
                     { errors.password }
                 </Form.Control.Feedback>
             </Form.Group>
-            <Button className='login-button font-weight-bold' variant='primary' type='submit' onClick={ handleLoginSubmit }>
-                Login
-            </Button>
+            <Button 
+                className='login-button font-weight-bold' 
+                variant='primary' 
+                type='submit' 
+                onClick={ handleLoginSubmit }
+                disabled={ disabledFields }    
+            >Login</Button>
             <div className='h-divider'/>
-            <Button className='signup-button' variant='secondary' onClick={ handleSignupClick }>
-                Signup
-            </Button>            
+            <Button 
+                className='signup-button' 
+                variant='secondary' 
+                onClick={ handleSignupClick }
+                disabled={ disabledFields }
+            >Signup</Button>            
         </Form>
     );
 }

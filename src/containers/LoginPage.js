@@ -19,7 +19,8 @@ const LoginPage = ({ loginUser, addAgreements }) => {
     const [ name, setName ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ errors, setErrors ] = useState({})
-    const [ showSignup, setShowSignup ] = useState(false)  
+    const [ showSignup, setShowSignup ] = useState(false)
+    const [ disabledFields, setDisabledFields ] = useState(false)  
 
     // USE HISTORY HOOK
     const history = useHistory()
@@ -49,6 +50,7 @@ const LoginPage = ({ loginUser, addAgreements }) => {
 
     const handleLoginSubmit = event => {
         event.preventDefault()
+        setDisabledFields(true)
         fetchUser()
     }
 
@@ -66,6 +68,7 @@ const LoginPage = ({ loginUser, addAgreements }) => {
     const handleUserFetch = json => {
         // if we receive errors back instead of a user, render an error message, otherwise update the store
         !!json.errors ? handleFetchErrors(json.errors) : sendUserToStore(json)
+        setDisabledFields(false)
         // return status of login
         return !json.errors
     }
@@ -144,7 +147,7 @@ const LoginPage = ({ loginUser, addAgreements }) => {
                     handleLoginSubmit={ handleLoginSubmit }
                     setShowSignup={ setShowSignup }
                     errors={ errors }
-                    setErrors={ setErrors }
+                    disabledFields={ disabledFields }
                 /> }
         </Container>
     );

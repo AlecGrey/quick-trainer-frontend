@@ -33,7 +33,6 @@ const ChatFeedMessages = ({ userId, agreementId, agreements, showFeed }) => {
 
     // WHEN A NEW MESSAGE IS RECEIVED, SCROLL PAGE TO BOTTOM
     useEffect(() => {
-        console.log('fired useEffect hook!')
         scrollToBottom()
     }, [agreements])
 
