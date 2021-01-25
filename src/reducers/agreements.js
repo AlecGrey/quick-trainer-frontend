@@ -44,7 +44,7 @@ const AgreementsReducer = (state = [], action) => {
 
       case 'ADD_CHAT_MESSAGE_TO_AGREEMENT':
         // RECEIVE NEW CHAT MESSAGE AND UPDATE STORE
-        agreement = state.find(agreement => agreement.id === action.params.AgreementId)
+        agreement = state.find(agreement => agreement.id === action.params.agreementId)
         agreement.chat_messages.push(action.params.chatMessage)
         return [...state]
 

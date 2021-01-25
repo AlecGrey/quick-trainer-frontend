@@ -14,16 +14,18 @@ const ChatUser = ({ event, active, agreement, addChatMessageToAgreement }) => {
             channel: 'MessagesChannel',
             id: agreement.id
         }, {
-            received: (data) => {
-                // reformat data to payload...
-                debugger
-                // addChatMessageToAgreement({ 
-                //     agreementId: ,
-                //     chatMessage: 
-                // })
+            received: (json) => {
+                // reformat json to payload...
+                console.log('RECEIVED MESSAGE, ADDING TO STORE')
+                const data = JSON.parse(json).data
+                const payload = {
+                    agreementId: parseInt(data.relationships.coach_client.data.id),
+                    chatMessage: data.attributes
+                }
+                addChatMessageToAgreement(payload)
             }
         })
-    }, [agreement])
+    }, [])
 
     return (
         <NavDropdown.Item 

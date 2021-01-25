@@ -40,7 +40,86 @@ body {
 }
 
 #chat-feed-container > * {
-  margin: 0.2rem;
+  padding: 0.8rem;
+}
+
+#chat-feed-container > .header {
+  padding-bottom: 0.2rem;
+}
+
+#chat-feed-container > .header > h5 {
+  margin-left: 0.5rem;
+  margin-bottom: 0;
+  font-style: italic;
+}
+
+#chat-feed-container > .h-divider {
+  margin: 0 auto;
+  margin-bottom: 0.05rem;
+  width: 97%;
+  padding: 0;
+
+}
+
+#message-submit.btn {
+  margin-left: 0.2rem;
+}
+
+#chat-feed-container > form > .form-group {
+  margin: 0;
+}
+
+#chat-feed {
+  overflow: auto;
+}
+
+#chat-feed > .message > div > .time {
+  margin: 0 0.2rem;
+  font-size: 0.3rem;
+  color: gray;
+  font-style: italic;
+}
+
+#chat-feed > .message > div > p {
+  margin: 0;
+}
+
+#chat-feed > .message {
+  margin-right: 0;
+  margin-left: auto;
+  margin-top: 0.5rem;
+}
+
+#chat-feed > .message > .user-message {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+#chat-feed > .message > .received-message {
+  margin-right: auto;
+  margin-left: 0;
+  padding-right: 2rem;
+}
+
+#chat-feed > .message > .user-message {
+  padding-left: 2rem;
+}
+
+.message > div > p.content {
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  display: inline-block;
+}
+
+.received-message > p.content {
+  background-color: rgb(230, 230, 230);
+}
+
+#chat-feed > .message > .user-message > p.content {
+  background-color: rgb(151, 199, 253);
+  margin-left: auto;
+  margin-right: 0;
+
 }
 
 /* LOGIN PAGE */

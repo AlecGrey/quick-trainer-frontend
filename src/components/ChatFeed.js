@@ -7,8 +7,12 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+// REDUX
+import { connect } from 'react-redux';
+// COMPONENT DEPENDENCIES
+import ChatFeedMessages from './ChatFeedMessages';
 
-const ChatFeed = ({ userId, feed }) => {
+const ChatFeed = ({ userId, feed, showFeed }) => {
 
     const cable = useContext(ActionCableContext)
     const [channel, setChannel] = useState(null)
@@ -30,6 +34,7 @@ const ChatFeed = ({ userId, feed }) => {
 
     // THIS CONNECTION WILL ONLY BE USED FOR SENDING MESSAGES TO DB
     const sendMessage = content => {
+        console.log('SENDING MESSAGE TO DB')
         const data = {
             coach_client_id: feed.id,
             user_id: userId,
@@ -38,20 +43,26 @@ const ChatFeed = ({ userId, feed }) => {
         channel.send(data)
     }
 
-    const handleSubmitClick = e => {
+    const handleSubmit = e => {
+        e.preventDefault()
         sendMessage(content)
-        console.log('MESSAGE SENT:', content)
         setContent('')
     }
 
     return (
         <Container id='chat-feed-container' className='d-flex flex-column align-items-stretch shadow-sm'>
             <ChatFeedHeader recipient={ feed.chatUser }/>
-            <ChatFeedMessageBox />
+            <div className='h-divider' />
+            <ChatFeedMessages
+                userId={ userId }
+                agreementId={ feed.id }
+                showFeed={ showFeed }
+            />
+            <div className='h-divider' />
             <ChatFeedInput 
                 content={ content }
                 setContent={ setContent }
-                handleSubmitClick={ handleSubmitClick } 
+                handleSubmit={ handleSubmit } 
             />
         </Container>
     );
@@ -59,27 +70,19 @@ const ChatFeed = ({ userId, feed }) => {
 
 const ChatFeedHeader = ({ recipient }) => {
     return (
-        <Container className='d-flex' fluid>
+        <Container className='header d-flex'>
             <h5>{ recipient }</h5>
             {/* Anything else? */}
         </Container>
     )
 }
 
-const ChatFeedMessageBox = () => {
-    return (
-        <Container className='d-flex flex-grow-1'>
-            MESSAGES
-        </Container>
-    )
-}
-
-const ChatFeedInput = ({ content, setContent, handleSubmitClick }) => {
+const ChatFeedInput = ({ content, setContent, handleSubmit }) => {
 
     const handleContentChange = e => setContent(e.target.value)
 
     return (
-        <Form>
+        <Form onSubmit={ handleSubmit }>
             <Form.Group as={Row} noGutters={true}>
                 <Col>
                     <Form.Control 
@@ -88,11 +91,22 @@ const ChatFeedInput = ({ content, setContent, handleSubmitClick }) => {
                         value={ content }/>
                 </Col>
                 <Col sm={ 2 }>
-                    <Button onClick={ handleSubmitClick } variant='success'>enter</Button>
+                    <Button 
+                        id='message-submit'
+                        onClick={ handleSubmit } 
+                        variant='success'
+                        disabled={ content === '' }
+                    >enter</Button>
                 </Col>
             </Form.Group>
         </Form>
     )
 }
 
-export default ChatFeed;
+const mapStateToProps = state => {
+    return {
+        agreements: state.agreements
+    }
+}
+
+export default connect(mapStateToProps)(ChatFeed);

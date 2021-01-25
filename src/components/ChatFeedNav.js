@@ -73,7 +73,11 @@ const ChatFeedNav = ({ user, agreements }) => {
                     </NavDropdown>
                 </Nav>
             </Navbar.Collapse>
-            { showFeed ? <ChatFeed userId={ user.id } feed={ activeFeed } /> : null }
+            { showFeed ? <ChatFeed 
+                userId={ user.id } 
+                feed={ activeFeed } 
+                showFeed={ showFeed }
+            /> : null }
         </Navbar> 
         </ActionCableContext.Provider>
         
