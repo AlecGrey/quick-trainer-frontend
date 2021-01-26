@@ -11,6 +11,8 @@ import Col from 'react-bootstrap/Col';
 import { connect } from 'react-redux';
 // COMPONENT DEPENDENCIES
 import ChatFeedMessages from './ChatFeedMessages';
+// REACT ICONS
+import { FaDumbbell } from "react-icons/fa";
 
 const ChatFeed = ({ userId, feed, showFeed }) => {
 
@@ -125,7 +127,9 @@ const ChatFeedInput = ({ content, setContent, handleSubmit, error, setError }) =
                         onClick={ handleSubmit } 
                         variant='success'
                         disabled={ content === '' }
-                    >enter</Button>
+                    >
+                        <FaDumbbell />
+                    </Button>
                 </Col>
             </Form.Group>
         </Form>
