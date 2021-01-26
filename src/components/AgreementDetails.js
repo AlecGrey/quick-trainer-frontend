@@ -9,6 +9,7 @@ import NewTrainingSessionModal from './NewTrainingSessionModal';
 import NewGoalModal from './NewGoalModal';
 import SuccessModal from './SuccessModal';
 import ErrorModal from './ErrorModal';
+import PlaceholderImage from './PlaceholderImage';
 // REACT REDUX AND ACTIONS
 import { updateAgreement } from '../actions/agreements';
 import { connect } from 'react-redux';
@@ -207,7 +208,10 @@ const AgreementHeader = ({ name, imageUrl, sessionsRemaining, pending }) => {
     return (
         <>
             <div id='agreement-header' className='d-flex align-items-end'>
-                <Image className='agreement-image' src={ imageUrl }/>
+                { !!imageUrl ? 
+                    <Image className='agreement-image' src={ imageUrl }/> :
+                    <PlaceholderImage size='58px' padding='30px 20px 10px 20px' noShadow={true}/>
+                }
                 <h1 className='display-name flex-grow-1'>{ name }</h1>
                 <p className='sessions-remaining'>{ pending ? 'Sessions Requested:' : 'Sessions Remaining:' }</p>
                 <h1 className='display-remaining-sessions'>{ sessionsRemaining }</h1>

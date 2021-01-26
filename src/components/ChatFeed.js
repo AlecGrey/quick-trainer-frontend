@@ -7,10 +7,12 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
 // REDUX
 import { connect } from 'react-redux';
 // COMPONENT DEPENDENCIES
 import ChatFeedMessages from './ChatFeedMessages';
+import PlaceholderImage from './PlaceholderImage';
 // REACT ICONS
 import { FaDumbbell } from "react-icons/fa";
 
@@ -67,6 +69,7 @@ const ChatFeed = ({ userId, feed, showFeed }) => {
             <ChatFeedHeader 
                 error={ error } 
                 recipient={ feed.chatUser }
+                recipientImg={ feed.chatUserImg }
                 content={ content }
             />
             <div className='h-divider' />
@@ -87,7 +90,7 @@ const ChatFeed = ({ userId, feed, showFeed }) => {
     );
 }
 
-const ChatFeedHeader = ({ recipient, error, content }) => {
+const ChatFeedHeader = ({ recipient, recipientImg, error, content }) => {
 
     const remainingCharacters = () => {
         return 250 - content.length
@@ -95,6 +98,19 @@ const ChatFeedHeader = ({ recipient, error, content }) => {
 
     return (
         <Container className='header d-flex'>
+            {   !!recipientImg ?
+                    <Image 
+                        style={{height: '25px', width: '25px', objectFit: 'cover'}} 
+                        src={ recipientImg } 
+                        rounded
+                    /> :
+                    <PlaceholderImage
+                        size='15px'
+                        padding='4px'
+                        noShadow={true}
+                        borderRadius='5px'
+                    />
+            }
             <h5>{ recipient }</h5>
             {/* Anything else? */}
             { error ? 

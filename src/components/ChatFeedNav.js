@@ -29,7 +29,8 @@ const ChatFeedNav = ({ user, agreements }) => {
         return agreements.map( agreement => {
             return {
                 id: agreement.id,
-                chatUser: userIsTrainer() ? agreement.client.name : agreement.trainer.name
+                chatUser: userIsTrainer() ? agreement.client.name : agreement.trainer.name,
+                chatUserImg: userIsTrainer() ? agreement.client.image_url : agreement.trainer.image_url
             }
         })
     }
@@ -68,7 +69,7 @@ const ChatFeedNav = ({ user, agreements }) => {
             <Navbar.Collapse id='chatfeed-nav-items'className="justify-content-end">
                 <Nav>
                     { renderChatfeedFromState() }
-                    <NavDropdown title={ user.is_trainer ? 'Clients' : 'Coaches' } id="nav-dropdown" drop='up' alignRight>
+                    <NavDropdown title={ user.isTrainer ? 'Clients' : 'Coaches' } id="nav-dropdown" drop='up' alignRight>
                         { renderDropdownItemsFromState() }
                     </NavDropdown>
                 </Nav>

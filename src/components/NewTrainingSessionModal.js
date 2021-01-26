@@ -122,8 +122,6 @@ const NewTrainingSessionModal = ({ show, setShow, setErrorMessage, setSuccessMes
         if (!item.repetitions && !item.duration) errors.repetitions = 'Cannot be blank!'
         else if (!item.repetitions && item.duration < 1) errors.repetitions = 'Must be more than 0!'
         else if (!item.duration && item.repetitions < 1) errors.repetitions = 'Must be more than 0!'
-        if (!item.resistance) errors.resistance = 'Cannot be blank!'
-        else if (item.resistance < 1) errors.resistance = 'Must be more than 0!'
         if (!item.restInterval) errors.restInterval = 'Cannot be blank!'
         else if (item.restInterval < 1) errors.restInterval = 'Must be more than 0!'
         return errors

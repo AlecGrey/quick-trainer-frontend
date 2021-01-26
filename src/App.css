@@ -234,6 +234,7 @@ body {
 
 .placeholder-image {
   padding: 4rem;
+  border: 1px solid rgb(220, 220, 220)
 }
 
 .welcome-message {
@@ -682,9 +683,13 @@ img.agreement-image {
 
 .workout-header {
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 450;
   margin-bottom: 0;
+}
+
+.workout-header + button {
+  margin-left: 0.5rem;
 }
 
 .workout-table > .workout-row {

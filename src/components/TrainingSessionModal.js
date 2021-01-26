@@ -6,6 +6,12 @@ import Form from 'react-bootstrap/Form';
 // REDUX AND ACTION
 import { updateTrainingSessionInAgreement } from '../actions/agreements';
 import { connect } from 'react-redux';
+// REACT-TO-PDF
+import ReactToPdf from 'react-to-pdf';
+// REACT ICONS
+import { IoMdDownload } from "react-icons/io";
+
+const ref = React.createRef()
 
 const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer, updateTrainingSession, setSuccessMessage, setErrorMessage }) => {
 
@@ -181,6 +187,14 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer, updateT
     }
 
     const renderTrainingSessionBody = () => {
+
+        const pdfFilename = () => {
+            if (!!trainingSession && !!trainingSession.name) {
+                const date = trainingSession.created_at.split('T')[0].split('-').join('')
+                return `${date} ${trainingSession.name}.pdf`
+            } else return 'workout.pdf'
+        }
+
         return (
             <>
                 <div className='status-container d-flex'>
@@ -194,7 +208,13 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer, updateT
                     <p className='description-value'>{ trainingSession.description }</p>
                 </div>
                 {/* <div className='h-divider' /> */}
-                <h1 className='workout-header' >Workout</h1>
+                <div className='d-flex justify-content-center'>
+                    <h1 className='workout-header' >Workout</h1>
+                    <ReactToPdf targetRef={ ref } filename={pdfFilename()}>
+                       { ({toPdf}) => <Button variant='light' onClick={toPdf}><IoMdDownload size='1.5rem'/></Button> }
+                    </ReactToPdf>
+                    
+                </div>                
                 <div className='h-divider' />
                 <div className='workout-table'>
                     <div className='workout-row'>
@@ -215,11 +235,11 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer, updateT
                             { showCompleteWorkoutForm ? 'Cancel' : 'Complete Workout' }
                     </Button> }
                     { showCompleteWorkoutForm ? 
-                        <Button 
-                            onClick={ handleSubmitFeedback }
-                            variant='primary'>
-                                Submit Feedback
-                        </Button> : null }
+                    <Button 
+                        onClick={ handleSubmitFeedback }
+                        variant='primary'>
+                            Submit Feedback
+                    </Button> : null }
                 </div>
                 
             </>
@@ -296,10 +316,10 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer, updateT
             <Modal.Header className='training-session-header' closeButton>
                 { renderTrainingSessionHeader() }
             </Modal.Header>
-            <Modal.Body className='training-session-body'>
+            <Modal.Body className='training-session-body' ref={ ref }>
                 { trainingSession ? renderTrainingSessionBody() : null }
-                { showCompleteWorkoutForm ? renderCompleteWorkoutForm() : null }
-                { userIsTrainer && trainingSession && trainingSession.is_complete ? renderClientFeedback() : null }
+                { showCompleteWorkoutForm ? renderCompleteWorkoutForm() : null } 
+                { userIsTrainer && trainingSession && trainingSession.is_complete ? renderClientFeedback() : null } 
             </Modal.Body>
       </Modal>
     );
