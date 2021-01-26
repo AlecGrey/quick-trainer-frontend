@@ -88,6 +88,8 @@ function App({ user, agreements, loginUser, logoutUser, addAgreements }) {
         <Route exact path='/training-agreements' component={ TrainingAgreementsPage } />
         { localStorage.getItem('token') ? null : <Redirect to='/' /> }
       </div>
+      <div id='bg-img-overlay' />
+      <div id='bg-img' />
       { loggedIn() ? <ChatFeedNav user={ user } agreements={ agreements }/> : null }
     </Router>
   );

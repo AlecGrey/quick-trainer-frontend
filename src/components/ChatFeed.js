@@ -105,8 +105,8 @@ const ChatFeedHeader = ({ recipient, recipientImg, error, content }) => {
                         rounded
                     /> :
                     <PlaceholderImage
-                        size='15px'
-                        padding='4px'
+                        size='19px'
+                        padding='2px'
                         noShadow={true}
                         borderRadius='5px'
                     />

@@ -210,7 +210,7 @@ const AgreementHeader = ({ name, imageUrl, sessionsRemaining, pending }) => {
             <div id='agreement-header' className='d-flex align-items-end'>
                 { !!imageUrl ? 
                     <Image className='agreement-image' src={ imageUrl }/> :
-                    <PlaceholderImage size='58px' padding='30px 20px 10px 20px' noShadow={true}/>
+                    <PlaceholderImage size='78px' padding='10px' noShadow={true}/>
                 }
                 <h1 className='display-name flex-grow-1'>{ name }</h1>
                 <p className='sessions-remaining'>{ pending ? 'Sessions Requested:' : 'Sessions Remaining:' }</p>

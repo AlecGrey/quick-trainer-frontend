@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaUser } from "react-icons/fa";
+import { GiStrong } from "react-icons/gi";
 
 const PlaceholderImage = ({ size, padding, noShadow, borderRadius }) => {
 
@@ -18,7 +18,7 @@ const PlaceholderImage = ({ size, padding, noShadow, borderRadius }) => {
 
     return (
         <div className={ className() } style={ customStyleObject() }>
-            <FaUser size={ size }/>
+            <GiStrong size={ size }/>
         </div>  
     );
 }

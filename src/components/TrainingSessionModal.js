@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import ReactToPdf from 'react-to-pdf';
 // REACT ICONS
 import { IoMdDownload } from "react-icons/io";
+import { GiBiceps } from "react-icons/gi";
 
 const ref = React.createRef()
 
@@ -195,13 +196,24 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer, updateT
             } else return 'workout.pdf'
         }
 
+        const renderGymRating = () => {
+            const starCount = trainingSession.rating
+            const stars = []
+            for (let i = 5; i > 0; i--) {
+                stars.push(
+                    <BicepStar size='1.5rem' checked={ i+1 >= starCount }/>
+                )
+            }
+            return stars
+        }
+
         return (
             <>
                 <div className='status-container d-flex'>
                     <h3 className='status'>Status:</h3>
                     <p className='complete-status'>{ trainingSession.is_complete ? 'Complete' : 'Not Complete' }</p>
                     <h3 className='rating'>Rating:</h3>
-                    <p className='rating-value'>{ !!trainingSession.is_complete ? trainingSession.rating : 'n/a' }</p>
+                    <p className='rating-value'>{ !!trainingSession.is_complete ? renderGymRating() : 'n/a' }</p>
                 </div>
                 <div className='description-container d-flex'>
                     <h3 className='description'>Description: </h3>
@@ -323,6 +335,12 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer, updateT
             </Modal.Body>
       </Modal>
     );
+}
+
+const BicepStar = ({ size, checked }) => {
+    return (
+        <GiBiceps size={ size } style={ checked ? {color: 'gold'} : {color: 'gray'} }/>
+    )
 }
 
 const addDispatchToProps = dispatch => {

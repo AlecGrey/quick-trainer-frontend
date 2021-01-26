@@ -1,36 +1,38 @@
 /* MAIN CONTAINERS */
 body {
-  background-color: rgba(240, 240, 240, 0.8) !important;
+  /* STUFF */
 }
 
 #bg-img-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
-  left: 0;
-  bottom: 0;
   right: 0;
+  bottom: 0;
+  left: 0;
   z-index: -1;
   background: rgb(250,250,250);
   background: linear-gradient(135deg, rgba(250,250,250,1) 0%, rgba(255,250,250,0.8) 70%, rgba(250,250,250,0) 100%);
 }
 
 #bg-img {
-  position: absolute;
+  position: fixed;
   z-index: -2;
   top: 0;
-  left: 0;
-  bottom: 0;
   right: 0;
-  opacity: 0.5;
+  bottom: 0;
+  left: 0;
   background: url(./assets/background.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  background-attachment: fixed;
 }
+
 
 #root > .App {
   margin-top: 3.5rem;
+  overflow: auto;
 }
 
 #root {
@@ -62,7 +64,7 @@ body {
   width: 26rem;
   border: 1px solid rgb(211, 211, 211);
   border-radius: 0.5rem;
-  background-color: rgba(250, 250, 250, 0.9);
+  background-color: rgba(250, 250, 250, 0.95);
 }
 
 #chat-feed-container > * {
@@ -476,6 +478,7 @@ p.edit-field:hover, .new-agreement-link {
 #agreement-details-container {
   margin-top: 0.6rem;
   margin-right: 0;
+  overflow: auto;
 }
 
 #agreement-header > * {
@@ -486,7 +489,7 @@ p.edit-field:hover, .new-agreement-link {
   font-size: 3rem;
   font-style: italic;
   font-weight: 400;
-  margin-left: 3rem;
+  margin-left: 1rem;
 }
 
 #agreement-header > .display-remaining-sessions {
@@ -685,8 +688,11 @@ img.agreement-image {
 }
 
 .status-container > p.rating-value {
-  margin-right: 0;
-  margin-left: 0.4rem;
+  margin: auto 0 auto 0.4rem;
+  font-size: 1.4rem;
+  /* margin-right: 0;
+  margin-left: 0.4rem; */
+  
 }
 
 .description-container > * {
