@@ -226,10 +226,14 @@ body {
   margin: 20px auto;
 }
 
-.homepage-image {
+.homepage-image, .placeholder-image {
   max-width: 350px;
   height: auto;
   border-radius: 10px;
+}
+
+.placeholder-image {
+  padding: 4rem;
 }
 
 .welcome-message {
@@ -751,24 +755,51 @@ img.agreement-image {
 
 .goal-header > p {
   margin: auto;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
   margin-right: 0.5rem;
   font-style: italic;
-  color: #6c757d;
 }
 
 .goal-header > button {
   margin-left: 0 !important;
 }
 
-.goal-body > .description-container > h3 {
+.goal-header > h3 {
+  font-weight: 350;
+  font-size: 1.2rem;
+  margin-bottom: 0.1rem;
+}
+
+.goal-body.modal-body {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.goal-body > div {
+  margin: 1rem 0;
+}
+
+.goal-body > .description-container > h3, .goal-status-container > h3, .date-container > h3 {
   margin-top: 0;
   margin-bottom: auto;
   font-size: 1.2rem;
 }
 
+.description-container > div > p {
+  margin-left: 0.2rem;
+}
+
 .goal-body > .description-container > p {
   margin-top: 0;
+}
+
+.description-container > p.date {
+  margin-right: 0;
+}
+
+.description-ctonainer > h3.date {
+  margin-right: 0;
+  margin-left: auto;
 }
 
 .complete-goal-form {

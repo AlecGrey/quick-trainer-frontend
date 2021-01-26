@@ -9,7 +9,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button'
 // REACT-ICONS
-import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 // COMPONENT DEPENDENCIES
 import SuccessModal from './SuccessModal';
 import ErrorModal from './ErrorModal';
@@ -191,7 +191,7 @@ const CoachCardGroup = ({ coaches, agreement, addToAgreement, errors }) => {
     }
 
     return (
-        <div className='card-container d-flex justify-content-around'>
+        <div className='card-container d-flex justify-content-between'>
             <ScrollArrow 
                 direction='left' 
                 active={ page !== 0 }
@@ -214,19 +214,19 @@ const ScrollArrow = ({ direction, active, handleClick }) => {
 
     const renderActiveArrow = () => {
         if (direction === 'left') return (
-            <FaChevronLeft size='5rem' className='left scroll-button clickable' />
+            <BsChevronLeft size='5rem' className='left scroll-button clickable' />
         ) 
         else return (
-            <FaChevronRight size='5rem' className='right scroll-button clickable' />
+            <BsChevronRight size='5rem' className='right scroll-button clickable' />
         )
     }
 
     const renderInactiveArrow = () => {
         if (direction === 'left') return (
-            <FaChevronLeft size='5rem' className='left scroll-button' />
+            <BsChevronLeft size='5rem' className='left scroll-button' />
         ) 
         else return (
-            <FaChevronRight size='5rem' className='right scroll-button' />
+            <BsChevronRight size='5rem' className='right scroll-button' />
         )
     }
 

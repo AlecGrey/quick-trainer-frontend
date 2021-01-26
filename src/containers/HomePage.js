@@ -3,14 +3,15 @@ import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image'
 import { connect } from 'react-redux';
 import { Link, useHistory } from "react-router-dom";
+import PlaceholderImage from '../components/PlaceholderImage';
 
 const HomePage = ({ user, agreements }) => {
 
-    const [ notifications, setNotifications ] = useState([])
+    // const [ notifications, setNotifications ] = useState([])
 
-    useEffect(() => {
-        // CONVERT AGREEMENTS INTO ARRAY OF NOTIFICATION OBJECTS, ADD TO NOTIFICATION STATE OBJECT
-    })
+    // useEffect(() => {
+    //     // CONVERT AGREEMENTS INTO ARRAY OF NOTIFICATION OBJECTS, ADD TO NOTIFICATION STATE OBJECT
+    // })
 
     // const reduceAgreementToNotification = agreement => {
     //     case () {
@@ -20,7 +21,10 @@ const HomePage = ({ user, agreements }) => {
 
     return (
         <Container id='home-page' className='d-flex align-items-center flex-column'>
-            <Image className='shadow homepage-image' src={ user.imageUrl } />
+            {   !!user.imageUrl ? 
+                <Image className='shadow homepage-image' src={ user.imageUrl } /> : 
+                <PlaceholderImage size='8rem' /> 
+            }
             <h1 className='.welcome-message'>{ `Welcome, ${ user.name }!` }</h1>
             <Container className='d-flex justify-content-center'>
                 <div className='nav-link-container d-flex justify-content-end'>

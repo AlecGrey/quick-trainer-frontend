@@ -74,9 +74,36 @@ const GoalModal = ({ show, setShow, goals, id, setId, userIsTrainer, updateGoalI
     }
 
     const renderGoalBody = () => {
+
+        const formattedCompleteByDate = () => {
+            const date = goal.complete_by_date.split('-')
+            return `${date[1]}/${date[2]}/${date[0]}`
+        }
+
+        const formattedCompletedOnDate = () => {
+            const date = goal.updated_at.split('T')[0].split('-')
+            return `${date[1]}/${date[2]}/${date[0]}`
+        }
+
+        const goalCompletionDate = () => {
+            if ( goal && goal.complete_by_date ) {
+                return goal.is_complete ? formattedCompletedOnDate() : formattedCompleteByDate()
+            }
+        }
+
         return (
             <>
-                <div className='description-container d-flex'>
+                <div className='description-container d-flex justify-content-between'>
+                    <div className='goal-status-container d-flex'>
+                      <h3>Status:</h3>
+                      <p>{ goal.is_complete ? 'Complete': 'Not-complete' }</p>  
+                    </div>
+                    <div className='date-container d-flex align-items-center'>
+                        <h3 className='date'>{ goal.is_complete ? 'Completed on:' : 'Complete by:' }</h3>
+                        <p className='date'>{ goalCompletionDate() }</p>
+                    </div>
+                </div>
+                <div className='description-container d-flex align-items-center'>
                     <h3>Description:</h3>
                     <p>{ goal.description }</p>
                 </div>
@@ -141,16 +168,17 @@ const GoalModal = ({ show, setShow, goals, id, setId, userIsTrainer, updateGoalI
         )
     }
 
-    const classNameByGoalStatus = () => {
-        // SET LOGIC FOR CONDITIONAL COLORING
-        return
+    const formattedDate = () => {
+        const date = goal.created_at.split('T')[0].split('-')
+        return `${date[1]}/${date[2]}/${date[0]}`
     }
 
     return (
         <Modal show={show} onHide={handleOnHide} aria-labelledby="goal-title">
             <Modal.Header className='goal-header' closeButton>
-                <Modal.Title id='goal-title'>{ goal ? goal.name : null }</Modal.Title>
-                <p className={ classNameByGoalStatus() }>{ goal && goal.is_complete ? 'Complete' : 'Not-complete' }</p>
+                <Modal.Title id='goal-title'>{ goal ? goal.name : 'Loading...' }</Modal.Title>
+                <p>date:</p>
+                <h3>{ goal && goal.created_at ? formattedDate() : 'Loading...' }</h3>
             </Modal.Header>
             <Modal.Body className='goal-body'>
                 { goal ? renderGoalBody() : null }

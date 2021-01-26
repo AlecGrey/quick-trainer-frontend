@@ -68,7 +68,7 @@ const ChatFeedNav = ({ user, agreements }) => {
             <Navbar.Collapse id='chatfeed-nav-items'className="justify-content-end">
                 <Nav>
                     { renderChatfeedFromState() }
-                    <NavDropdown title="Feeds" id="nav-dropdown" drop='up' alignRight>
+                    <NavDropdown title={ user.is_trainer ? 'Clients' : 'Coaches' } id="nav-dropdown" drop='up' alignRight>
                         { renderDropdownItemsFromState() }
                     </NavDropdown>
                 </Nav>

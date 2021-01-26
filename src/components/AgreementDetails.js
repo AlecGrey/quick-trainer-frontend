@@ -141,17 +141,30 @@ const AgreementDetails = ({ userIsTrainer, agreement, updateAgreement }) => {
     }
 
     const showSessionsAndGoalsIfAccepted = () => {
+
+        const timeFromDate = createdAtDate => {
+            return new Date(createdAtDate).getTime()
+        }
+
+        const sortByCreatedAtDate = arrayOfObjects => {
+            return arrayOfObjects.sort((a, b) => {
+                if (timeFromDate(a.created_at) > timeFromDate(b.created_at)) return -1
+                else if (timeFromDate(a.created_at) < timeFromDate(b.created_at)) return 1
+                else return 0
+            })
+        }
+
         return (
             <div className='d-flex justify-content-stretch'>
                 <TrainingSessionsList 
-                    trainingSessions={ agreement.training_sessions }
+                    trainingSessions={ sortByCreatedAtDate(agreement.training_sessions) }
                     userIsTrainer={ userIsTrainer }
                     setShowTrainingSession={ setShowTrainingSession }
                     setTrainingSessionId={ setTrainingSessionId }
                     setShowNewTrainingSession={ setShowNewTrainingSession }
                 />
                 <GoalsList
-                    goals={ agreement.goals }
+                    goals={ sortByCreatedAtDate(agreement.goals) }
                     userIsTrainer={ userIsTrainer }
                     setShowGoal={ setShowGoal }
                     setGoalId={ setGoalId }
@@ -167,14 +180,16 @@ const AgreementDetails = ({ userIsTrainer, agreement, updateAgreement }) => {
             <div id='pending-agreement-buttons' className='d-flex'>
                 <Button 
                     variant='success' 
-                    onClick={ () => resolveAgreement('ACCEPT') }>
-                        Accept Agreement
-                    </Button>
+                    onClick={ () => resolveAgreement('ACCEPT') }
+                >
+                    Accept Agreement
+                </Button>
                 <Button 
                     variant='danger'
-                    onClick={ () => resolveAgreement('DECLINE') }>
-                        Decline Agreement
-                    </Button>
+                    onClick={ () => resolveAgreement('DECLINE') }
+                >
+                    Decline Agreement
+                </Button>
             </div>
         )
     }

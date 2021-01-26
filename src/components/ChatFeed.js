@@ -122,13 +122,14 @@ const ChatFeedInput = ({ content, setContent, handleSubmit, error, setError }) =
                         value={ content }/>
                 </Col>
                 <Col sm={ 2 }>
-                    <Button 
+                    <Button
+                        style={{ width:'100%' }} 
                         id='message-submit'
                         onClick={ handleSubmit } 
                         variant='success'
                         disabled={ content === '' }
                     >
-                        <FaDumbbell />
+                        <FaDumbbell size='1.2rem'/>
                     </Button>
                 </Col>
             </Form.Group>

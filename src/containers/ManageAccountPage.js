@@ -2,8 +2,8 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image'
 import { connect } from 'react-redux';
-import { Link, useHistory } from "react-router-dom";
 import AccountSettings from '../components/AccountSettings';
+import PlaceholderImage from '../components/PlaceholderImage';
 
 const ManageAccountPage = ({ user }) => {
 
@@ -12,7 +12,10 @@ const ManageAccountPage = ({ user }) => {
     return (
         <div id='account-settings-page' className='no-gutters d-flex justify-content-stretch'>
             <Container className='user-preview d-flex flex-column align-items-center'>
-                <Image className='shadow homepage-image' src={ imageUrl } />
+                { !!imageUrl ?
+                    <Image className='shadow homepage-image' src={ imageUrl } /> : 
+                    <PlaceholderImage size='8rem' />
+                }
                 <h1 className='.welcome-message'>{ name }</h1>
             </Container>
             <AccountSettings user={ user }/>
