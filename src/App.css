@@ -1,6 +1,32 @@
 /* MAIN CONTAINERS */
 body {
-  background-color: rgb(240, 240, 240) !important;
+  background-color: rgba(240, 240, 240, 0.8) !important;
+}
+
+#bg-img-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  background: rgb(250,250,250);
+  background: linear-gradient(135deg, rgba(250,250,250,1) 0%, rgba(255,250,250,0.8) 70%, rgba(250,250,250,0) 100%);
+}
+
+#bg-img {
+  position: absolute;
+  z-index: -2;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0.5;
+  background: url(./assets/background.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 #root > .App {
@@ -36,7 +62,7 @@ body {
   width: 26rem;
   border: 1px solid rgb(211, 211, 211);
   border-radius: 0.5rem;
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(250, 250, 250, 0.9);
 }
 
 #chat-feed-container > * {
@@ -233,6 +259,7 @@ body {
 }
 
 .placeholder-image {
+  background-color: rgb(250, 250, 250);
   padding: 4rem;
   border: 1px solid rgb(220, 220, 220)
 }
