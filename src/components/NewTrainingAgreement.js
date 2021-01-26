@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { addAgreement } from '../actions/agreements';
 import { connect } from 'react-redux';
+// REACT BOOTSTRAP COMPONENTS
 import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button'
+// REACT-ICONS
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+// COMPONENT DEPENDENCIES
 import SuccessModal from './SuccessModal';
 import ErrorModal from './ErrorModal';
 
@@ -150,6 +154,10 @@ const NewTrainingAgreement = ({ addAgreement, closeTrainingAgreement }) => {
                 successMessage={ successMessage }
                 resetSuccessMessage={ handleHideSuccessMessage }
             />
+            <ErrorModal 
+                errorMessage={ errorMessage }
+                resetErrorMessage={ () => setErrorMessage(null) }
+            />
         </div>
     );
 }
@@ -175,20 +183,61 @@ const CoachCardGroup = ({ coaches, agreement, addToAgreement, errors }) => {
         })
     }
 
-    const changePageDown = e => setPage( page - 1 )
-    const changePageUp = e => setPage( page + 1 )
+    const changePageDown = e => {
+        setPage( page - 1 )
+    }
+    const changePageUp = e => {
+        setPage( page + 1 )
+    }
 
     return (
-        <div className='card-container d-flex'>
-            { page === 0 ? <p className='card-group-link'>PREVIOUS</p> : 
-                <p onClick={ changePageDown } className='card-group-link clickable'>PREVIOUS</p> }
+        <div className='card-container d-flex justify-content-around'>
+            <ScrollArrow 
+                direction='left' 
+                active={ page !== 0 }
+                handleClick={changePageDown}
+            />
             <CardGroup>
                 { renderCards() }
             </CardGroup>
-            { page < ((coaches.length % 3) - 1) ? <p onClick={ changePageUp } className='card-group-link clickable'>NEXT</p> : 
-                <p className='card-group-link'>NEXT</p> }
+            <ScrollArrow 
+                direction='right' 
+                active={ page < (coaches.length % 3) - 1}
+                handleClick={changePageUp}
+            />
         </div>
         
+    )
+}
+
+const ScrollArrow = ({ direction, active, handleClick }) => {
+
+    const renderActiveArrow = () => {
+        if (direction === 'left') return (
+            <FaChevronLeft size='5rem' className='left scroll-button clickable' />
+        ) 
+        else return (
+            <FaChevronRight size='5rem' className='right scroll-button clickable' />
+        )
+    }
+
+    const renderInactiveArrow = () => {
+        if (direction === 'left') return (
+            <FaChevronLeft size='5rem' className='left scroll-button' />
+        ) 
+        else return (
+            <FaChevronRight size='5rem' className='right scroll-button' />
+        )
+    }
+
+    const handleArrowClick = e => {
+        if (active) handleClick()
+    }
+
+    return (
+        <div onClick={handleArrowClick} className='arrow-container d-flex align-items-center'>
+            { active ? renderActiveArrow() : renderInactiveArrow() }
+        </div>
     )
 }
 
@@ -207,7 +256,7 @@ const CoachCard = ({ coach, addToAgreement, selectedCoachId }) => {
     }
 
     return (
-        <Card onClick={ handleOnClick } className={ coachIsSelected() ? 'selected-card' : null }>
+        <Card style={{ width: '15rem' }} onClick={ handleOnClick } className={ coachIsSelected() ? 'selected-card' : null }>
             <Card.Img 
                 variant="top" 
                 src={ coach.image_url } 

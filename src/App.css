@@ -850,6 +850,10 @@ img.agreement-image {
   margin: 0 auto;
 }
 
+.card-group > .card {
+  width: 20rem;
+}
+
 .card-img-top {
   object-fit: cover;
   height: 200px;
@@ -889,19 +893,16 @@ img.agreement-image {
   margin-left: 0.3rem;
 }
 
-.card-container > .card-group-link {
-  font-size: 1rem;
-  font-weight: 300;
+.card-container > div > .scroll-button {
   color: rgb(189, 189, 189);
-  align-self: center;
-  cursor: default;
+  margin: auto -1rem;
 }
 
-.card-container > .card-group-link.clickable {
-  color: rgb(95, 95, 95);
+.card-container > div > .scroll-button.clickable:hover {
+  cursor: pointer;
 }
 
-.card-container > .card-group-link.clickable:hover {
+.card-container > div > .scroll-button.clickable:click {
   cursor: pointer;
   color: rgb(40, 40, 40)
 }
