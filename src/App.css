@@ -521,15 +521,19 @@ img.agreement-image {
 }
 
 #bio-container {
-  margin: 2rem 0;
+  margin: 1rem 0;
 }
 
-#bio-container > .user-bio-header {
+#intent-container {
+  margin: 0 0 1rem 0;
+}
+
+#bio-container > h3, #intent-container > h3 {
   font-style: italic;
   font-weight: 500;
 }
 
-#bio-container > .user-bio-content {
+#bio-container > p, #intent-container > p {
   margin-left: 1rem;
   margin-top: 0.5rem;
   margin-bottom: 0;

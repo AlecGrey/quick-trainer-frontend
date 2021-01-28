@@ -83,6 +83,9 @@ const AgreementDetails = ({ userIsTrainer, agreement, updateAgreement }) => {
                     <Bio bio={ agreement.client.bio } /> :
                     <Bio bio={ agreement.trainer.bio } /> 
                 }
+                { agreement.accepted_agreement === null ?
+                    <Intent intent={ agreement.intent } /> : null
+                }
                 {
                     userIsTrainer ?
                     <Demographics 
@@ -226,6 +229,15 @@ const Bio = ({ bio }) => {
         <div id='bio-container' className='d-flex'>
             <h3 className='user-bio-header'>Bio</h3>
             <p className='user-bio-content flex-grow-1'>{ bio }</p>
+        </div>
+    )
+}
+
+const Intent = ({ intent }) => {
+    return (
+        <div id='intent-container' className='d-flex'>
+            <h3 className='user-intent-header'>Training Intent</h3>
+            <p className='user-intent-content flex-grow-1'>{ intent }</p>
         </div>
     )
 }
