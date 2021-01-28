@@ -133,7 +133,6 @@
   padding: 0.4rem 0.8rem;
   border-radius: 0.5rem;
   display: inline-block;
-  word-break: break-all
 }
 
 .received-message > p.content {

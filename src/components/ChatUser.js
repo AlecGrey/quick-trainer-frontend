@@ -16,7 +16,6 @@ const ChatUser = ({ event, active, agreement, addChatMessageToAgreement }) => {
         }, {
             received: (json) => {
                 // reformat json to payload...
-                console.log('RECEIVED MESSAGE, ADDING TO STORE')
                 const data = JSON.parse(json).data
                 const payload = {
                     agreementId: parseInt(data.relationships.coach_client.data.id),
@@ -32,7 +31,7 @@ const ChatUser = ({ event, active, agreement, addChatMessageToAgreement }) => {
             onClick={ event }
             active={ active }
         >
-                { agreement.chatUser }
+            { agreement.chatUser }
         </NavDropdown.Item>
     );
 }

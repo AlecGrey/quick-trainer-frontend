@@ -157,7 +157,7 @@ const GoalModal = ({ show, setShow, goals, id, setId, userIsTrainer, updateGoalI
                                 <Form.Label>Update Description <em>{ '(optional)' }</em></Form.Label>
                                 <Form.Control as='textarea' onChange={ handleDescriptionChange } value={ goalUpdates.description } />
                             </Form.Group>
-                            <div className='d-flex'>
+                            <div className='d-flex' style={{ marginBottom: '0.5rem' }}>
                                 <Button variant='danger' onClick={ cancelChanges }>Cancel</Button>
                                 <Button variant='primary'onClick={ submitChanges }>Submit Changes</Button>
                             </div>

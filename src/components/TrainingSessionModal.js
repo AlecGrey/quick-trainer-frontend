@@ -199,9 +199,9 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer, updateT
         const renderGymRating = () => {
             const starCount = trainingSession.rating
             const stars = []
-            for (let i = 5; i > 0; i--) {
+            for (let i = 0; i < 5; i++) {
                 stars.push(
-                    <BicepStar size='1.5rem' checked={ i+1 >= starCount }/>
+                    <BicepStar size='1.5rem' checked={ i < starCount }/>
                 )
             }
             return stars

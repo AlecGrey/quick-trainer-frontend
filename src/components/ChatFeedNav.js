@@ -65,21 +65,21 @@ const ChatFeedNav = ({ user, agreements }) => {
 
     return (
         <ActionCableContext.Provider value={ CableApp.cable }>
-           <Navbar id='chatfeed-nav'fixed='bottom'>
-            <Navbar.Collapse id='chatfeed-nav-items'className="justify-content-end">
-                <Nav>
-                    { renderChatfeedFromState() }
-                    <NavDropdown title={ user.isTrainer ? 'Clients' : 'Coaches' } id="nav-dropdown" drop='up' alignRight>
-                        { renderDropdownItemsFromState() }
-                    </NavDropdown>
-                </Nav>
-            </Navbar.Collapse>
-            { showFeed ? <ChatFeed 
-                userId={ user.id } 
-                feed={ activeFeed } 
-                showFeed={ showFeed }
+           <Navbar id='chatfeed-nav'fixed='bottom' variant='dark'>
+                <Navbar.Collapse id='chatfeed-nav-items'className="justify-content-end">
+                    <Nav>
+                        { renderChatfeedFromState() }
+                        <NavDropdown title={ user.isTrainer ? 'Clients' : 'Coaches' } id="nav-dropdown" drop='up' alignRight>
+                            { renderDropdownItemsFromState() }
+                        </NavDropdown>
+                    </Nav>
+                </Navbar.Collapse>
+                { showFeed ? <ChatFeed 
+                    userId={ user.id } 
+                    feed={ activeFeed } 
+                    showFeed={ showFeed }
             /> : null }
-        </Navbar> 
+            </Navbar> 
         </ActionCableContext.Provider>
         
     );
