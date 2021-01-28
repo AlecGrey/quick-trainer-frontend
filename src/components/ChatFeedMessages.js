@@ -17,9 +17,9 @@ const ChatFeedMessages = ({ userId, agreementId, agreements, showFeed }) => {
     },[agreements, agreementId])
 
     const renderChatMessages = () => {
-        return messages.map(message => {
+        return messages.map( message => {
             return <ChatMessage
-                key={ message.id } 
+                key={ message.id }
                 isUser={ message.user_id === userId }
                 content={ message.content }
                 createdAt={ message.created_at }
@@ -39,7 +39,7 @@ const ChatFeedMessages = ({ userId, agreementId, agreements, showFeed }) => {
     return (
         <Container 
             id='chat-feed' 
-            className='d-flex align-items-center flex-column flex-grow-1 flex-nowrap'>
+            className='d-flex align-items-center justify-content-start flex-column flex-grow-1 flex-nowrap'>
             { renderChatMessages() }
             <div ref={ messagesEndRef } />
         </Container>

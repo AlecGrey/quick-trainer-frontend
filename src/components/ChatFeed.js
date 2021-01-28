@@ -39,7 +39,6 @@ const ChatFeed = ({ userId, feed, showFeed }) => {
 
     // THIS CONNECTION WILL ONLY BE USED FOR SENDING MESSAGES TO DB
     const sendMessage = content => {
-        console.log('SENDING MESSAGE TO DB')
         const data = {
             coach_client_id: feed.id,
             user_id: userId,
