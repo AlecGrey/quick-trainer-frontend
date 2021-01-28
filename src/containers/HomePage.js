@@ -26,7 +26,7 @@ const HomePage = ({ user, agreements }) => {
                 <PlaceholderImage size='8rem' /> 
             }
             <h1 className='.welcome-message'>{ `Welcome, ${ user.name }!` }</h1>
-            <Container className='d-flex justify-content-center'>
+            {/* <Container className='d-flex justify-content-center'>
                 <div className='nav-link-container d-flex justify-content-end'>
                     <Link to='/manage-account'>User Settings</Link>
                 </div>
@@ -36,7 +36,7 @@ const HomePage = ({ user, agreements }) => {
                         { user.isTrainer ? 'View Roster' : 'View Coaches' }
                     </Link>
                 </div>
-            </Container>
+            </Container> */}
         </Container>
     );
 }

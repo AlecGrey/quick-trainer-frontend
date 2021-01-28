@@ -173,7 +173,7 @@
 /* LOGIN PAGE */
 
 #login-page {
-  margin-top: -3rem;
+  margin-top: -1rem;
 }
 
 #login-box, #signup-box {
@@ -254,6 +254,10 @@
 }
 
 /* HOMEPAGE */
+#home-page {
+  padding-top: 5rem;
+}
+
 #home-page > * {
   margin: 20px auto;
 }
