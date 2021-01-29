@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+# Welcome to Quick Trainer!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was built with love for my Capstone with the Flatiron SE program.  I have worked in the fitness industry for several years, and I have seen a niche market for individuals who are specifically interested in exercise programs from a personal trainer, but who (for a multitude of reasons) do not wish to partake in 1:1 personal training.  By creating a platform for clients to meet coaches, we can help coaches expand their market, and help clients gain access to fitness professionals.  This platform would also be a great compliment to fitness professionals who already have a social media presence, as it would be a central hub to provide programming and advice to clients.
 
-## Available Scripts
+**This was recently completed, and a video demonstration is to come**
 
-In the project directory, you can run:
+## Instructions
 
-### `yarn start`
+1. Fork and clone this repo, as well as the [Backend API](https://github.com/AlecGrey/quick-trainer-backend).
+2. Begin by installing all necessary Gems with `bundle install` in the Backend directory.
+3. Do the same with the Frontend, using `yarn install`.
+4. To start the web application, first seed the database by running `rails db:seed` from the Backend directory.  Once that is complete, spin-up the server with `rails s`.  Finally, navigate to the Frontend directory and run `yarn start`.  This should open up your browser to the homepage!
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### For use:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+You can start with your own account, or log in to any of the seeded users.  For example, 'Tony Horton' is an instantiated trainer account that you can log in with the password of 'password'.
 
-### `yarn test`
+### Things to try:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Add a new training agreement, then log in as the coach (they all have a password of 'password') and accept the agreement!
+2. Write yourself a workout as a coach!
+3. Export the PDF as a client, and rate the workout!
+4. Check-out the chat feed at the bottom.  Open a second window and place it side-by-side with your client on one account and your coach on the other (You may need an icognito window to do this).  Open up both of your chat feeds (in the bottom-right corner) and open a new feed with your coach and client.  Watch how the page updates in real time to new chat messages!
 
-### `yarn build`
+## Contributors
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This project was developed by Alexander Grey.  I am happy to accept contributors, so please send me a request if you are interested!
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Licence
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+License Copyright 2021 Alexander Grey
 
-### `yarn eject`
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
