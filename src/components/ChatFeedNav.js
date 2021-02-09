@@ -12,7 +12,7 @@ import PlaceholderImage from './PlaceholderImage';
 import actionCable from 'actioncable';
 
 const CableApp = {}
-CableApp.cable = actionCable.createConsumer('ws://localhost:5000/cable')
+CableApp.cable = actionCable.createConsumer('ws://quick-trainer-backend.herokuapp.com//cable')
 export const ActionCableContext = createContext()
 
 const ChatFeedNav = ({ user, agreements }) => {
