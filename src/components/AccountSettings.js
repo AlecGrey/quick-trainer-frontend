@@ -17,7 +17,7 @@ const AccountSettings = ({ user, updateUser}) => {
 
     const requestSettingChange = (title, content) => {
         // Sends patch request to server!
-        const url = 'http://localhost:5000/update-user'
+        const url = 'https://quick-trainer-backend.herokuapp.com/update-user'
         const params = updateUserParams({title, content})
         fetch( url, params )
             .then(resp => resp.json())
@@ -106,10 +106,10 @@ const AccountSettings = ({ user, updateUser}) => {
         // 'CHANGE_PASSWORD' or 'DELETE_ACCOUNT'
         let url, params
         if ( eventType === 'CHANGE_PASSWORD' ) {
-            url = 'http://localhost:5000/update-user'
+            url = 'https://quick-trainer-backend.herokuapp.com/update-user'
             params = updatePasswordParams( password )
         } else if ( eventType === 'DELETE_ACCOUNT' ) {
-            url = 'http://localhost:5000/delete-user'
+            url = 'https://quick-trainer-backend.herokuapp.com/delete-user'
             params = deleteUserParams( password )
         }
         fetch(url, params)

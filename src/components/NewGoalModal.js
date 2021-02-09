@@ -44,7 +44,7 @@ const NewGoalModal = ({ show, setShow, setSuccessMessage, setErrorMessage, coach
     }
 
     const postNewGoalToServer = () => {
-        const url = 'http://localhost:5000/goals/create'
+        const url = 'https://quick-trainer-backend.herokuapp.com/goals/create'
         const params = postNewGoalParams()
         fetch(url, params)
             .then(resp => resp.json())

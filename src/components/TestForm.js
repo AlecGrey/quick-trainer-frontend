@@ -42,7 +42,7 @@ const TestForm = () => {
     }
   
     const loginUser = () => {
-      const url = 'http://localhost:5000/signup'
+      const url = 'https://quick-trainer-backend.herokuapp.com/signup'
       const params = loginParams()
       fetch(url, params)
         .then(resp => resp.json())

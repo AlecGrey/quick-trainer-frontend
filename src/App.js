@@ -24,7 +24,7 @@ function App({ user, agreements, loginUser, logoutUser, addAgreements }) {
 
   const fetchUserToStore = () => {
     // SEND GET REQUEST TO GET USER INFORMATION
-    const url = `http://localhost:5000/get-user`
+    const url = `https://quick-trainer-backend.herokuapp.com/get-user`
     const params = getUserParams()
     fetch(url, params)
       .then(resp => resp.json())

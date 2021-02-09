@@ -33,7 +33,7 @@ const AgreementDetails = ({ userIsTrainer, agreement, updateAgreement }) => {
     }
 
     const fetchUpdateAgreement = resolution => {
-        const url = `http://localhost:5000/coach-client/${agreement.id}`
+        const url = `https://quick-trainer-backend.herokuapp.com/coach-client/${agreement.id}`
         const params = updateAgreementParams(resolution)
         fetch(url, params)
             .then(resp => resp.json())

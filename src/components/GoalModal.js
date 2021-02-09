@@ -44,7 +44,7 @@ const GoalModal = ({ show, setShow, goals, id, setId, userIsTrainer, updateGoalI
         if (optionalBody) body = optionalBody
         else body = goalUpdates
 
-        const url = `http://localhost:5000/goals/${goal.id}`
+        const url = `https://quick-trainer-backend.herokuapp.com/goals/${goal.id}`
         const params = updateGoalParams(body)
         fetch(url, params)
             .then(resp => resp.json())

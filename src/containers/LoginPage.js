@@ -57,7 +57,7 @@ const LoginPage = ({ loginUser, addAgreements }) => {
     // FETCH REQUEST TO LOGIN USER
     const fetchUser = () => {
         console.log('initiating login fetch')
-        const url = 'http://localhost:5000/login'
+        const url = 'https://quick-trainer-backend.herokuapp.com/login'
         const params = loginParams()
         fetch(url, params)
           .then(resp => resp.json())

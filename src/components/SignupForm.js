@@ -39,7 +39,7 @@ const SignupForm = ({ setShowSignup, sendUserToStore, navigateToHomePage }) => {
     const newUserFetch = () => {
         // This fetch takes advantage of two callback functions from the login page:
         // handleUserFetch and navigateToHomePage
-        const url = 'http://localhost:5000/signup'
+        const url = 'https://quick-trainer-backend.herokuapp.com/signup'
         const params = newUserParams()
         console.log('fetching...')
         fetch(url, params)

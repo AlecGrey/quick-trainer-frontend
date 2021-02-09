@@ -87,7 +87,7 @@ const NewTrainingSessionModal = ({ show, setShow, setErrorMessage, setSuccessMes
     }
 
     const fetchNewWorkout = () => {
-        const url = 'http://localhost:5000/training-sessions/create'
+        const url = 'https://quick-trainer-backend.herokuapp.com/training-sessions/create'
         const params = submitWorkoutParams()
         fetch(url, params)
             .then(resp => resp.json())

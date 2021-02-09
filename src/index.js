@@ -13,12 +13,6 @@ import rootReducer from './reducers/index';
 
 // initializing redux store & devtools
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
-// initializing action cable connection
-// const CableApp = {}
-// CableApp.cable = actionCable.createConsumer('ws://localhost:5000/cable')
-// export const ActionCableContext = createContext()
-
-
 
 ReactDOM.render(
   <Provider store={ store }>

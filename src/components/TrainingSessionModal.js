@@ -105,7 +105,7 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer, updateT
 // =================================
 
     const fetchTrainingSessionData = () => {
-        const url = `http://localhost:5000/training-sessions/${id}`
+        const url = `https://quick-trainer-backend.herokuapp.com/training-sessions/${id}`
         const params = fetchTrainingSessionParams()
         fetch(url, params)
             .then(resp => resp.json())
@@ -132,7 +132,7 @@ const TrainingSessionModal = ({ show, setShow, id, setId, userIsTrainer, updateT
     }
 
     const fetchFeedbackToTrainingSession = () => {
-        const url = `http://localhost:5000/training-sessions/${id}`
+        const url = `https://quick-trainer-backend.herokuapp.com/training-sessions/${id}`
         const params = fetchFeedbackParams()
         fetch(url, params)
             .then(resp => resp.json())

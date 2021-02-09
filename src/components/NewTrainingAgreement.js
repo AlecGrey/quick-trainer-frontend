@@ -33,7 +33,7 @@ const NewTrainingAgreement = ({ addAgreement, closeTrainingAgreement }) => {
     }, [])
 
     const fetchAllCoaches = () => {
-        const url = 'http://localhost:5000/users/coaches'
+        const url = 'https://quick-trainer-backend.herokuapp.com/users/coaches'
         fetch(url)
             .then(resp => resp.json())
             .then(addCoachesToState)
@@ -90,7 +90,7 @@ const NewTrainingAgreement = ({ addAgreement, closeTrainingAgreement }) => {
     }
 
     const postNewAgreement = () => {
-        const url = 'http://localhost:5000/coach-client/create'
+        const url = 'https://quick-trainer-backend.herokuapp.com/coach-client/create'
         const params = newAgreementParams()
         fetch(url, params)
             .then(resp => resp.json())
