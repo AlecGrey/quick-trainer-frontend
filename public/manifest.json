@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Quick Trainer",
+  "name": "Find your next Fitness Professional or Client with Quick Trainer!",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "icons/kettlebell-192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "icons/kettlebell-512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
